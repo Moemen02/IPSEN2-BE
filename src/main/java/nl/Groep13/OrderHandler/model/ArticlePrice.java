@@ -9,6 +9,16 @@ public class ArticlePrice {
     private float vPrice;
     private float aPrice;
 
+    public ArticlePrice(int id, String type, float width, float ptrWidth, float ptrLength, float vPrice, float aPrice) {
+        this.id = id;
+        this.type = type;
+        this.width = width;
+        this.ptrWidth = ptrWidth;
+        this.ptrLength = ptrLength;
+        this.vPrice = vPrice;
+        this.aPrice = aPrice;
+    }
+
     public int getId() {
         return id;
     }
@@ -62,16 +72,6 @@ public class ArticlePrice {
     }
 
     public void setaPrice(float aPrice) {
-        this.aPrice = aPrice;
-    }
-
-    public ArticlePrice(int id, String type, float width, float ptrWidth, float ptrLength, float vPrice, float aPrice) {
-        this.id = id;
-        this.type = type;
-        this.width = width;
-        this.ptrWidth = ptrWidth;
-        this.ptrLength = ptrLength;
-        this.vPrice = vPrice;
         this.aPrice = aPrice;
     }
 }
