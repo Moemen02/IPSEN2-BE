@@ -1,5 +1,6 @@
 package nl.Groep13.OrderHandler.DAO;
 
+
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.repository.ArticleRepository;
 import org.springframework.stereotype.Component;
@@ -19,4 +20,4 @@ public class ArticleDAO {
         Optional<Article> article = this.articleRepository.findById(id);
         return article;
     }
-}
+

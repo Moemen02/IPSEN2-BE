@@ -6,6 +6,7 @@ import nl.Groep13.OrderHandler.model.ArticlePrice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.Optional;
 
 @RestController
@@ -23,14 +24,15 @@ public class ArticleController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
-    public Object Article(){
+    public Article Article(){
         //TODO echte code uit databae ophalen
+
         return null;
     }
 
     @RequestMapping(value = "/prices", method = RequestMethod.GET)
     @ResponseBody
-    public Object getAllArticlePrices(){
+    public ArticlePrice getAllArticlePrices(){
         //TODO echte code uit databae ophalen
         return null;
     }
