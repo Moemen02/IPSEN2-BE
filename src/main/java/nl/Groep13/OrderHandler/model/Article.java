@@ -1,6 +1,11 @@
 package nl.Groep13.OrderHandler.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Article {
+    @Id
     private int articleNumber;
     private int priceId;
     private int eanCode;
@@ -17,6 +22,10 @@ public class Article {
         this.layout = layout;
         this.washSymbol = washSymbol;
         this.composition = composition;
+    }
+
+    public Article() {
+
     }
 
     public int getArticleNumber() {

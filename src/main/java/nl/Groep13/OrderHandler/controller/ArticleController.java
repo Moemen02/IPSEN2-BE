@@ -24,20 +24,15 @@ public class ArticleController {
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
-    public HashMap<String, Object> getArticles(){
+    public Object Article(){
         //TODO echte code uit databae ophalen
-        article = new Article(134, 1, 1234, "black", "een layour", "symbool", "iets");
-        HashMap<String, Object> wholeArticle = new HashMap<>();
-        wholeArticle.put("article", article);
-        wholeArticle.put("articlePrice", getAllArticlePrices());
-        return wholeArticle;
+        return null;
     }
 
     @RequestMapping(value = "/prices", method = RequestMethod.GET)
     @ResponseBody
-    public ArticlePrice getAllArticlePrices(){
+    public Object getAllArticlePrices(){
         //TODO echte code uit databae ophalen
-        articlePrice = new ArticlePrice(1, "iets", 10.4F, 10.6F, 13F, 15.4F, 20);
-        return articlePrice;
+        return null;
     }
 }
