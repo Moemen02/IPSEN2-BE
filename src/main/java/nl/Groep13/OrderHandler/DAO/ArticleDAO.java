@@ -1,4 +1,4 @@
-package nl.Groep13.OrderHandler.controller.DAO;
+package nl.Groep13.OrderHandler.DAO;
 
 import org.springframework.stereotype.Component;
 
