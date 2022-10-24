@@ -2,53 +2,57 @@ package nl.Groep13.OrderHandler.model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "article")
 public class Article {
+
     @Id
-    private int articleNumber;
-    private int priceId;
-    private int eanCode;
+    private long id;
+    private int priceid;
+    private int eancode;
     private String color;
     private String layout;
-    private String washSymbol;
+    private String washsymbol;
     private String composition;
     //    private Location location;
 
-    public Article(int articleNumber, int priceId, int eanCode, String color, String layout, String washSymbol, String composition) {
-        this.articleNumber = articleNumber;
-        this.priceId = priceId;
-        this.eanCode = eanCode;
+    public Article(int id, int priceid, int eancode, String color, String layout, String washsymbol, String composition) {
+        this.id = id;
+        this.priceid = priceid;
+        this.eancode = eancode;
+        this.color = color;
         this.layout = layout;
-        this.washSymbol = washSymbol;
+        this.washsymbol = washsymbol;
         this.composition = composition;
     }
 
     public Article() {
 
     }
-    public int getArticleNumber() {
-        return articleNumber;
+
+    public long getId() {
+        return id;
+
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setArticleNumber(int articleNumber) {
-        this.articleNumber = articleNumber;
+    public int getPriceid() {
+        return priceid;
     }
 
-    public int getPriceId() {
-        return priceId;
+    public void setPriceid(int priceid) {
+        this.priceid = priceid;
     }
 
-    public void setPriceId(int priceId) {
-        this.priceId = priceId;
+    public int getEancode() {
+        return eancode;
     }
 
-    public int getEanCode() {
-        return eanCode;
-    }
-
-    public void setEanCode(int eanCode) {
-        this.eanCode = eanCode;
+    public void setEancode(int eancode) {
+        this.eancode = eancode;
     }
 
     public String getColor() {
@@ -67,12 +71,12 @@ public class Article {
         this.layout = layout;
     }
 
-    public String getWashSymbol() {
-        return washSymbol;
+    public String getWashsymbol() {
+        return washsymbol;
     }
 
-    public void setWashSymbol(String washSymbol) {
-        this.washSymbol = washSymbol;
+    public void setWashsymbol(String washsymbol) {
+        this.washsymbol = washsymbol;
     }
 
     public String getComposition() {
