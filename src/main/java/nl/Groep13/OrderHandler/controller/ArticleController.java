@@ -1,14 +1,12 @@
 package nl.Groep13.OrderHandler.controller;
 
-import nl.Groep13.OrderHandler.controller.DAO.ArticleDAO;
+import nl.Groep13.OrderHandler.DAO.ArticleDAO;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticlePrice;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping(value = "/api/articles")
