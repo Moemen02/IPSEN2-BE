@@ -11,14 +11,14 @@ public class Article {
     @Id
     private long id;
     private int priceid;
-    private int eancode;
+    private String eancode;
     private String color;
     private String layout;
     private String washsymbol;
     private String composition;
     //    private Location location;
 
-    public Article(int id, int priceid, int eancode, String color, String layout, String washsymbol, String composition) {
+    public Article(int id, int priceid, String eancode, String color, String layout, String washsymbol, String composition) {
         this.id = id;
         this.priceid = priceid;
         this.eancode = eancode;
@@ -48,11 +48,11 @@ public class Article {
         this.priceid = priceid;
     }
 
-    public int getEancode() {
+    public String getEancode() {
         return eancode;
     }
 
-    public void setEancode(int eancode) {
+    public void setEancode(String eancode) {
         this.eancode = eancode;
     }
 

@@ -1,21 +1,21 @@
 package nl.Groep13.OrderHandler.model;
 
 public class ArticleDetail {
-    private int eancode;
+    private String eancode;
     private String productGroup;
     private String supplier;
 
-    public ArticleDetail(int eancode, String productGroup, String supplier) {
+    public ArticleDetail(String eancode, String productGroup, String supplier) {
         this.eancode = eancode;
         this.productGroup = productGroup;
         this.supplier = supplier;
     }
 
-    public int getEancode() {
+    public String getEancode() {
         return eancode;
     }
 
-    public void setEancode(int eancode) {
+    public void setEancode(String eancode) {
         this.eancode = eancode;
     }
 
