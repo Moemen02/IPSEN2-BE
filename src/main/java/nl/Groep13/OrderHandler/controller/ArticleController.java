@@ -3,10 +3,10 @@ package nl.Groep13.OrderHandler.controller;
 import nl.Groep13.OrderHandler.DAO.ArticleDAO;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticlePrice;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/articles")
@@ -16,6 +16,7 @@ public class ArticleController {
     private static Article article;
     private static ArticlePrice articlePrice;
 
+    @Autowired
     public ArticleController(ArticleDAO articleDAO) {
         this.articleDAO = articleDAO;
     }
@@ -32,5 +33,12 @@ public class ArticleController {
     public Object getAllArticlePrices(){
         //TODO echte code uit databae ophalen
         return null;
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public Optional<Article> getArticle(@PathVariable long id){
+        Optional<Article> articleById = this.articleDAO.getArticle(id);
+        return articleById;
     }
 }
