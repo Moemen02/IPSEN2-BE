@@ -26,7 +26,7 @@ public class ArticleController {
     @ResponseBody
     public Article Article(){
         //TODO echte code uit databae ophalen
-        article = new Article(1, 1, 1, "RED", "layout", "wassen", "nylon");
+
         return article;
     }
 
