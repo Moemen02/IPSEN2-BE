@@ -4,7 +4,7 @@ import nl.Groep13.OrderHandler.model.lOrder;
 import nl.Groep13.OrderHandler.repository.OrderRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Component
