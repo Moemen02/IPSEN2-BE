@@ -8,8 +8,9 @@ public class ArticlePrice {
     private float ptrLength;
     private float vPrice;
     private float aPrice;
+    private String description;
 
-    public ArticlePrice(int id, String type, float width, float ptrWidth, float ptrLength, float vPrice, float aPrice) {
+    public ArticlePrice(int id, String type, float width, float ptrWidth, float ptrLength, float vPrice, float aPrice, String description) {
         this.id = id;
         this.type = type;
         this.width = width;
@@ -17,6 +18,7 @@ public class ArticlePrice {
         this.ptrLength = ptrLength;
         this.vPrice = vPrice;
         this.aPrice = aPrice;
+        this.description = description;
     }
 
     public int getId() {
@@ -73,5 +75,13 @@ public class ArticlePrice {
 
     public void setaPrice(float aPrice) {
         this.aPrice = aPrice;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
