@@ -3,6 +3,7 @@ package nl.Groep13.OrderHandler.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticlePrice;
 import nl.Groep13.OrderHandler.service.ArticleService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -23,6 +25,7 @@ public class ArticleController {
     private static Article article;
     private static ArticlePrice articlePrice;
     private ObjectMapper objectMapper;
+    Gson gson = new Gson();
 
     @Autowired
     public ArticleController(ArticleService articleService) {
@@ -52,9 +55,9 @@ public class ArticleController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
     @ResponseBody
-    public Optional<Article> updateArticle(@PathVariable Long id, @RequestParam Optional<Article> article) throws JsonMappingException, JsonProcessingException {
-        Article article1 = new Article(1L, 1L, "180300", "ZWART", "iets", "symbool", "oui");
-//        Article newArticle = objectMapper.readValue(article, Article.class);
-        return this.articleService.updateArticle(1L, Optional.of(article1));
+    public Optional<Article> updateArticle(@PathVariable Long id, @RequestParam Map<String, String> article) throws JsonMappingException, JsonProcessingException {
+        String articleToJson = gson.toJson(article);
+        Article newArticle = gson.fromJson(articleToJson, Article.class);
+        return this.articleService.updateArticle(id, Optional.of(newArticle));
     }
 }
