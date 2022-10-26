@@ -3,12 +3,10 @@ package nl.Groep13.OrderHandler.controller;
 import nl.Groep13.OrderHandler.DAO.OrderDAO;
 import nl.Groep13.OrderHandler.model.lOrder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/api/orders")
@@ -28,5 +26,13 @@ public class OrderController {
         List<lOrder> orders = this.orderDAO.getAllOrders();
 
         return orders;
+    }
+
+    @RequestMapping(value = "/{id}")
+    @ResponseBody
+    public Optional<lOrder> getOrderById(@PathVariable Long id){
+        Optional<lOrder> order = this.orderDAO.getOrderById(id);
+
+        return order;
     }
 }
