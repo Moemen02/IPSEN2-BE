@@ -6,6 +6,7 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleService {
@@ -23,7 +24,7 @@ public class ArticleService {
         return articleDAO.getAllArticles();
     }
 
-    public Article getArticle(final Long id) throws ChangeSetPersister.NotFoundException {
+    public Optional<Article> getArticle(final Long id) throws ChangeSetPersister.NotFoundException {
         return articleDAO.getArticle(id);
     }
 

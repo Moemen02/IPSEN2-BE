@@ -15,13 +15,13 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Modifying
     @Transactional
     @Query("update Article a set"
-            + " a.priceid = ?1, a.detailid = ?2,"
+            + " a.priceid = ?1, a.eancode = ?2,"
             + " a.composition = ?3, a.washsymbol = ?4,"
             + " a.color = ?5, a.layout = ?6"
             + " where a.id = ?7")
     void setArticleInfoById (
             Long priceId,
-            Long detailId,
+            String eancode,
             String composition,
             String washsymbol,
             String color,

@@ -1,6 +1,5 @@
 package nl.Groep13.OrderHandler.controller;
 
-import nl.Groep13.OrderHandler.DAO.ArticleDAO;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticlePrice;
 import nl.Groep13.OrderHandler.service.ArticleService;
@@ -43,7 +42,7 @@ public class ArticleController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Article getArticle(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
+    public Optional<Article> getArticle(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
         return this.articleService.getArticle(id);
     }
 }

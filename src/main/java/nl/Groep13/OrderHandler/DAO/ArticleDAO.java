@@ -24,7 +24,7 @@ public class ArticleDAO {
     public boolean updateArticle(final Article article) {
         articleRepository.setArticleInfoById(
                 article.getPriceid(),
-                article.getDetailid(),
+                article.getEancode(),
                 article.getComposition(),
                 article.getWashsymbol(),
                 article.getColor(),
@@ -49,16 +49,17 @@ public class ArticleDAO {
     /**
      * This function tries to find one Article by id
      * and then tries to remove it.
+     *
      * @param id given Long id to select one Article.
      * @throws ChangeSetPersister.NotFoundException if there
-     * is no Article is found with the given id.
+     *                                              is no Article is found with the given id.
      */
-    public Article getArticle(final Long id)
-        throws ChangeSetPersister.NotFoundException {
+    public Optional<Article> getArticle(final Long id) throws ChangeSetPersister.NotFoundException {
         Optional<Article> article = articleRepository.findById(id);
-        if (article.isPresent()) {
-            return article.get();
-        }
-        throw new ChangeSetPersister.NotFoundException();
+//        if (article.isPresent()) {
+//            return article.get();
+//        }
+//        throw new ChangeSetPersister.NotFoundException();
+        return article;
     }
 }

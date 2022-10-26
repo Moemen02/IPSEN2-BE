@@ -9,33 +9,25 @@ import javax.persistence.*;
 public class Article {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "articlenumber")
     private Long id;
 
-    @Column(name = "price_id")
     private Long priceid;
 
-    @Column(name = "detail_id")
-    private Long detailid;
+    private String eancode;
 
-    @Column
     private String color;
 
-    @Column
     private String layout;
 
-    @Column
     private String washsymbol;
 
-    @Column
     private String composition;
     //    private Location location;
 
-    public Article(Long id, Long priceid, Long detailid, String color, String layout, String washsymbol, String composition) {
+    public Article(Long id, Long priceid, String eancode, String color, String layout, String washsymbol, String composition) {
         this.id = id;
         this.priceid = priceid;
-        this.detailid = detailid;
+        this.eancode = eancode;
         this.color = color;
         this.layout = layout;
         this.washsymbol = washsymbol;
@@ -61,12 +53,20 @@ public class Article {
         this.priceid = priceid;
     }
 
-    public Long getDetailid() {
-        return detailid;
+    public Long getId() {
+        return id;
     }
 
-    public void setDetailid(Long detailid) {
-        this.detailid = detailid;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEancode() {
+        return eancode;
+    }
+
+    public void setEancode(String eancode) {
+        this.eancode = eancode;
     }
 
     public String getColor() {

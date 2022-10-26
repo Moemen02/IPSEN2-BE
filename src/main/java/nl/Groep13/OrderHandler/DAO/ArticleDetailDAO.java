@@ -9,7 +9,7 @@ public class ArticleDetailDAO {
 
     private final ArticleDetailRepository articleDetailRepository;
 
-    public ArticleDetailDAO(ArticleDetailRepository articleDetailRepository){
+    public ArticleDetailDAO(final ArticleDetailRepository articleDetailRepository){
         this.articleDetailRepository = articleDetailRepository;
     }
 

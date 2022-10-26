@@ -1,7 +1,14 @@
 package nl.Groep13.OrderHandler.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "article_detail")
 public class ArticleDetail {
 
+    @Id
     private Long id;
     private String eancode;
     private String productGroup;
@@ -12,6 +19,10 @@ public class ArticleDetail {
         this.eancode = eancode;
         this.productGroup = productGroup;
         this.supplier = supplier;
+    }
+
+    public ArticleDetail() {
+
     }
 
     public Long getId() { return id; }
