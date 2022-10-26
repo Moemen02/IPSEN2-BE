@@ -21,17 +21,23 @@ public class ArticleDAO {
         return articleRepository.findAll();
     }
 
-    public boolean updateArticle(final Article article) {
-        articleRepository.setArticleInfoById(
-                article.getPriceid(),
-                article.getEancode(),
-                article.getComposition(),
-                article.getWashsymbol(),
-                article.getColor(),
-                article.getLayout(),
-                article.getArticleId()
-        );
-        return true;
+    public Optional<Article> updateArticle(Long id, Optional<Article> article) {
+        if (article.isPresent()){
+            Article newArticle = article.get();
+            if (newArticle.getArticleId().equals(id)){
+                articleRepository.setArticleInfoById(
+                        newArticle.getPriceid(),
+                        newArticle.getEancode(),
+                        newArticle.getComposition(),
+                        newArticle.getWashsymbol(),
+                        newArticle.getColor(),
+                        newArticle.getLayout(),
+                        newArticle.getArticleId()
+                );
+                articleRepository.save(newArticle);
+            }
+        }
+        return article;
     }
 
     public void deleteArticle(final Long id) throws ChangeSetPersister.NotFoundException {
@@ -56,10 +62,9 @@ public class ArticleDAO {
      */
     public Optional<Article> getArticle(final Long id) throws ChangeSetPersister.NotFoundException {
         Optional<Article> article = articleRepository.findById(id);
-//        if (article.isPresent()) {
-//            return article.get();
-//        }
-//        throw new ChangeSetPersister.NotFoundException();
-        return article;
+        if (article.isPresent()) {
+            return article;
+        }
+        throw new ChangeSetPersister.NotFoundException();
     }
 }

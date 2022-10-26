@@ -1,5 +1,8 @@
 package nl.Groep13.OrderHandler.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticlePrice;
 import nl.Groep13.OrderHandler.service.ArticleService;
@@ -19,6 +22,7 @@ public class ArticleController {
     private final ArticleService articleService;
     private static Article article;
     private static ArticlePrice articlePrice;
+    private ObjectMapper objectMapper;
 
     @Autowired
     public ArticleController(ArticleService articleService) {
@@ -44,5 +48,13 @@ public class ArticleController {
     @ResponseBody
     public Optional<Article> getArticle(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
         return this.articleService.getArticle(id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public Optional<Article> updateArticle(@PathVariable Long id, @RequestParam Optional<Article> article) throws JsonMappingException, JsonProcessingException {
+        Article article1 = new Article(1L, 1L, "180300", "ZWART", "iets", "symbool", "oui");
+//        Article newArticle = objectMapper.readValue(article, Article.class);
+        return this.articleService.updateArticle(1L, Optional.of(article1));
     }
 }
