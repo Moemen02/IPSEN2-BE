@@ -1,7 +1,7 @@
 package nl.Groep13.OrderHandler.model;
 
 public class ArticlePrice {
-    private int id;
+    private Long id;
     private String type;
     private float width;
     private float ptrWidth;
@@ -10,7 +10,7 @@ public class ArticlePrice {
     private float aPrice;
     private String description;
 
-    public ArticlePrice(int id, String type, float width, float ptrWidth, float ptrLength, float vPrice, float aPrice, String description) {
+    public ArticlePrice(Long id, String type, float width, float ptrWidth, float ptrLength, float vPrice, float aPrice, String description) {
         this.id = id;
         this.type = type;
         this.width = width;
@@ -21,11 +21,11 @@ public class ArticlePrice {
         this.description = description;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
