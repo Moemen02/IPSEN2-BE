@@ -9,19 +9,33 @@ import javax.persistence.*;
 public class Article {
 
     @Id
-    private long id;
-    private int priceid;
-    private String eancode;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "articlenumber")
+    private Long id;
+
+    @Column(name = "price_id")
+    private Long priceid;
+
+    @Column(name = "detail_id")
+    private Long detailid;
+
+    @Column
     private String color;
+
+    @Column
     private String layout;
+
+    @Column
     private String washsymbol;
+
+    @Column
     private String composition;
     //    private Location location;
 
-    public Article(int id, int priceid, String eancode, String color, String layout, String washsymbol, String composition) {
+    public Article(Long id, Long priceid, Long detailid, String color, String layout, String washsymbol, String composition) {
         this.id = id;
         this.priceid = priceid;
-        this.eancode = eancode;
+        this.detailid = detailid;
         this.color = color;
         this.layout = layout;
         this.washsymbol = washsymbol;
@@ -32,28 +46,27 @@ public class Article {
 
     }
 
-    public long getId() {
+    public Long getArticleId() {
         return id;
     }
-
-    public void setId(long id) {
+    public void setArticleId(Long id) {
         this.id = id;
     }
 
-    public int getPriceid() {
+    public Long getPriceid() {
         return priceid;
     }
 
-    public void setPriceid(int priceid) {
+    public void setPriceid(Long priceid) {
         this.priceid = priceid;
     }
 
-    public String getEancode() {
-        return eancode;
+    public Long getDetailid() {
+        return detailid;
     }
 
-    public void setEancode(String eancode) {
-        this.eancode = eancode;
+    public void setDetailid(Long detailid) {
+        this.detailid = detailid;
     }
 
     public String getColor() {

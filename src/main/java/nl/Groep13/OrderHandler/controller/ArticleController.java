@@ -3,31 +3,34 @@ package nl.Groep13.OrderHandler.controller;
 import nl.Groep13.OrderHandler.DAO.ArticleDAO;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticlePrice;
+import nl.Groep13.OrderHandler.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/articles")
+@RequestMapping(value = "/api/article")
 public class ArticleController {
 
-    private final ArticleDAO articleDAO;
+    private final ArticleService articleService;
     private static Article article;
     private static ArticlePrice articlePrice;
 
     @Autowired
-    public ArticleController(ArticleDAO articleDAO) {
-        this.articleDAO = articleDAO;
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    @ResponseBody
-    public Article Article(){
-        //TODO echte code uit databae ophalen
-
-        return null;
+    @GetMapping
+    public ResponseEntity<List<Article>> getAllArticles() {
+        return ResponseEntity.ok(
+                this.articleService.getAllArticles()
+        );
     }
 
     @RequestMapping(value = "/prices", method = RequestMethod.GET)
@@ -37,10 +40,10 @@ public class ArticleController {
         return null;
     }
 
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public Optional<Article> getArticle(@PathVariable long id){
-        Optional<Article> articleById = this.articleDAO.getArticle(id);
-        return articleById;
+    public Article getArticle(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
+        return this.articleService.getArticle(id);
     }
 }
