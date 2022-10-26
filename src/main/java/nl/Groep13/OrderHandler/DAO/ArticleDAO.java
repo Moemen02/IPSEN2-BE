@@ -21,17 +21,31 @@ public class ArticleDAO {
         return articleRepository.findAll();
     }
 
-    public boolean updateArticle(final Article article) {
+    public Optional<Article> updateArticle(Long id, Optional<Article> article) {
+        Optional<Article> oldArticleById = articleRepository.findById(id);
+        Article oldArticle = oldArticleById.get();
+        Article newArticle = article.get();
+
+        newArticle.setPriceid((newArticle.getPriceid() == null) ? oldArticle.getPriceid() : newArticle.getPriceid());
+        newArticle.setEancode((newArticle.getEancode() == null) ? oldArticle.getEancode() : newArticle.getEancode());
+        newArticle.setComposition((newArticle.getComposition() == null) ? oldArticle.getComposition() : newArticle.getComposition());
+        newArticle.setWashsymbol((newArticle.getWashsymbol() == null) ? oldArticle.getWashsymbol() : newArticle.getWashsymbol());
+        newArticle.setColor((newArticle.getColor() == null) ? oldArticle.getColor() : newArticle.getColor());
+        newArticle.setLayout((newArticle.getLayout() == null) ? oldArticle.getLayout() : newArticle.getLayout());
+        newArticle.setArticleId((newArticle.getArticleId() == null) ? oldArticle.getArticleId() : newArticle.getArticleId());
+
         articleRepository.setArticleInfoById(
-                article.getPriceid(),
-                article.getEancode(),
-                article.getComposition(),
-                article.getWashsymbol(),
-                article.getColor(),
-                article.getLayout(),
-                article.getArticleId()
+            newArticle.getPriceid(),
+            newArticle.getEancode(),
+            newArticle.getComposition(),
+            newArticle.getWashsymbol(),
+            newArticle.getColor(),
+            newArticle.getLayout(),
+            newArticle.getArticleId()
         );
-        return true;
+
+        articleRepository.save(newArticle);
+        return article;
     }
 
     public void deleteArticle(final Long id) throws ChangeSetPersister.NotFoundException {
@@ -56,10 +70,9 @@ public class ArticleDAO {
      */
     public Optional<Article> getArticle(final Long id) throws ChangeSetPersister.NotFoundException {
         Optional<Article> article = articleRepository.findById(id);
-//        if (article.isPresent()) {
-//            return article.get();
-//        }
-//        throw new ChangeSetPersister.NotFoundException();
-        return article;
+        if (article.isPresent()) {
+            return article;
+        }
+        throw new ChangeSetPersister.NotFoundException();
     }
 }

@@ -9,25 +9,19 @@ import javax.persistence.Table;
 public class ArticleDetail {
 
     @Id
-    private Long id;
     private String eancode;
-    private String productGroup;
+    private String productgroup;
     private String supplier;
 
-    public ArticleDetail(Long id ,String eancode, String productGroup, String supplier) {
-        this.id = id;
+    public ArticleDetail(String eancode, String productgroup, String supplier) {
         this.eancode = eancode;
-        this.productGroup = productGroup;
+        this.productgroup = productgroup;
         this.supplier = supplier;
     }
 
     public ArticleDetail() {
 
     }
-
-    public Long getId() { return id; }
-
-    public void setId(Long id){ this.id = id; }
 
     public String getEancode() {
         return eancode;
@@ -38,11 +32,11 @@ public class ArticleDetail {
     }
 
     public String getProductGroup() {
-        return productGroup;
+        return productgroup;
     }
 
     public void setProductGroup(String productGroup) {
-        this.productGroup = productGroup;
+        this.productgroup = productGroup;
     }
 
     public String getSupplier() {
