@@ -1,10 +1,22 @@
 package nl.Groep13.OrderHandler.service;
 
+import nl.Groep13.OrderHandler.DAO.ArticleDetailDAO;
+import nl.Groep13.OrderHandler.model.ArticleDetail;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
 public class ArticleDetailService {
 
-    private final ArticleService articleService;
+    private final ArticleDetailDAO articleDetailDAO;
 
-    public ArticleDetailService(ArticleService articleService) {
-        this.articleService = articleService;
+
+    public ArticleDetailService(ArticleDetailDAO articleDetailDAO) {
+        this.articleDetailDAO = articleDetailDAO;
+    }
+
+    public List<ArticleDetail> getAllArticleDetails(){
+        return articleDetailDAO.getAllArticleDetails();
     }
 }
