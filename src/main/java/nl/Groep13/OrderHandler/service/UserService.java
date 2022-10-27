@@ -31,7 +31,6 @@ public class UserService implements UserDetailsService {
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private UserRepository userRepository;
 
-
     public String login(LoginRequest request, AuthenticationManager authManager) {
         UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         authManager.authenticate(authInputToken);
