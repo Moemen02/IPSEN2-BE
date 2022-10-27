@@ -1,27 +1,45 @@
 package nl.Groep13.OrderHandler.controller;
 
-import lombok.AllArgsConstructor;
-import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.record.LoginRequest;
-import nl.Groep13.OrderHandler.service.ArticleService;
+import nl.Groep13.OrderHandler.record.RegisterRequest;
 import nl.Groep13.OrderHandler.service.UserService;
-import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import java.util.Collections;
+import java.util.Map;
 
 @RestController
-@AllArgsConstructor
-@RequestMapping(value = "/api/login")
+@RequestMapping("/api/auth")
 public class UserController {
 
-    private final UserService userService;
+    @Autowired private UserService userService;
+    @Autowired private AuthenticationManager authManager;
 
 
-    @PostMapping
-    public String login(@RequestBody LoginRequest request) {
-        return userService.login(request);
+    @PostMapping("/register")
+    public Map<String, Object> registerHandler(@RequestBody RegisterRequest registerRequest){
+        try {
+            String token = userService.register(registerRequest);
+
+            return Collections.singletonMap("jwt-token", token);
+        } catch (AuthenticationException e) {
+            return Collections.singletonMap("jwt-token", "User Already exists");
+        }
     }
 
-
+    @PostMapping("/login")
+    public Map<String, Object> loginHandler(@RequestBody LoginRequest body){
+        try {
+            String token = userService.login(body, authManager);
+            return Collections.singletonMap("jwt-token", token);
+        }catch (AuthenticationException authExc){
+            return Collections.singletonMap("jwt-token", "Invalid Login Credentials");
+        }
+    }
 }

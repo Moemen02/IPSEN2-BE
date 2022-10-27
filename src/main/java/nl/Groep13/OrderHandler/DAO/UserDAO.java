@@ -16,8 +16,7 @@ public class UserDAO {
     }
 
     public Optional<User> getUserByEmail(String email) {
-        Optional<User> user = userRepository.findByEmail(email);
-        return user;
+        return userRepository.findByEmail(email);
     }
 
 }
