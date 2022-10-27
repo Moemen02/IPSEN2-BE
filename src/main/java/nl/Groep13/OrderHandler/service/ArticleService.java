@@ -28,8 +28,8 @@ public class ArticleService {
         return articleDAO.getArticle(id);
     }
 
-    public boolean updateArticle(final Article article) {
-        return articleDAO.updateArticle(article);
+    public Optional<Article> updateArticle(Long id, final Optional<Article> article) {
+        return articleDAO.updateArticle(id, article);
     }
 
     public void deleteArticle(final Long id) throws ChangeSetPersister.NotFoundException {
