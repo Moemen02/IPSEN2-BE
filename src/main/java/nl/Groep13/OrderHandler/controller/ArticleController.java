@@ -86,9 +86,8 @@ public class ArticleController {
 
     @RequestMapping(value = "/prices", method = RequestMethod.GET)
     @ResponseBody
-    public ArticlePrice getAllArticlePrices(){
-        //TODO echte code uit databae ophalen
-        return null;
+    public List<ArticlePrice> getAllArticlePrices(){
+        return articlePriceService.getAllArticlePrices();
     }
 
 }
