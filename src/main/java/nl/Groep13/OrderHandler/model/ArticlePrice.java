@@ -1,6 +1,13 @@
 package nl.Groep13.OrderHandler.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "article_price")
 public class ArticlePrice {
+    @Id
     private Long id;
     private String type;
     private float width;
@@ -19,6 +26,10 @@ public class ArticlePrice {
         this.vPrice = vPrice;
         this.aPrice = aPrice;
         this.description = description;
+    }
+
+    public ArticlePrice() {
+        
     }
 
     public Long getId() {

@@ -1,22 +1,27 @@
 package nl.Groep13.OrderHandler.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "article_detail")
 public class ArticleDetail {
 
-    private Long id;
+    @Id
     private String eancode;
-    private String productGroup;
+    private String productgroup;
     private String supplier;
 
-    public ArticleDetail(Long id ,String eancode, String productGroup, String supplier) {
-        this.id = id;
+    public ArticleDetail(String eancode, String productgroup, String supplier) {
         this.eancode = eancode;
-        this.productGroup = productGroup;
+        this.productgroup = productgroup;
         this.supplier = supplier;
     }
 
-    public Long getId() { return id; }
+    public ArticleDetail() {
 
-    public void setId(Long id){ this.id = id; }
+    }
 
     public String getEancode() {
         return eancode;
@@ -27,11 +32,11 @@ public class ArticleDetail {
     }
 
     public String getProductGroup() {
-        return productGroup;
+        return productgroup;
     }
 
     public void setProductGroup(String productGroup) {
-        this.productGroup = productGroup;
+        this.productgroup = productGroup;
     }
 
     public String getSupplier() {
