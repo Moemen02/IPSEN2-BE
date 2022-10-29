@@ -54,13 +54,13 @@ public class ArticleController {
         );
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     @ResponseBody
     public Optional<Article> getArticle(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
         return this.articleService.getArticle(id);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @PutMapping(value = "/{id}")
     @ResponseBody
     public Optional<Article> updateArticle(@PathVariable Long id, @RequestParam Map<String, String> article) throws JsonMappingException, JsonProcessingException {
         String articleToJson = gson.toJson(article);
@@ -73,7 +73,7 @@ public class ArticleController {
      * This part is for the article details
      */
 
-    @RequestMapping(value = "/details", method = RequestMethod.GET)
+    @GetMapping(value = "/details")
     @ResponseBody
     public List<ArticleDetail> getAllArticleDetails(){
         return this.articleDetailService.getAllArticleDetails();
@@ -84,10 +84,16 @@ public class ArticleController {
      * This part is for the article prices
      */
 
-    @RequestMapping(value = "/prices", method = RequestMethod.GET)
+    @GetMapping(value = "/prices")
     @ResponseBody
     public List<ArticlePrice> getAllArticlePrices(){
         return articlePriceService.getAllArticlePrices();
+    }
+
+    @GetMapping(value = "/prices/{id}")
+    @ResponseBody
+    public Optional<ArticlePrice> getArticleById(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
+        return articlePriceService.getArticlePriceById(id);
     }
 
 }
