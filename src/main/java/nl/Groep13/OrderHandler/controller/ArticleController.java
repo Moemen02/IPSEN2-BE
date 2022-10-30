@@ -79,6 +79,14 @@ public class ArticleController {
         return this.articleDetailService.getAllArticleDetails();
     }
 
+    @PutMapping(value = "details/{eancode}")
+    @ResponseBody
+    public Optional<ArticleDetail> updateArticleDetail(@PathVariable String eancode, @RequestParam Map<String, String> articleDetail) throws JsonMappingException, JsonProcessingException {
+        String articleDetailToJson = gson.toJson(articleDetail);
+        ArticleDetail newArticleDetail = gson.fromJson(articleDetailToJson, ArticleDetail.class);
+        return this.articleDetailService.updateArticle(eancode, Optional.of(newArticleDetail));
+    }
+
     /**
      *
      * This part is for the article prices
