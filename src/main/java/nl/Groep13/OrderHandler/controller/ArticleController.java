@@ -79,6 +79,20 @@ public class ArticleController {
         return this.articleDetailService.getAllArticleDetails();
     }
 
+    @PutMapping(value = "details/{eancode}")
+    @ResponseBody
+    public Optional<ArticleDetail> updateArticleDetail(@PathVariable String eancode, @RequestParam Map<String, String> articleDetail) throws JsonMappingException, JsonProcessingException {
+        String articleDetailToJson = gson.toJson(articleDetail);
+        ArticleDetail newArticleDetail = gson.fromJson(articleDetailToJson, ArticleDetail.class);
+        return this.articleDetailService.updateArticle(eancode, Optional.of(newArticleDetail));
+    }
+
+    @GetMapping(value = "/details/{eancode}")
+    @ResponseBody
+    public Optional<ArticleDetail> getArticleById(@PathVariable String eancode) throws ChangeSetPersister.NotFoundException {
+        return articleDetailService.getArticleDetailByEancode(eancode);
+    }
+
     /**
      *
      * This part is for the article prices
@@ -94,6 +108,14 @@ public class ArticleController {
     @ResponseBody
     public Optional<ArticlePrice> getArticleById(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
         return articlePriceService.getArticlePriceById(id);
+    }
+
+    @PutMapping(value = "prices/{id}")
+    @ResponseBody
+    public Optional<ArticlePrice> updateArticlePrice(@PathVariable Long id, @RequestParam Map<String, String> articlePrice) throws JsonMappingException, JsonProcessingException {
+        String articlePriceToJson = gson.toJson(articlePrice);
+        ArticlePrice newArticlePrice = gson.fromJson(articlePriceToJson, ArticlePrice.class);
+        return this.articlePriceService.updateArticlePrice(id, Optional.of(newArticlePrice));
     }
 
 }

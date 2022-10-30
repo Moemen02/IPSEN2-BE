@@ -1,10 +1,12 @@
 package nl.Groep13.OrderHandler.service;
 
 import nl.Groep13.OrderHandler.DAO.ArticleDetailDAO;
+import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticleDetail;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ArticleDetailService {
@@ -18,5 +20,13 @@ public class ArticleDetailService {
 
     public List<ArticleDetail> getAllArticleDetails(){
         return articleDetailDAO.getAllArticleDetails();
+    }
+
+    public Optional<ArticleDetail> updateArticle(String eancode, Optional<ArticleDetail> newArticleDetail) {
+        return articleDetailDAO.updateArticleDetail(eancode, newArticleDetail);
+    }
+
+    public Optional<ArticleDetail> getArticleDetailByEancode(String eancode) {
+        return articleDetailDAO.getArticleDetailByEancode(eancode);
     }
 }

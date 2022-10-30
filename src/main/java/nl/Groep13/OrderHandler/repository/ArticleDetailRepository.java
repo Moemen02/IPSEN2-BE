@@ -7,23 +7,25 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Repository
 public interface ArticleDetailRepository extends JpaRepository<ArticleDetail, String> {
 
-//    @Modifying
-//    @Transactional
-//    @Query("update ArticleDetail articleDetail set"
-//            + " articleDetail.productgroup = ?1, articleDetail.supplier = ?2"
-//            + " where articleDetail.eancode = ?7")
-//    void setArticleDetailById (
-//            String eancode,
-//            String productgroup,
-//            String supplier
-//    );
-//
-//    @Modifying
-//    @Transactional
-//    @Query(" delete from ArticleDetail where eancode = ?1")
-//    void deleteArticleDetailsByEancode(String eancode);
+    @Modifying
+    @Transactional
+    @Query("update ArticleDetail articleDetail set"
+            + " articleDetail.productgroup = ?1, articleDetail.supplier = ?2"
+            + " where articleDetail.eancode = ?3")
+    void setArticleDetailByEancode (
+            String eancode,
+            String productgroup,
+            String supplier
+    );
+
+
+    @Modifying
+    @Transactional
+    @Query(" delete from ArticleDetail where eancode = ?1")
+    void deleteArticleDetailsByEancode(String eancode);
 }
