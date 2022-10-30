@@ -68,6 +68,28 @@ public class ArticleController {
         return this.articleService.updateArticle(id, Optional.of(newArticle));
     }
 
+    @DeleteMapping
+    public ResponseEntity<Boolean> deleteArticle(
+            @PathVariable final int id
+    ) {
+        try {
+            articleService.deleteArticle((long) id);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.ok(false);
+        }
+
+        return ResponseEntity.ok(true);
+    }
+
+    @PostMapping
+    public ResponseEntity<Boolean> addArticle(@RequestBody final Article article) {
+        if (this.articleService.addArticle(article) == null) {
+            return ResponseEntity.badRequest().body(false);
+        } else {
+            return ResponseEntity.ok(true);
+        }
+    }
+
     /**
      *
      * This part is for the article details
@@ -93,6 +115,33 @@ public class ArticleController {
         return articleDetailService.getArticleDetailByEancode(eancode);
     }
 
+    @DeleteMapping(value = "/detail/{id}")
+    public ResponseEntity<Boolean> deleteArticleDetail(
+            @PathVariable final String eancode
+    ) {
+        try {
+            articleDetailService.deleteArticleDetail(eancode);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.ok(false);
+        }
+
+        return ResponseEntity.ok(true);
+    }
+
+    @PostMapping(value = "/detail")
+    public ResponseEntity<Boolean> addArticleDetail(@RequestBody final ArticleDetail articleDetail) {
+        System.out.println(article);
+        if (
+                this.articleDetailService.addArticleDetail(
+                        articleDetail
+                ) == null
+        ) {
+            return ResponseEntity.badRequest().body(false);
+        } else {
+            return ResponseEntity.ok(true);
+        }
+    }
+
     /**
      *
      * This part is for the article prices
@@ -116,6 +165,34 @@ public class ArticleController {
         String articlePriceToJson = gson.toJson(articlePrice);
         ArticlePrice newArticlePrice = gson.fromJson(articlePriceToJson, ArticlePrice.class);
         return this.articlePriceService.updateArticlePrice(id, Optional.of(newArticlePrice));
+    }
+
+    @DeleteMapping(value = "/price/{id}")
+    public ResponseEntity<Boolean> deleteArticlePrice(
+            @PathVariable final int id
+    ) {
+        try {
+            articlePriceService.deleteArticlePrice((long) id);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.ok(false);
+        }
+
+        return ResponseEntity.ok(true);
+    }
+
+    @PostMapping(value = "/price")
+    public ResponseEntity<Boolean> addArticlePrice(
+            @RequestBody final ArticlePrice articlePrice
+    ) {
+        if (
+                this.articlePriceService.addArticlePrice(
+                        articlePrice
+                ) == null
+        ) {
+            return ResponseEntity.badRequest().body(false);
+        } else {
+            return ResponseEntity.ok(true);
+        }
     }
 
 }

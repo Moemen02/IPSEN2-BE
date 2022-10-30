@@ -2,6 +2,7 @@ package nl.Groep13.OrderHandler.DAO;
 
 import nl.Groep13.OrderHandler.model.ArticleDetail;
 import nl.Groep13.OrderHandler.repository.ArticleDetailRepository;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -38,7 +39,22 @@ public class ArticleDetailDAO {
         return Optional.of(newArticleDetail);
     }
 
-    public Optional<ArticleDetail> getArticleDetailByEancode(String eancode) {
-        return articleDetailRepository.findById(eancode);
+    public Optional<ArticleDetail> getArticleDetailByEancode(String eancode) throws ChangeSetPersister.NotFoundException {
+        if (articleDetailRepository.findById(eancode).isPresent()) {
+            articleDetailRepository.deleteArticleDetailsByEancode(eancode);
+        }
+        throw new ChangeSetPersister.NotFoundException();
     }
+
+    public void deleteArticleDetail(final String eancode) throws ChangeSetPersister.NotFoundException {
+        if (articleDetailRepository.findById(eancode).isPresent()) {
+            articleDetailRepository.deleteArticleDetailsByEancode(eancode);
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public ArticleDetail addArticleDetail(final ArticleDetail articleDetail) {
+        return this.articleDetailRepository.save(articleDetail);
+    }
+
 }
