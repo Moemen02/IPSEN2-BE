@@ -1,6 +1,7 @@
 package nl.Groep13.OrderHandler.service;
 
 import nl.Groep13.OrderHandler.DAO.ArticlePriceDAO;
+import nl.Groep13.OrderHandler.model.ArticleDetail;
 import nl.Groep13.OrderHandler.model.ArticlePrice;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,9 @@ public class ArticlePriceService {
 
         public Optional<ArticlePrice> getArticlePriceById(Long id) throws ChangeSetPersister.NotFoundException {
         return articlePriceDAO.getArticlePriceByID(id);
+    }
+
+    public Optional<ArticlePrice> updateArticlePrice(Long id, Optional<ArticlePrice> newArticlePrice) {
+        return articlePriceDAO.updateArticlePrice(id, newArticlePrice);
     }
 }

@@ -110,4 +110,12 @@ public class ArticleController {
         return articlePriceService.getArticlePriceById(id);
     }
 
+    @PutMapping(value = "prices/{id}")
+    @ResponseBody
+    public Optional<ArticlePrice> updateArticlePrice(@PathVariable Long id, @RequestParam Map<String, String> articlePrice) throws JsonMappingException, JsonProcessingException {
+        String articlePriceToJson = gson.toJson(articlePrice);
+        ArticlePrice newArticlePrice = gson.fromJson(articlePriceToJson, ArticlePrice.class);
+        return this.articlePriceService.updateArticlePrice(id, Optional.of(newArticlePrice));
+    }
+
 }
