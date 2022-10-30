@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticleDetail;
 import nl.Groep13.OrderHandler.model.ArticlePrice;
+import nl.Groep13.OrderHandler.model.CompleteArticle;
 import nl.Groep13.OrderHandler.service.ArticleDetailService;
 import nl.Groep13.OrderHandler.service.ArticlePriceService;
 import nl.Groep13.OrderHandler.service.ArticleService;
@@ -28,6 +29,7 @@ public class ArticleController {
     private final ArticleDetailService articleDetailService;
     private final ArticlePriceService articlePriceService;
 
+    private static CompleteArticle completeArticle;
     private static Article article;
     private static ArticlePrice articlePrice;
     private static ArticleDetail articleDetail;
@@ -69,9 +71,7 @@ public class ArticleController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteArticle(
-            @PathVariable final int id
-    ) {
+    public ResponseEntity<Boolean> deleteArticle(@PathVariable final int id) {
         try {
             articleService.deleteArticle((long) id);
         } catch (ChangeSetPersister.NotFoundException e) {
@@ -82,8 +82,10 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> addArticle(@RequestBody final Article article) {
-        if (this.articleService.addArticle(article) == null) {
+    public ResponseEntity<Boolean> addArticle(@RequestParam Map<String, String> article) {
+        String articleToJson = gson.toJson(article);
+        Article newArticle = gson.fromJson(articleToJson, Article.class);
+        if (this.articleService.addArticle(newArticle) == null) {
             return ResponseEntity.badRequest().body(false);
         } else {
             return ResponseEntity.ok(true);
@@ -115,10 +117,8 @@ public class ArticleController {
         return articleDetailService.getArticleDetailByEancode(eancode);
     }
 
-    @DeleteMapping(value = "/detail/{id}")
-    public ResponseEntity<Boolean> deleteArticleDetail(
-            @PathVariable final String eancode
-    ) {
+    @DeleteMapping(value = "/details/{eancode}")
+    public ResponseEntity<Boolean> deleteArticleDetail(@PathVariable final String eancode) {
         try {
             articleDetailService.deleteArticleDetail(eancode);
         } catch (ChangeSetPersister.NotFoundException e) {
@@ -128,14 +128,13 @@ public class ArticleController {
         return ResponseEntity.ok(true);
     }
 
-    @PostMapping(value = "/detail")
-    public ResponseEntity<Boolean> addArticleDetail(@RequestBody final ArticleDetail articleDetail) {
-        System.out.println(article);
-        if (
-                this.articleDetailService.addArticleDetail(
-                        articleDetail
-                ) == null
-        ) {
+    @PostMapping(value = "/details")
+    public ResponseEntity<Boolean> addArticleDetail(@RequestParam Map<String, String> articleDetail) {
+        String articleDetailToJson = gson.toJson(articleDetail);
+//        System.out.println(articleDetail);
+//        System.out.printf(articleDetailToJson);
+        ArticleDetail newArticleDetail = gson.fromJson(articleDetailToJson, ArticleDetail.class);
+        if (this.articleDetailService.addArticleDetail(newArticleDetail) == null) {
             return ResponseEntity.badRequest().body(false);
         } else {
             return ResponseEntity.ok(true);
@@ -167,10 +166,8 @@ public class ArticleController {
         return this.articlePriceService.updateArticlePrice(id, Optional.of(newArticlePrice));
     }
 
-    @DeleteMapping(value = "/price/{id}")
-    public ResponseEntity<Boolean> deleteArticlePrice(
-            @PathVariable final int id
-    ) {
+    @DeleteMapping(value = "/prices/{id}")
+    public ResponseEntity<Boolean> deleteArticlePrice(@PathVariable final int id) {
         try {
             articlePriceService.deleteArticlePrice((long) id);
         } catch (ChangeSetPersister.NotFoundException e) {
@@ -180,15 +177,11 @@ public class ArticleController {
         return ResponseEntity.ok(true);
     }
 
-    @PostMapping(value = "/price")
-    public ResponseEntity<Boolean> addArticlePrice(
-            @RequestBody final ArticlePrice articlePrice
-    ) {
-        if (
-                this.articlePriceService.addArticlePrice(
-                        articlePrice
-                ) == null
-        ) {
+    @PostMapping(value = "/prices")
+    public ResponseEntity<Boolean> addArticlePrice(@RequestBody final ArticlePrice articlePrice) {
+        String articlePriceToJson = gson.toJson(articlePrice);
+        ArticlePrice newArticlePrice = gson.fromJson(articlePriceToJson, ArticlePrice.class);
+        if (this.articlePriceService.addArticlePrice(newArticlePrice) == null) {
             return ResponseEntity.badRequest().body(false);
         } else {
             return ResponseEntity.ok(true);
