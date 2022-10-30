@@ -58,4 +58,15 @@ public class ArticlePriceDAO {
 
         return Optional.of(inpArticlePrice);
     }
+
+    public void deleteArticlePrice(final Long id) throws ChangeSetPersister.NotFoundException {
+        if (articlePriceRepository.findById(id).isPresent()) {
+            articlePriceRepository.deleteArticlePriceById(id);
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public ArticlePrice addArticlePrice(final ArticlePrice articlePrice) {
+        return this.articlePriceRepository.save(articlePrice);
+    }
 }

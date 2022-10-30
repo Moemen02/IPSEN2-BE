@@ -29,4 +29,12 @@ public class ArticlePriceService {
     public Optional<ArticlePrice> updateArticlePrice(Long id, Optional<ArticlePrice> newArticlePrice) {
         return articlePriceDAO.updateArticlePrice(id, newArticlePrice);
     }
+
+    public void deleteArticlePrice(final Long id) throws ChangeSetPersister.NotFoundException {
+        articlePriceDAO.deleteArticlePrice(id);
+    }
+
+    public ArticlePrice addArticlePrice(final ArticlePrice articlePrice) {
+        return this.articlePriceDAO.addArticlePrice(articlePrice);
+    }
 }
