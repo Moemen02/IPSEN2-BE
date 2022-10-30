@@ -41,7 +41,7 @@ public class ArticleDetailDAO {
 
     public Optional<ArticleDetail> getArticleDetailByEancode(String eancode) throws ChangeSetPersister.NotFoundException {
         if (articleDetailRepository.findById(eancode).isPresent()) {
-            articleDetailRepository.deleteArticleDetailsByEancode(eancode);
+            return articleDetailRepository.findById(eancode);
         }
         throw new ChangeSetPersister.NotFoundException();
     }
