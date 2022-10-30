@@ -29,4 +29,9 @@ public interface ArticlePriceRepository extends JpaRepository<ArticlePrice, Long
             String description,
             Long id
     );
+
+    @Modifying
+    @Transactional
+    @Query(" delete from ArticlePrice where id = ?1")
+    void deleteArticlePriceById(Long articlePriceId);
 }
