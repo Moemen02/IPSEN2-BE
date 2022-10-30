@@ -80,7 +80,7 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> addArticle(@RequestBody final Article article) {
+    public ResponseEntity<Boolean> addArticle(@RequestParam Map<String, String> article) {
         String articleToJson = gson.toJson(article);
         Article newArticle = gson.fromJson(articleToJson, Article.class);
         if (this.articleService.addArticle(newArticle) == null) {
