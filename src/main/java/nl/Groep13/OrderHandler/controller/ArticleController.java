@@ -79,7 +79,7 @@ public class ArticleController {
         return this.articleDetailService.getAllArticleDetails();
     }
 
-    @PutMapping(value = "details/{eancode}")
+    @PutMapping(value = "/details/{eancode}")
     @ResponseBody
     public Optional<ArticleDetail> updateArticleDetail(@PathVariable String eancode, @RequestParam Map<String, String> articleDetail) throws JsonMappingException, JsonProcessingException {
         String articleDetailToJson = gson.toJson(articleDetail);
