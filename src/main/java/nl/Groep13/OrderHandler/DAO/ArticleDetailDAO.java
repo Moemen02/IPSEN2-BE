@@ -1,6 +1,5 @@
 package nl.Groep13.OrderHandler.DAO;
 
-import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticleDetail;
 import nl.Groep13.OrderHandler.repository.ArticleDetailRepository;
 import org.springframework.stereotype.Component;
@@ -37,5 +36,9 @@ public class ArticleDetailDAO {
         );
         articleDetailRepository.save(newArticleDetail);
         return Optional.of(newArticleDetail);
+    }
+
+    public Optional<ArticleDetail> getArticleDetailByEancode(String eancode) {
+        return articleDetailRepository.findById(eancode);
     }
 }

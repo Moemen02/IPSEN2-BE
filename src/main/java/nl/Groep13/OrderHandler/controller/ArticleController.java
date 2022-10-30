@@ -87,6 +87,12 @@ public class ArticleController {
         return this.articleDetailService.updateArticle(eancode, Optional.of(newArticleDetail));
     }
 
+    @GetMapping(value = "/details/{eancode}")
+    @ResponseBody
+    public Optional<ArticleDetail> getArticleById(@PathVariable String eancode) throws ChangeSetPersister.NotFoundException {
+        return articleDetailService.getArticleDetailByEancode(eancode);
+    }
+
     /**
      *
      * This part is for the article prices

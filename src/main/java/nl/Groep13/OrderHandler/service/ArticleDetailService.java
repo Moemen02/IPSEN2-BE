@@ -25,4 +25,8 @@ public class ArticleDetailService {
     public Optional<ArticleDetail> updateArticle(String eancode, Optional<ArticleDetail> newArticleDetail) {
         return articleDetailDAO.updateArticleDetail(eancode, newArticleDetail);
     }
+
+    public Optional<ArticleDetail> getArticleDetailByEancode(String eancode) {
+        return articleDetailDAO.getArticleDetailByEancode(eancode);
+    }
 }

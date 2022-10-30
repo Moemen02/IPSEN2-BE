@@ -21,7 +21,7 @@ public class ArticlePriceService {
         return articlePriceDAO.getAllArticlePrices();
     }
 
-    public Optional<ArticlePrice> getArticlePriceById(Long id) throws ChangeSetPersister.NotFoundException {
+        public Optional<ArticlePrice> getArticlePriceById(Long id) throws ChangeSetPersister.NotFoundException {
         return articlePriceDAO.getArticlePriceByID(id);
     }
 }
