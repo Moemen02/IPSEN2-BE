@@ -27,11 +27,11 @@ public class ArticleDAO {
         Article newArticle = article.get();
 
         newArticle.setPriceid((newArticle.getPriceid() == null) ? oldArticle.getPriceid() : newArticle.getPriceid());
-        newArticle.setEancode((newArticle.getEancode() == null) ? oldArticle.getEancode() : newArticle.getEancode());
-        newArticle.setComposition((newArticle.getComposition() == null) ? oldArticle.getComposition() : newArticle.getComposition());
-        newArticle.setWashsymbol((newArticle.getWashsymbol() == null) ? oldArticle.getWashsymbol() : newArticle.getWashsymbol());
-        newArticle.setColor((newArticle.getColor() == null) ? oldArticle.getColor() : newArticle.getColor());
-        newArticle.setLayout((newArticle.getLayout() == null) ? oldArticle.getLayout() : newArticle.getLayout());
+        newArticle.setEancode((newArticle.getEancode() == null || newArticle.getEancode().equals("")) ? oldArticle.getEancode() : newArticle.getEancode());
+        newArticle.setComposition((newArticle.getComposition() == null || newArticle.getComposition().equals("")) ? oldArticle.getComposition() : newArticle.getComposition());
+        newArticle.setWashsymbol((newArticle.getWashsymbol() == null || newArticle.getWashsymbol().equals("")) ? oldArticle.getWashsymbol() : newArticle.getWashsymbol());
+        newArticle.setColor((newArticle.getColor() == null || newArticle.getColor().equals("")) ? oldArticle.getColor() : newArticle.getColor());
+        newArticle.setLayout((newArticle.getLayout() == null || newArticle.getLayout().equals("")) ? oldArticle.getLayout() : newArticle.getLayout());
         newArticle.setArticleId((newArticle.getArticleId() == null) ? oldArticle.getArticleId() : newArticle.getArticleId());
 
         articleRepository.setArticleInfoById(

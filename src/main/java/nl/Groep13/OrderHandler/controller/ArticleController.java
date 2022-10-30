@@ -62,7 +62,7 @@ public class ArticleController {
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public Optional<Article> updateArticle(@PathVariable Long id, @RequestParam Map<String, String> article) throws JsonMappingException, JsonProcessingException {
+    public Optional<Article> updateArticle(@PathVariable Long id, @RequestBody Map<String, String> article) throws JsonMappingException, JsonProcessingException {
         String articleToJson = gson.toJson(article);
         Article newArticle = gson.fromJson(articleToJson, Article.class);
         return this.articleService.updateArticle(id, Optional.of(newArticle));
