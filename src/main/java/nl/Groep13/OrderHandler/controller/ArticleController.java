@@ -7,6 +7,7 @@ import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticleDetail;
 import nl.Groep13.OrderHandler.model.ArticlePrice;
+import nl.Groep13.OrderHandler.model.CompleteArticle;
 import nl.Groep13.OrderHandler.service.ArticleDetailService;
 import nl.Groep13.OrderHandler.service.ArticlePriceService;
 import nl.Groep13.OrderHandler.service.ArticleService;
@@ -28,6 +29,7 @@ public class ArticleController {
     private final ArticleDetailService articleDetailService;
     private final ArticlePriceService articlePriceService;
 
+    private static CompleteArticle completeArticle;
     private static Article article;
     private static ArticlePrice articlePrice;
     private static ArticleDetail articleDetail;
@@ -115,7 +117,7 @@ public class ArticleController {
         return articleDetailService.getArticleDetailByEancode(eancode);
     }
 
-    @DeleteMapping(value = "/detail/{id}")
+    @DeleteMapping(value = "/details/{eancode}")
     public ResponseEntity<Boolean> deleteArticleDetail(@PathVariable final String eancode) {
         try {
             articleDetailService.deleteArticleDetail(eancode);
@@ -126,9 +128,11 @@ public class ArticleController {
         return ResponseEntity.ok(true);
     }
 
-    @PostMapping(value = "/detail")
+    @PostMapping(value = "/details")
     public ResponseEntity<Boolean> addArticleDetail(@RequestParam Map<String, String> articleDetail) {
         String articleDetailToJson = gson.toJson(articleDetail);
+//        System.out.println(articleDetail);
+//        System.out.printf(articleDetailToJson);
         ArticleDetail newArticleDetail = gson.fromJson(articleDetailToJson, ArticleDetail.class);
         if (this.articleDetailService.addArticleDetail(newArticleDetail) == null) {
             return ResponseEntity.badRequest().body(false);
@@ -162,7 +166,7 @@ public class ArticleController {
         return this.articlePriceService.updateArticlePrice(id, Optional.of(newArticlePrice));
     }
 
-    @DeleteMapping(value = "/price/{id}")
+    @DeleteMapping(value = "/prices/{id}")
     public ResponseEntity<Boolean> deleteArticlePrice(@PathVariable final int id) {
         try {
             articlePriceService.deleteArticlePrice((long) id);
@@ -173,7 +177,7 @@ public class ArticleController {
         return ResponseEntity.ok(true);
     }
 
-    @PostMapping(value = "/price")
+    @PostMapping(value = "/prices")
     public ResponseEntity<Boolean> addArticlePrice(@RequestBody final ArticlePrice articlePrice) {
         String articlePriceToJson = gson.toJson(articlePrice);
         ArticlePrice newArticlePrice = gson.fromJson(articlePriceToJson, ArticlePrice.class);
