@@ -4,6 +4,7 @@ package nl.Groep13.OrderHandler.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "customer")
@@ -13,6 +14,8 @@ public class Customer {
     private Long id;
     private int articlenumber;
     private Long addressid;
+
+    @NotBlank(message = "Name is mandatory")
     private String name;
 
     public Customer() {
