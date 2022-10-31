@@ -186,12 +186,14 @@ public class ArticleController {
      */
 
     @PostMapping(value = "/completearticle")
-    public ResponseEntity addCompleteArticle(@RequestBody CompleteArticle completeArticle) {
-        if(this.articlePriceService.addArticlePrice(completeArticle.getArticlePrice()) == null || this.articleDetailService.addArticleDetail(completeArticle.getArticleDetail()) == null || this.articleService.addArticle(completeArticle.getArticle()) == null) {
-            return ResponseEntity.badRequest().body("Lacking all info");
+    public ResponseEntity<String> addCompleteArticle(@RequestBody CompleteArticle completeArticle) {
+        if (this.articlePriceService.addArticlePrice(completeArticle.getArticlePrice()) == null || this.articleDetailService.addArticleDetail(completeArticle.getArticleDetail()) == null || this.articleService.addArticle(completeArticle.getArticle()) == null) {
+            return ResponseEntity.badRequest().body("Lacking important info");
         } else {
-            return ResponseEntity.ok("Succes");
+            articlePriceService.addArticlePrice(completeArticle.getArticlePrice());
+            articleDetailService.addArticleDetail(completeArticle.getArticleDetail());
+            articleService.addArticle(completeArticle.getArticle());
+            return ResponseEntity.ok("Info added to the database");
         }
-        //TODO put all the saves in the correct order after know how to add an article in postmen.
     }
 }

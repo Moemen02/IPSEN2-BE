@@ -56,7 +56,6 @@ public class ArticleDAO {
     }
 
     public Article addArticle(final Article article) {
-        article.setArticleId(null);
         return this.articleRepository.save(article);
     }
 
