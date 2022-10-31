@@ -34,7 +34,8 @@ public class UserService implements UserDetailsService {
     public String login(LoginRequest request, AuthenticationManager authManager) {
         UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         authManager.authenticate(authInputToken);
-        return jwtUtil.generateToken(request.email());
+        User user = userDAO.getUserByEmail(request.email()).get();
+        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName());
     }
 
     @Override
@@ -62,6 +63,6 @@ public class UserService implements UserDetailsService {
         String encodedPass = passwordEncoder.encode(registerRequest.password());
         newUser.setPassword(encodedPass);
         userRepository.save(newUser);
-        return jwtUtil.generateToken(newUser.getEmail());
+        return jwtUtil.generateToken(newUser.getEmail(), newUser.getRole(), newUser.getName());
     }
 }

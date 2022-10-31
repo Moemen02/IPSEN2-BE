@@ -26,7 +26,6 @@ public class UserController {
     public Map<String, Object> registerHandler(@RequestBody RegisterRequest registerRequest){
         try {
             String token = userService.register(registerRequest);
-
             return Collections.singletonMap("jwt-token", token);
         } catch (AuthenticationException e) {
             return Collections.singletonMap("jwt-token", "User Already exists");
