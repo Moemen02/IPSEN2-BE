@@ -23,7 +23,7 @@ public class CustomerController {
 
 
     private static Customer customer;
-    private final CustomerService customerService;
+    private CustomerService customerService;
     private ObjectMapper objectMapper;
     Gson gson = new Gson();
 
@@ -50,18 +50,18 @@ public class CustomerController {
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity updateCustomer(@PathVariable Long id, @RequestBody Customer customer){
-//        String customerToJson = gson.toJson(customer);
-//        Customer newCustomer = gson.fromJson(customerToJson, Customer.class);
-        try {
-            return new ResponseEntity<> ( this.customerService.updateCustomer(id, customer), HttpStatus.OK);
-        } catch (NoCustomerFoundGivenId e) {
-            return new ResponseEntity<> ( e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public Optional<Customer> updateCustomer(@PathVariable Long id, @RequestBody Optional<Customer> customer) throws JsonMappingException, JsonProcessingException{
+
+        String customerToJson = gson.toJson(customer);
+        Customer newCustomer = gson.fromJson(customerToJson, Customer.class);
+
+
+        return this.customerService.updateCustomer(id, Optional.of(newCustomer));
+
     }
 
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteCustomer(@PathVariable final Long id) {
+    public ResponseEntity<Boolean> deleteCustomer(@PathVariable Long id) {
         try {
             customerService.deleteCustomer((Long) id);
         } catch (ChangeSetPersister.NotFoundException e) {

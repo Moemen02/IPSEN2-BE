@@ -13,7 +13,7 @@ import java.util.Optional;
 @Component
 public class CustomerDAO {
 
-    private final CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
     public CustomerDAO(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
@@ -30,45 +30,40 @@ public class CustomerDAO {
         return customer;
     }
 
-    public Customer updateCustomer(Long id, Customer customer) throws NoCustomerFoundGivenId {
-        Optional<Customer> customerToUpdate = getCustomerById(id);
+    public Optional<Customer> updateCustomer(Long id, Optional<Customer> customer) {
+        System.out.println(id );
+        System.out.println(customer);
+        Optional<Customer> oldCustomerById = customerRepository.findById(id);
+        Customer oldCustomer = oldCustomerById.get();
+        Customer newCustomer = customer.get();
 
-        if (!customerToUpdate.isPresent()){
-            throw new NoCustomerFoundGivenId();
-        }
+        newCustomer.setId((newCustomer.getId() == null) ? oldCustomer.getId() : newCustomer.getId());
+        newCustomer.setAddressid((newCustomer.getAddressid() == null) ? oldCustomer.getAddressid() : newCustomer.getAddressid());
+        newCustomer.setArticlenumber((newCustomer.getArticlenumber() == 0) ? oldCustomer.getArticlenumber() : newCustomer.getArticlenumber());
+        newCustomer.setName((newCustomer.getName() == null) ? oldCustomer.getName() : newCustomer.getName());
 
-        Customer updatedCustomer = customerToUpdate.get();
-        updatedCustomer.setName(customer.getName());
+        customerRepository.setCustomerById(
+                newCustomer.getId(),
+                newCustomer.getArticlenumber(),
+                newCustomer.getAddressid(),
+                newCustomer.getName(),
+                newCustomer.isPerserved_fabric(),
+                newCustomer.isRetour_fabric()
+        );
 
+        customerRepository.save(newCustomer);
+        return customer;
 
-//        Optional<Customer> oldCustomerById = customerRepository.findById(id);
-//        Customer oldCustomer = oldCustomerById.get();
-//        Customer newCustomer = customer.get();
-//
-//        newCustomer.setId((newCustomer.getId() == null) ? oldCustomer.getId() : newCustomer.getId());
-//        newCustomer.setAddressid((newCustomer.getAddressid() == null) ? oldCustomer.getAddressid() : newCustomer.getAddressid());
-//        newCustomer.setArticlenumber((newCustomer.getArticlenumber() == 0) ? oldCustomer.getArticlenumber() : newCustomer.getArticlenumber());
-//        newCustomer.setName((newCustomer.getName() == null) ? oldCustomer.getName() : newCustomer.getName());
-//
-//        customerRepository.setCustomerById(
-//                newCustomer.getId(),
-//                newCustomer.getArticlenumber(),
-//                newCustomer.getAddressid(),
-//                newCustomer.getName()
-//        );
-
-
-        return customerRepository.save(updatedCustomer);
     }
 
-    public void deleteCustomer(final Long id) throws ChangeSetPersister.NotFoundException{
+    public void deleteCustomer( Long id) throws ChangeSetPersister.NotFoundException{
         if (customerRepository.findById(id).isPresent()){
             customerRepository.deleteCustomerById(id);
         }
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public Customer addCustomer(final Customer customer){
+    public Customer addCustomer( Customer customer){
         customer.setId(null);
         return this.customerRepository.save(customer);
     }

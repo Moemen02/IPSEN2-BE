@@ -12,9 +12,9 @@ import java.util.Optional;
 @Service
 public class CustomerService {
 
-    private final CustomerDAO customerDAO;
+    private CustomerDAO customerDAO;
 
-    public CustomerService(final CustomerDAO customerDAO) {
+    public CustomerService( CustomerDAO customerDAO) {
         this.customerDAO = customerDAO;
     }
 
@@ -26,15 +26,16 @@ public class CustomerService {
         return this.customerDAO.getCustomerById(id);
     }
 
-    public Customer updateCustomer(Long id, Customer customer) throws NoCustomerFoundGivenId {
+    public Optional<Customer> updateCustomer(Long id, Optional<Customer> customer) {
         return this.customerDAO.updateCustomer(id, customer);
+
     }
 
-    public void deleteCustomer(final Long id) throws ChangeSetPersister.NotFoundException{
+    public void deleteCustomer(Long id) throws ChangeSetPersister.NotFoundException{
         this.customerDAO.deleteCustomer(id);
     }
 
-    public Customer addCustomer(final Customer customer){
+    public Customer addCustomer( Customer customer){
         return this.customerDAO.addCustomer(customer);
     }
 }
