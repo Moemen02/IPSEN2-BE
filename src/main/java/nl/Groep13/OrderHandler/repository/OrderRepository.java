@@ -14,8 +14,9 @@ public interface OrderRepository extends JpaRepository<lOrder, Long> {
     @Modifying
     @Transactional
     @Query("update lOrder lorder set " +
-            "lorder.id = ?1, lorder.articlenumber = ?2," +
-            "lorder.customerid = ?3, lorder.claimed_by = ?4")
+            "lorder.articlenumber = ?2," +
+            "lorder.customerid = ?3, lorder.claimed_by = ?4" +
+            " where lorder.id = ?1")
     void setOrderById(
             Long id,
             int articlenumber,

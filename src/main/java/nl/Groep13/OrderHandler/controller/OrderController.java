@@ -18,8 +18,7 @@ import java.util.Optional;
 @RequestMapping(value="/api/orders")
 public class OrderController {
 
-    private lOrder lorder;
-    private final OrderService orderService;
+    private OrderService orderService;
     Gson gson = new Gson();
 
     @Autowired
@@ -27,25 +26,23 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    @ResponseBody
-    public List<lOrder> getAllOrders(){
-        List<lOrder> orders = this.orderService.getAllOrders();
-
-        return orders;
+    @GetMapping
+    public ResponseEntity<List<lOrder>> getAllOrders(){
+        return ResponseEntity.ok(
+                this.orderService.getAllOrders()
+        );
     }
 
     @RequestMapping(value = "/{id}")
     @ResponseBody
-    public Optional<lOrder> getOrderById(@PathVariable Long id){
-        Optional<lOrder> order = this.orderService.getOrderById(id);
+    public Optional<lOrder> getOrderById(@PathVariable Long id) throws ChangeSetPersister.NotFoundException{
+        return this.orderService.getOrderById(id);
 
-        return order;
     }
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public Optional<lOrder> updateOrder(@PathVariable Long id, @RequestBody Map<String, String> order){
+    public Optional<lOrder> updateOrder(@PathVariable Long id, @RequestBody Map<String, String> order) throws JsonMappingException, JsonProcessingException{
 
         String orderToJson = gson.toJson(order);
         lOrder newOrder = gson.fromJson(orderToJson, lOrder.class);
@@ -56,7 +53,7 @@ public class OrderController {
     @DeleteMapping
     public ResponseEntity<Boolean> deleteOrder(@PathVariable final Long id) {
         try {
-            orderService.deleteOrder((Long) id);
+            orderService.deleteOrder(id);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.ok(false);
         }

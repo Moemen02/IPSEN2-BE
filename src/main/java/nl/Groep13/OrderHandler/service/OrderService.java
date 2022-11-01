@@ -21,7 +21,7 @@ public class OrderService {
         return this.orderDAO.getAllOrders();
     }
 
-    public Optional<lOrder> getOrderById(Long id){
+    public Optional<lOrder> getOrderById(Long id) throws ChangeSetPersister.NotFoundException{
         return this.orderDAO.getOrderById(id);
     }
 
@@ -34,6 +34,6 @@ public class OrderService {
     }
 
     public lOrder addOrder(final lOrder order){
-        return this.orderDAO.addorder(order);
+        return this.orderDAO.addOrder(order);
     }
 }

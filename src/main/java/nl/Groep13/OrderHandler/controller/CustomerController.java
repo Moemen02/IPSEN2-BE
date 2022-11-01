@@ -2,14 +2,14 @@ package nl.Groep13.OrderHandler.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.google.gson.Gson;
-import nl.Groep13.OrderHandler.exception.NoCustomerFoundGivenId;
+
 import nl.Groep13.OrderHandler.model.Customer;
 import nl.Groep13.OrderHandler.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

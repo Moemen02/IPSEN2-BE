@@ -25,7 +25,7 @@ public class OrderDAO {
         return orders;
     }
 
-    public Optional<lOrder> getOrderById(long id){
+    public Optional<lOrder> getOrderById(long id) throws ChangeSetPersister.NotFoundException{
         Optional<lOrder> order = this.orderRepository.findById(id);
 
         return order;
@@ -59,7 +59,7 @@ public class OrderDAO {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public lOrder addorder(final lOrder order){
+    public lOrder addOrder(final lOrder order){
         order.setId(null);
         return this.orderRepository.save(order);
     }
