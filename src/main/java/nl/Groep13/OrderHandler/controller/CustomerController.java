@@ -22,9 +22,9 @@ import java.util.Optional;
 public class CustomerController {
 
 
-    private static Customer customer;
+
     private CustomerService customerService;
-    private ObjectMapper objectMapper;
+
     Gson gson = new Gson();
 
     @Autowired
@@ -32,38 +32,34 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    @ResponseBody
-    public List<Customer> getAllCustomers(){
-        List<Customer> customers = this.customerService.getAllCustomers();
-
-        return customers;
+    @GetMapping
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        return ResponseEntity.ok(
+                this.customerService.getAllCustomers()
+        );
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseBody
-    public Optional<Customer> getCustomerById(@PathVariable Long id){
-        Optional<Customer> customer = this.customerService.getCustomerById(id);
 
-        return customer;
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public Optional<Customer> getCustomerById(@PathVariable Long id) throws ChangeSetPersister.NotFoundException{
+        return this.customerService.getCustomerById(id);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public Optional<Customer> updateCustomer(@PathVariable Long id, @RequestBody Optional<Customer> customer) throws JsonMappingException, JsonProcessingException{
-
+    public Optional<Customer> updateCustomer(@PathVariable Long id, @RequestBody Map<String, String> customer) throws JsonMappingException, JsonProcessingException{
         String customerToJson = gson.toJson(customer);
         Customer newCustomer = gson.fromJson(customerToJson, Customer.class);
-
 
         return this.customerService.updateCustomer(id, Optional.of(newCustomer));
 
     }
 
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteCustomer(@PathVariable Long id) {
+    public ResponseEntity<Boolean> deleteCustomer(@PathVariable final Long id) {
         try {
-            customerService.deleteCustomer((Long) id);
+            customerService.deleteCustomer(id);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.ok(false);
         }

@@ -4,7 +4,6 @@ package nl.Groep13.OrderHandler.model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "customer")
@@ -19,18 +18,6 @@ public class Customer {
     private boolean retour_fabric;
 
     public Customer() {
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id=" + id +
-                ", articlenumber=" + articlenumber +
-                ", addressid=" + addressid +
-                ", name='" + name + '\'' +
-                ", perserved_fabric=" + perserved_fabric +
-                ", retour_fabric=" + retour_fabric +
-                '}';
     }
 
     public Customer(Long id, int articlenumber, Long addressid, String name, boolean perserved_fabric, boolean retour_fabric) {

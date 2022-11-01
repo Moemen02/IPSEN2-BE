@@ -1,6 +1,6 @@
 package nl.Groep13.OrderHandler.DAO;
 
-import nl.Groep13.OrderHandler.exception.NoCustomerFoundGivenId;
+
 import nl.Groep13.OrderHandler.model.Customer;
 import nl.Groep13.OrderHandler.repository.CustomerRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -13,26 +13,25 @@ import java.util.Optional;
 @Component
 public class CustomerDAO {
 
-    private CustomerRepository customerRepository;
+    private final CustomerRepository customerRepository;
 
-    public CustomerDAO(CustomerRepository customerRepository) {
+    public CustomerDAO(final CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
     public List<Customer> getAllCustomers(){
-        List<Customer> customers = this.customerRepository.findAll();
-        return customers;
+        return this.customerRepository.findAll();
     }
 
-    public Optional<Customer> getCustomerById(Long id){
+    public Optional<Customer> getCustomerById(final Long id) throws ChangeSetPersister.NotFoundException {
         Optional<Customer> customer = this.customerRepository.findById(id);
-
-        return customer;
+        if (customer.isPresent()) {
+            return customer;
+        }
+        throw new ChangeSetPersister.NotFoundException();
     }
 
     public Optional<Customer> updateCustomer(Long id, Optional<Customer> customer) {
-        System.out.println(id );
-        System.out.println(customer);
         Optional<Customer> oldCustomerById = customerRepository.findById(id);
         Customer oldCustomer = oldCustomerById.get();
         Customer newCustomer = customer.get();
@@ -41,14 +40,17 @@ public class CustomerDAO {
         newCustomer.setAddressid((newCustomer.getAddressid() == null) ? oldCustomer.getAddressid() : newCustomer.getAddressid());
         newCustomer.setArticlenumber((newCustomer.getArticlenumber() == 0) ? oldCustomer.getArticlenumber() : newCustomer.getArticlenumber());
         newCustomer.setName((newCustomer.getName() == null) ? oldCustomer.getName() : newCustomer.getName());
+        newCustomer.setPerserved_fabric((oldCustomer.isPerserved_fabric() == newCustomer.isPerserved_fabric()) ? oldCustomer.isPerserved_fabric() : newCustomer.isPerserved_fabric());
+        newCustomer.setRetour_fabric((oldCustomer.isRetour_fabric() == newCustomer.isRetour_fabric()) ? oldCustomer.isRetour_fabric() : newCustomer.isRetour_fabric());
 
         customerRepository.setCustomerById(
-                newCustomer.getId(),
+
                 newCustomer.getArticlenumber(),
                 newCustomer.getAddressid(),
                 newCustomer.getName(),
                 newCustomer.isPerserved_fabric(),
-                newCustomer.isRetour_fabric()
+                newCustomer.isRetour_fabric(),
+                newCustomer.getId()
         );
 
         customerRepository.save(newCustomer);
@@ -56,7 +58,7 @@ public class CustomerDAO {
 
     }
 
-    public void deleteCustomer( Long id) throws ChangeSetPersister.NotFoundException{
+    public void deleteCustomer(final Long id) throws ChangeSetPersister.NotFoundException{
         if (customerRepository.findById(id).isPresent()){
             customerRepository.deleteCustomerById(id);
         }
