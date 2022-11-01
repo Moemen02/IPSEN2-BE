@@ -7,7 +7,6 @@ import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.repository.UserRepository;
 import nl.Groep13.OrderHandler.security.JWTUtil;
 import nl.Groep13.OrderHandler.record.RegisterRequest;
-import nl.Groep13.OrderHandler.exception.UserAlreadyExistAuthenticationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,13 +50,9 @@ public class UserService implements UserDetailsService {
                 Collections.singletonList(new SimpleGrantedAuthority(ROLE_PREFIX + user.getRole())));
     }
 
-    public String register(RegisterRequest registerRequest) throws UserAlreadyExistAuthenticationException {
-
+    public String register(RegisterRequest registerRequest)  {
         Optional<User> user = userDAO.getUserByEmail(registerRequest.email());
-
-        if (user.isPresent()) {
-            throw new UserAlreadyExistAuthenticationException("User already exits");
-        }
+        if (user.isPresent()) return "gebuiker bestaat al";
 
         User newUser = new User(registerRequest.name(), registerRequest.email(), registerRequest.role(), registerRequest.password());
         String encodedPass = passwordEncoder.encode(registerRequest.password());
