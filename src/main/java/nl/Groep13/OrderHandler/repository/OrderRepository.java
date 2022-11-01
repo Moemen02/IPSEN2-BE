@@ -14,14 +14,14 @@ public interface OrderRepository extends JpaRepository<lOrder, Long> {
     @Modifying
     @Transactional
     @Query("update lOrder lorder set " +
-            "lorder.articlenumber = ?2," +
-            "lorder.customerid = ?3, lorder.claimed_by = ?4" +
-            " where lorder.id = ?1")
+            "lorder.articlenumber = ?1," +
+            "lorder.customerid = ?2, lorder.claimed_by = ?3 " +
+            "where lorder.id = ?4")
     void setOrderById(
-            Long id,
             int articlenumber,
             int customerid,
-            int claimed_by
+            int claimed_by,
+            Long id
     );
 
     @Modifying

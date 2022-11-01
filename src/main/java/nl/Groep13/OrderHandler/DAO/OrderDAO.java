@@ -14,21 +14,21 @@ public class OrderDAO {
 
     private final OrderRepository orderRepository;
 
-    public OrderDAO(OrderRepository orderRepository){
-
+    public OrderDAO(final OrderRepository orderRepository){
         this.orderRepository = orderRepository;
     }
 
     public List<lOrder> getAllOrders(){
         List<lOrder> orders = this.orderRepository.findAll();
-
         return orders;
     }
 
-    public Optional<lOrder> getOrderById(long id) throws ChangeSetPersister.NotFoundException{
+    public Optional<lOrder> getOrderById(final Long id) throws ChangeSetPersister.NotFoundException{
         Optional<lOrder> order = this.orderRepository.findById(id);
-
-        return order;
+        if (order.isPresent()) {
+            return order;
+        }
+        throw new ChangeSetPersister.NotFoundException();
     }
 
     public Optional<lOrder> updateOrder(Long id, Optional<lOrder> order){
@@ -42,10 +42,10 @@ public class OrderDAO {
         newOrder.setClaimed_by((newOrder.getClaimed_by() == 0) ? oldOrder.getClaimed_by() : newOrder.getClaimed_by());
 
         orderRepository.setOrderById(
-                newOrder.getId(),
                 newOrder.getArticlenumber(),
                 newOrder.getCustomerid(),
-                newOrder.getClaimed_by()
+                newOrder.getClaimed_by(),
+                newOrder.getId()
         );
 
         orderRepository.save(newOrder);
