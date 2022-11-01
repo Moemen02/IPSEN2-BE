@@ -28,7 +28,7 @@ public class UserController {
             String token = userService.register(registerRequest);
             return Collections.singletonMap("jwt-token", token);
         } catch (AuthenticationException e) {
-            return Collections.singletonMap("jwt-token", "User Already exists");
+            return Collections.singletonMap("jwtToken", "");
         }
     }
 
@@ -36,9 +36,9 @@ public class UserController {
     public Map<String, Object> loginHandler(@RequestBody LoginRequest body){
         try {
             String token = userService.login(body, authManager);
-            return Collections.singletonMap("jwt-token", token);
+            return Collections.singletonMap("jwtToken", token);
         }catch (AuthenticationException authExc){
-            return Collections.singletonMap("jwt-token", "Invalid Login Credentials");
+            return Collections.singletonMap("jwtToken", "");
         }
     }
 }
