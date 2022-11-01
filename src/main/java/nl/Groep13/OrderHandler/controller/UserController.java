@@ -1,6 +1,9 @@
 package nl.Groep13.OrderHandler.controller;
 
+import lombok.Getter;
+import lombok.Setter;
 import nl.Groep13.OrderHandler.DAO.UserDAO;
+import nl.Groep13.OrderHandler.model.JWTPayload;
 import nl.Groep13.OrderHandler.model.User;
 import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.record.RegisterRequest;
@@ -26,24 +29,23 @@ public class UserController {
     @Autowired private AuthenticationManager authManager;
 
     @PostMapping("/register")
-    public Map<String, Object> registerHandler(@RequestBody RegisterRequest registerRequest){
+    public JWTPayload registerHandler(@RequestBody RegisterRequest registerRequest){
         try {
             String token = userService.register(registerRequest);
-
-            if (token.contains("gebuiker bestaat al")) return Map.of("jwtToken", "", "message", "gebuiker bestaat al", "success", false);
-            return Map.of("jwtToken", token, "message", "Nieuwe gebruiker aangemaakt", "success", true);
+            if (token.contains("gebuiker bestaat al")) return new JWTPayload("", "gebuiker bestaat al", false);
+            return new JWTPayload(token, "Nieuwe gebruiker aangemaakt", true);
         } catch (AuthenticationException e) {
-            return Map.of("jwtToken", "", "message", "Er is iets fout gegaan op de server, probeer het later opnieuw", "success", false);
+            return new JWTPayload("", "Er is iets fout gegaan op de server, probeer het later opnieuw", false);
         }
     }
 
     @PostMapping("/login")
-    public Map<String, Object> loginHandler(@RequestBody LoginRequest body){
+    public JWTPayload loginHandler(@RequestBody LoginRequest body){
         try {
             String token = userService.login(body, authManager);
-            return Collections.singletonMap("jwtToken", token);
+            return new JWTPayload(token, "Inloggen was succesful", true);
         }catch (AuthenticationException authExc){
-            return Collections.singletonMap("jwtToken", "");
+            return new JWTPayload("", "Ongeldige inloggegevens", false);
         }
     }
 }
