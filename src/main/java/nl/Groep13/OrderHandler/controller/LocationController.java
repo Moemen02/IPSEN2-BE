@@ -35,13 +35,13 @@ public class LocationController {
        );
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/{articlenumber}")
     @ResponseBody
     public Optional<Location> getLocationByArticlenumber(@PathVariable Long articlenumber) throws ChangeSetPersister.NotFoundException{
        return this.locationService.getLocationByArticlenumber(articlenumber);
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = "/{articlenumber}")
     @ResponseBody
     public Optional<Location> updateLocation(@PathVariable Long articlenumber, @RequestBody Map<String, String> location) throws JsonMappingException, JsonProcessingException{
        String locationToJson = gson.toJson(location);
