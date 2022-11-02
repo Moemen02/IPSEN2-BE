@@ -81,7 +81,7 @@ public class ArticleController {
 
     @PutMapping(value = "/details/{eancode}")
     @ResponseBody
-    public Optional<ArticleDetail> updateArticleDetail(@PathVariable String eancode, @RequestParam Map<String, String> articleDetail) throws JsonMappingException, JsonProcessingException {
+    public Optional<ArticleDetail> updateArticleDetail(@PathVariable String eancode, @RequestBody Map<String, String> articleDetail) throws JsonMappingException, JsonProcessingException {
         String articleDetailToJson = gson.toJson(articleDetail);
         ArticleDetail newArticleDetail = gson.fromJson(articleDetailToJson, ArticleDetail.class);
         return this.articleDetailService.updateArticle(eancode, Optional.of(newArticleDetail));
@@ -112,7 +112,7 @@ public class ArticleController {
 
     @PutMapping(value = "prices/{id}")
     @ResponseBody
-    public Optional<ArticlePrice> updateArticlePrice(@PathVariable Long id, @RequestParam Map<String, String> articlePrice) throws JsonMappingException, JsonProcessingException {
+    public Optional<ArticlePrice> updateArticlePrice(@PathVariable Long id, @RequestBody Map<String, String> articlePrice) throws JsonMappingException, JsonProcessingException {
         String articlePriceToJson = gson.toJson(articlePrice);
         ArticlePrice newArticlePrice = gson.fromJson(articlePriceToJson, ArticlePrice.class);
         return this.articlePriceService.updateArticlePrice(id, Optional.of(newArticlePrice));
