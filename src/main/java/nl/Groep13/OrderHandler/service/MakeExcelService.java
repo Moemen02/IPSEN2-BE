@@ -32,7 +32,7 @@ public class MakeExcelService {
 
     private final String retourLabel = "src/main/resources/Labels/retourLabel.xlsx";
 
-    public void toExcel(Long id) throws ChangeSetPersister.NotFoundException, FileNotFoundException {
+    public HashMap<String, String> getLabelData(Long id) throws ChangeSetPersister.NotFoundException, FileNotFoundException {
         Optional<Label> label = labelService.getLabel(id);
         Optional<lOrder> order = orderController.getOrderById(label.get().getOrderid());
         Optional<Location> location = locationController.getLocationByArticlenumber(label.get().getLocationid());
@@ -52,28 +52,28 @@ public class MakeExcelService {
         labelData.put("description", articlePrice.get().getDescription());
         labelData.put("kleur", article.get().getColor());
         labelData.put("metrage","length: " + articlePrice.get().getPtrLength() + "  width: " + articlePrice.get().getPtrWidth());
+        return labelData;
 
-        if (customer.get().isRetour_fabric()){
-            try {
-                FileInputStream labelTemplate = new FileInputStream(new File(retourLabel));
-                XSSFWorkbook retourLabel = new XSSFWorkbook(labelTemplate);
+//        if (customer.get().isRetour_fabric()){
+//            try {
+//                FileInputStream labelTemplate = new FileInputStream(new File(retourLabel));
+//                XSSFWorkbook retourLabel = new XSSFWorkbook(labelTemplate);
+//
+//                Sheet retourInpakLabel = retourLabel.getSheet("Inpaklabel");
+//
+//                Row row = retourInpakLabel.createRow(8);
+//                Cell cell = row.createCell(3);
+//                cell.setCellValue("Holland Haag BV");
+//
+//
+//            }
+//            catch (IOException e){
+//
+//            }
 
-                Sheet retourInpakLabel = retourLabel.getSheet("Inpaklabel");
-
-                Row row = retourInpakLabel.createRow(8);
-                Cell cell = row.createCell(3);
-                cell.setCellValue("Holland Haag BV");
+//        }
 
 
-            }
-            catch (IOException e){
-
-            }
-
-        }
-
-
-//        XSSFWorkbook workbook = new XSSFWorkbook();
 
     }
 }
