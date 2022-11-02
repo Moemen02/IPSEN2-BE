@@ -20,6 +20,8 @@ public class CustomerController {
         this.customerDAO = customerDAO;
     }
 
+    public CustomerController(){}
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     @ResponseBody
     public List<Customer> getAllCustomers(){

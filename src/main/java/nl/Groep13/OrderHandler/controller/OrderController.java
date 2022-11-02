@@ -14,6 +14,7 @@ public class OrderController {
 
     private OrderDAO orderDAO;
     private lOrder lorder;
+    public OrderController(){}
 
     @Autowired
     public OrderController(OrderDAO orderDAO) {

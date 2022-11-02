@@ -19,4 +19,7 @@ public class LabelDAO {
         }
         throw new ChangeSetPersister.NotFoundException();
     }
+    public Label addLabel(final Label label) {
+        return this.labelRepository.save(label);
+    }
 }
