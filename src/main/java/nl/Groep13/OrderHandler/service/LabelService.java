@@ -1,30 +1,25 @@
 package nl.Groep13.OrderHandler.service;
 
 import nl.Groep13.OrderHandler.DAO.LabelDAO;
-import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.Label;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
-import java.lang.module.FindException;
-import java.util.List;
+import java.io.FileNotFoundException;
 import java.util.Optional;
 
 @Service
 public class LabelService {
 
-    private LabelDAO labelDAO;
+    private final LabelDAO labelDAO;
 
     public LabelService(LabelDAO labelDAO) {
         this.labelDAO = labelDAO;
     }
 
-    public LabelService(){}
 
-
-
-    public Optional<Label> getLabel(final Long id) throws ChangeSetPersister.NotFoundException {
-
+    public Optional<Label> getLabel(Long id) throws ChangeSetPersister.NotFoundException {
         return labelDAO.getLabel(id);
     }
 

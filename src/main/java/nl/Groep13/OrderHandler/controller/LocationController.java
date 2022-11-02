@@ -30,7 +30,7 @@ public class LocationController {
         this.locationService = locationService;
     }
 
-    public LocationController(){}
+
 
     @GetMapping
     public ResponseEntity<List<Location>> getAllLocation(){

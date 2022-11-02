@@ -19,16 +19,25 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Optional;
 
+
 @Service
 public class MakeExcelService {
 
-    LabelService labelService = new LabelService();
-    OrderController orderController = new OrderController();
-    LocationController locationController = new LocationController();
-    CustomerController customerController = new CustomerController();
-    AdressController adressController = new AdressController();
-    ArticleController articleController = new ArticleController();
+    LabelService labelService;
+    OrderController orderController;
+    LocationController locationController;
+    CustomerController customerController;
+    AdressController adressController;
+    ArticleController articleController ;
 
+    public MakeExcelService(LabelService labelService, OrderController orderController, LocationController locationController, CustomerController customerController, AdressController adressController, ArticleController articleController) {
+        this.labelService = labelService;
+        this.orderController = orderController;
+        this.locationController = locationController;
+        this.customerController = customerController;
+        this.adressController = adressController;
+        this.articleController = articleController;
+    }
 
     private final String retourLabel = "src/main/resources/Labels/retourLabel.xlsx";
 
@@ -44,10 +53,10 @@ public class MakeExcelService {
         HashMap<String, String> labelData = new HashMap<>();
         labelData.put("vervoerder", "HollandHaag BV");
         labelData.put("klant", customer.get().getName());
-        labelData.put("klant", customer.get().getName());
+        labelData.put("factuurklant", customer.get().getName());
         labelData.put("straat", adress.get().getStreetname() + " " + adress.get().getHousenumber());
         labelData.put("postcode", adress.get().getPostalcode());
-//        labelData.put("Land", article.get().getLocation());
+//      labelData.put("Land", article.get().getLocation());
         labelData.put("orderCode", article.get().getEancode());
         labelData.put("description", articlePrice.get().getDescription());
         labelData.put("kleur", article.get().getColor());

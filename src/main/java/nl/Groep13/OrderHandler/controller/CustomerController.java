@@ -30,7 +30,7 @@ public class CustomerController {
     public CustomerController(CustomerService customerService){
         this.customerService = customerService;
     }
-    public CustomerController(){}
+
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {

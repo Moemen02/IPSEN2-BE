@@ -17,7 +17,6 @@ public class AdressController {
     public AdressController(AdressService adressService) {
         this.adressService = adressService;
     }
-    public AdressController(){}
 
     @GetMapping(value = "/{id}")
     @ResponseBody

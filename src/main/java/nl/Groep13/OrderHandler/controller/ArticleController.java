@@ -44,7 +44,7 @@ public class ArticleController {
         this.articlePriceService = articlePriceService;
     }
 
-    public ArticleController(){}
+
 
     /**
      *

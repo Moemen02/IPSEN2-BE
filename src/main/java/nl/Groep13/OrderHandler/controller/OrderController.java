@@ -26,7 +26,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    public OrderController(){}
+
 
     @GetMapping
     public ResponseEntity<List<lOrder>> getAllOrders(){
