@@ -28,6 +28,7 @@ public class CompleteArticle {
         this.articleDetail = articleDetail;
     }
 
+
     public ArticlePrice getArticlePrice() {
         return articlePrice;
     }
