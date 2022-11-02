@@ -1,33 +1,73 @@
 package nl.Groep13.OrderHandler.controller;
 
-
-import nl.Groep13.OrderHandler.DAO.LocationDao;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.Location;
+import nl.Groep13.OrderHandler.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/location")
 public class LocationController {
 
-    private LocationDao locationDao;
-    private Location location;
+    private LocationService locationService;
 
-    @Autowired
-    public LocationController(LocationDao locationDao){
-        this.locationDao = locationDao;
+    Gson gson = new Gson();
+
+   @Autowired
+    public LocationController(LocationService locationService) {
+        this.locationService = locationService;
     }
 
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @GetMapping
+    public ResponseEntity<List<Location>> getAllLocation(){
+       return ResponseEntity.ok(
+               this.locationService.getAllLocations()
+       );
+    }
+
+    @GetMapping(value = "/{articlenumber}")
     @ResponseBody
-    public List<Location> getAllLocations(){
-        List<Location> locations = this.locationDao.getAllLocations();
-
-        return locations;
+    public Optional<Location> getLocationByArticlenumber(@PathVariable Long articlenumber) throws ChangeSetPersister.NotFoundException{
+       return this.locationService.getLocationByArticlenumber(articlenumber);
     }
+
+    @PutMapping(value = "/{articlenumber}")
+    @ResponseBody
+    public Optional<Location> updateLocation(@PathVariable Long articlenumber, @RequestBody Map<String, String> location) throws JsonMappingException, JsonProcessingException{
+       String locationToJson = gson.toJson(location);
+       Location newLocation = gson.fromJson(locationToJson, Location.class);
+
+       return this.locationService.updateLocation(articlenumber, Optional.of(newLocation));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Boolean> deleteLocation(@PathVariable final Long articlenumber){
+       try {
+           locationService.deleteLocation(articlenumber);
+       } catch (ChangeSetPersister.NotFoundException e){
+           return ResponseEntity.ok(false);
+       }
+       return ResponseEntity.ok(true);
+   }
+
+   @PostMapping
+    public ResponseEntity<Boolean> addLocation(@RequestParam Map<String, String> location){
+       String locationToJson = gson.toJson(location);
+       Location newLocation = gson.fromJson(locationToJson, Location.class);
+       if (this.locationService.addLocation(newLocation) == null){
+           return ResponseEntity.badRequest().body(false);
+       } else {
+           return ResponseEntity.ok(true);
+       }
+   }
 }
