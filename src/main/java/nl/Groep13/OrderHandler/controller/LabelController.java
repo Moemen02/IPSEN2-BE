@@ -27,7 +27,8 @@ public class LabelController {
     @GetMapping(value = "/{id}")
     @ResponseBody
     public HashMap<String,String> getLabelData(@PathVariable Long id) throws FileNotFoundException, ChangeSetPersister.NotFoundException {
-        makeExcelService.getLabelData(id);
+       return makeExcelService.getLabelData(id);
+
     }
 
 //    @GetMapping
