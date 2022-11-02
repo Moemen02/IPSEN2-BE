@@ -64,7 +64,7 @@ public class ArticleController {
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public Optional<Article> updateArticle(@PathVariable Long id, @RequestParam Map<String, String> article) throws JsonMappingException, JsonProcessingException {
+    public Optional<Article> updateArticle(@PathVariable Long id, @RequestBody Map<String, String> article) throws JsonMappingException, JsonProcessingException {
         String articleToJson = gson.toJson(article);
         Article newArticle = gson.fromJson(articleToJson, Article.class);
         return this.articleService.updateArticle(id, Optional.of(newArticle));
@@ -82,10 +82,8 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> addArticle(@RequestParam Map<String, String> article) {
-        String articleToJson = gson.toJson(article);
-        Article newArticle = gson.fromJson(articleToJson, Article.class);
-        if (this.articleService.addArticle(newArticle) == null) {
+    public ResponseEntity<Boolean> addArticle(@RequestBody Article article) {
+        if (this.articleService.addArticle(article) == null) {
             return ResponseEntity.badRequest().body(false);
         } else {
             return ResponseEntity.ok(true);
@@ -103,7 +101,7 @@ public class ArticleController {
         return this.articleDetailService.getAllArticleDetails();
     }
 
-    @PutMapping(value = "details/{eancode}")
+    @PutMapping(value = "/details/{eancode}")
     @ResponseBody
     public Optional<ArticleDetail> updateArticleDetail(@PathVariable String eancode, @RequestParam Map<String, String> articleDetail) throws JsonMappingException, JsonProcessingException {
         String articleDetailToJson = gson.toJson(articleDetail);
@@ -129,12 +127,8 @@ public class ArticleController {
     }
 
     @PostMapping(value = "/details")
-    public ResponseEntity<Boolean> addArticleDetail(@RequestParam Map<String, String> articleDetail) {
-        String articleDetailToJson = gson.toJson(articleDetail);
-//        System.out.println(articleDetail);
-//        System.out.printf(articleDetailToJson);
-        ArticleDetail newArticleDetail = gson.fromJson(articleDetailToJson, ArticleDetail.class);
-        if (this.articleDetailService.addArticleDetail(newArticleDetail) == null) {
+    public ResponseEntity<Boolean> addArticleDetail(@RequestBody ArticleDetail articleDetail) {
+        if (this.articleDetailService.addArticleDetail(articleDetail) == null) {
             return ResponseEntity.badRequest().body(false);
         } else {
             return ResponseEntity.ok(true);
@@ -179,13 +173,27 @@ public class ArticleController {
 
     @PostMapping(value = "/prices")
     public ResponseEntity<Boolean> addArticlePrice(@RequestBody final ArticlePrice articlePrice) {
-        String articlePriceToJson = gson.toJson(articlePrice);
-        ArticlePrice newArticlePrice = gson.fromJson(articlePriceToJson, ArticlePrice.class);
-        if (this.articlePriceService.addArticlePrice(newArticlePrice) == null) {
+        if (this.articlePriceService.addArticlePrice(articlePrice) == null) {
             return ResponseEntity.badRequest().body(false);
         } else {
             return ResponseEntity.ok(true);
         }
     }
 
+    /**
+     *
+     * CompleteArticle functions
+     */
+
+    @PostMapping(value = "/completearticle")
+    public ResponseEntity<String> addCompleteArticle(@RequestBody CompleteArticle completeArticle) {
+        if (this.articlePriceService.addArticlePrice(completeArticle.getArticlePrice()) == null || this.articleDetailService.addArticleDetail(completeArticle.getArticleDetail()) == null || this.articleService.addArticle(completeArticle.getArticle()) == null) {
+            return ResponseEntity.badRequest().body("Lacking important info");
+        } else {
+            articlePriceService.addArticlePrice(completeArticle.getArticlePrice());
+            articleDetailService.addArticleDetail(completeArticle.getArticleDetail());
+            articleService.addArticle(completeArticle.getArticle());
+            return ResponseEntity.ok("Info added to the database");
+        }
+    }
 }
