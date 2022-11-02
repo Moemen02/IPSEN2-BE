@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value="/api/orders")
+@RequestMapping(value="/api/order")
 public class OrderController {
 
     private OrderService orderService;
