@@ -1,5 +1,8 @@
 package nl.Groep13.OrderHandler.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.DAO.CustomerDAO;
 import nl.Groep13.OrderHandler.model.Customer;
 import nl.Groep13.OrderHandler.service.CustomerService;
@@ -27,6 +30,7 @@ public class CustomerController {
     public CustomerController(CustomerService customerService){
         this.customerService = customerService;
     }
+    public CustomerController(){}
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
@@ -44,7 +48,7 @@ public class CustomerController {
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public Optional<Customer> updateCustomer(@PathVariable Long id, @RequestBody Map<String, String> customer) throws JsonMappingException, JsonProcessingException{
+    public Optional<Customer> updateCustomer(@PathVariable Long id, @RequestBody Map<String, String> customer) throws JsonMappingException, JsonProcessingException {
         String customerToJson = gson.toJson(customer);
         Customer newCustomer = gson.fromJson(customerToJson, Customer.class);
 
