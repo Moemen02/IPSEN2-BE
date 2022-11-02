@@ -1,12 +1,8 @@
 package nl.Groep13.OrderHandler.service;
 
-import nl.Groep13.OrderHandler.controller.CustomerController;
-import nl.Groep13.OrderHandler.controller.LocationController;
-import nl.Groep13.OrderHandler.controller.OrderController;
-import nl.Groep13.OrderHandler.model.Customer;
-import nl.Groep13.OrderHandler.model.Label;
-import nl.Groep13.OrderHandler.model.Location;
-import nl.Groep13.OrderHandler.model.lOrder;
+import nl.Groep13.OrderHandler.controller.*;
+import nl.Groep13.OrderHandler.model.*;
+import org.apache.coyote.http11.AbstractHttp11JsseProtocol;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -29,7 +25,10 @@ public class MakeExcelService {
     LabelService labelService = new LabelService();
     OrderController orderController = new OrderController();
     LocationController locationController = new LocationController();
-    CustomerController customerController = new CustomerController  ();
+    CustomerController customerController = new CustomerController();
+    AdressController adressController = new AdressController();
+    ArticleController articleController = new ArticleController();
+
 
     private final String retourLabel = "src/main/resources/Labels/retourLabel.xlsx";
 
@@ -38,12 +37,21 @@ public class MakeExcelService {
         Optional<lOrder> order = orderController.getOrderById(label.get().getOrderid());
         Optional<Location> location = locationController.getLocationByArticlenumber(label.get().getLocationid());
         Optional<Customer> customer = customerController.getCustomerById((long) order.get().getCustomerid());
+        Optional<Adress> adress = adressController.getAdress(customer.get().getAddressid());
+        Optional<Article> article = articleController.getArticle((long) order.get().getArticlenumber());
+        Optional<ArticlePrice> articlePrice = articleController.getArticleById(article.get().getPriceid());
 
         HashMap<String, String> labelData = new HashMap<>();
         labelData.put("vervoerder", "HollandHaag BV");
         labelData.put("klant", customer.get().getName());
         labelData.put("klant", customer.get().getName());
-//        labelData.put("adres", loca)
+        labelData.put("straat", adress.get().getStreetname() + " " + adress.get().getHousenumber());
+        labelData.put("postcode", adress.get().getPostalcode());
+//        labelData.put("Land", article.get().getLocation());
+        labelData.put("orderCode", article.get().getEancode());
+        labelData.put("description", articlePrice.get().getDescription());
+        labelData.put("kleur", article.get().getColor());
+        labelData.put("metrage","length: " + articlePrice.get().getPtrLength() + "  width: " + articlePrice.get().getPtrWidth());
 
         if (customer.get().isRetour_fabric()){
             try {

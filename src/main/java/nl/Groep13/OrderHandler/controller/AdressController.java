@@ -11,12 +11,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/api/adress")
 public class AdressController {
-    private final AdressService adressService;
+    private AdressService adressService;
 
     @Autowired
     public AdressController(AdressService adressService) {
         this.adressService = adressService;
     }
+    public AdressController(){}
 
     @GetMapping(value = "/{id}")
     @ResponseBody
