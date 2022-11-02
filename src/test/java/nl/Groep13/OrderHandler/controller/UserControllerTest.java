@@ -24,8 +24,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @ExtendWith(SpringExtension.class)
 class UserControllerTest {
 
-    private String name = "Jesse van Vuuren";
-    private String email = "jessevv10@gmail.com";
+    private String name = "admin";
+    private String adminEmail = "admin@admin.com";
     private UserRole role = UserRole.ADMIN;
     private String password = "adminpass";
 
@@ -39,9 +39,9 @@ class UserControllerTest {
     @Test
     void Should_NotRegisterNewUser_When_UserAlreadyExists() throws Exception{
         // Arrage
-        RegisterRequest registerRequest = new RegisterRequest(name, email, role, password);
+        RegisterRequest registerRequest = new RegisterRequest(name, adminEmail, role, password);
         String json = new Gson().toJson(registerRequest);
-        String token = jwtUtil.generateToken("admin@admin.com", UserRole.ADMIN, "admin");
+        String token = jwtUtil.generateToken(adminEmail, role, name);
 
         // Act
         MvcResult result = mvc.perform(post("/api/auth/register")
@@ -59,11 +59,10 @@ class UserControllerTest {
     @Test
     void Should_GiveUserJWTToken_When_LoggingIn() throws Exception{
         // Arrange
-        LoginRequest loginRequest = new LoginRequest(email, password);
+        LoginRequest loginRequest = new LoginRequest(adminEmail, password);
         String json = new Gson().toJson(loginRequest);
 
         // Act
-
         MvcResult result = mvc.perform(post("/api/auth/login")
                 .contentType(MediaType.APPLICATION_JSON).content(json)).andReturn();
 
@@ -71,6 +70,22 @@ class UserControllerTest {
 
 
         // Assert
-        assertEquals(payload.getMessage(), "Ongeldige inloggegevens");
+        assertEquals(payload.getMessage(), "Inloggen was succesful");
+        assertNotEquals(payload.getJwtToken(), "");
+    }
+
+    @Test
+    void Should_GiveUnauthorized_When_NoToken() throws Exception{
+        // Arrange
+        String newUser = "newUserEmail@gmain.com";
+        RegisterRequest registerRequest = new RegisterRequest(name, newUser, role, password);
+        String json = new Gson().toJson(registerRequest);
+
+        // Act
+        MvcResult result = mvc.perform(post("/api/auth/register")
+                .contentType(MediaType.APPLICATION_JSON).content(json)).andReturn();
+
+        // Assert
+        assertEquals(result.getResponse().getErrorMessage(), "Unauthorized");
     }
 }
