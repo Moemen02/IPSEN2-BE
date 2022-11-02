@@ -15,13 +15,13 @@ public interface LocationRepository extends JpaRepository<Location, Long> {
     @Modifying
     @Transactional
     @Query("update Location location set"
-            + " location.articlenumber = ?1, location.type_storage = ?2,"
-            + " location.branch = ?3"
-            + " where location.articlenumber = ?4")
+            + " location.type_storage = ?1,"
+            + " location.branch = ?2"
+            + " where location.articlenumber = ?3")
     void setLocationInfoByArticleNumber (
-            Long articlenumber,
             String type_storage,
-            String branch
+            String branch,
+            Long articlenumber
     );
 
     @Modifying

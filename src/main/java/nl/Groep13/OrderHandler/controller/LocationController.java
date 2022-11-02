@@ -23,57 +23,51 @@ public class LocationController {
 
     Gson gson = new Gson();
 
-
-
-    @Autowired
+   @Autowired
     public LocationController(LocationService locationService) {
         this.locationService = locationService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Location>> getAllLocations() {
-        return ResponseEntity.ok(
-                this.locationService.getAllLocations()
-        );
+    public ResponseEntity<List<Location>> getAllLocation(){
+       return ResponseEntity.ok(
+               this.locationService.getAllLocations()
+       );
     }
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public Optional<Location> getLocationByArticlenumber(@PathVariable Long articlenumber) throws ChangeSetPersister.NotFoundException {
-        return this.locationService.getLocationByArticlenumber(articlenumber);
+    public Optional<Location> getLocationByArticlenumber(@PathVariable Long articlenumber) throws ChangeSetPersister.NotFoundException{
+       return this.locationService.getLocationByArticlenumber(articlenumber);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseBody
     public Optional<Location> updateLocation(@PathVariable Long articlenumber, @RequestBody Map<String, String> location) throws JsonMappingException, JsonProcessingException{
+       String locationToJson = gson.toJson(location);
+       Location newLocation = gson.fromJson(locationToJson, Location.class);
 
-        String locationToJson = gson.toJson(location);
-        Location newLocation = gson.fromJson(locationToJson, Location.class);
-
-        return this.locationService.updateLocation(articlenumber, Optional.of(newLocation));
+       return this.locationService.updateLocation(articlenumber, Optional.of(newLocation));
     }
 
     @DeleteMapping
-    public ResponseEntity<Boolean> deleteLocation(@PathVariable final long articlenumber) {
-        try {
-            locationService.deleteLocation(articlenumber);
-        } catch (ChangeSetPersister.NotFoundException e) {
-            return ResponseEntity.ok(false);
-        }
+    public ResponseEntity<Boolean> deleteLocation(@PathVariable final Long articlenumber){
+       try {
+           locationService.deleteLocation(articlenumber);
+       } catch (ChangeSetPersister.NotFoundException e){
+           return ResponseEntity.ok(false);
+       }
+       return ResponseEntity.ok(true);
+   }
 
-        return ResponseEntity.ok(true);
-    }
-
-    @PostMapping
-    public ResponseEntity<Boolean> addLocation(@RequestParam Map<String, String> location) {
-        String locationToJson = gson.toJson(location);
-        Location newLocation = gson.fromJson(locationToJson, Location.class);
-        if (this.locationService.addLocation(newLocation) == null) {
-            return ResponseEntity.badRequest().body(false);
-        } else {
-            return ResponseEntity.ok(true);
-        }
-    }
-
-
+   @PostMapping
+    public ResponseEntity<Boolean> addLocation(@RequestParam Map<String, String> location){
+       String locationToJson = gson.toJson(location);
+       Location newLocation = gson.fromJson(locationToJson, Location.class);
+       if (this.locationService.addLocation(newLocation) == null){
+           return ResponseEntity.badRequest().body(false);
+       } else {
+           return ResponseEntity.ok(true);
+       }
+   }
 }

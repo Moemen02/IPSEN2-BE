@@ -28,7 +28,13 @@ public class LocationDao {
     }
 
     public Optional<Location> getLocationByArticlenumber(final Long articlenumber) throws ChangeSetPersister.NotFoundException{
-        return locationRepository.findById(articlenumber);
+        Optional<Location> location = this.locationRepository.findById(articlenumber);
+
+        if (location.isPresent()){
+            return location;
+        }
+        throw new ChangeSetPersister.NotFoundException();
+
     }
 
     public Optional<Location> updateLocation(Long articlenumber, Optional<Location> location) {
@@ -41,9 +47,9 @@ public class LocationDao {
         newLocation.setBranch((newLocation.getBranch() == null) ? oldLocation.getBranch() : newLocation.getBranch());
 
         locationRepository.setLocationInfoByArticleNumber(
-                newLocation.getArticlenumber(),
                 newLocation.getType_storage(),
-                newLocation.getBranch()
+                newLocation.getBranch(),
+                newLocation.getArticlenumber()
         );
 
         locationRepository.save(newLocation);
