@@ -25,9 +25,9 @@ public class ArticleDetailDAO {
         ArticleDetail oldArticleDetail = oldArticleDetailByEancode.get();
         ArticleDetail newArticleDetail = articleDetail.get();
 
-        newArticleDetail.setEancode((newArticleDetail.getEancode()) == null ? oldArticleDetail.getEancode() : newArticleDetail.getEancode());
-        newArticleDetail.setProductGroup((newArticleDetail.getProductGroup()) == null ? oldArticleDetail.getProductGroup() : newArticleDetail.getProductGroup());
-        newArticleDetail.setSupplier((newArticleDetail.getSupplier()) == null ? oldArticleDetail.getSupplier() : newArticleDetail.getSupplier());
+        newArticleDetail.setEancode((newArticleDetail.getEancode() == null || newArticleDetail.getEancode().equals("")) ? oldArticleDetail.getEancode() : newArticleDetail.getEancode());
+        newArticleDetail.setProductGroup((newArticleDetail.getProductGroup() == null || newArticleDetail.getProductGroup().equals("")) ? oldArticleDetail.getProductGroup() : newArticleDetail.getProductGroup());
+        newArticleDetail.setSupplier((newArticleDetail.getSupplier() == null || newArticleDetail.getSupplier().equals("")) ? oldArticleDetail.getSupplier() : newArticleDetail.getSupplier());
 
         articleDetailRepository.setArticleDetailByEancode(
                 newArticleDetail.getEancode(),
