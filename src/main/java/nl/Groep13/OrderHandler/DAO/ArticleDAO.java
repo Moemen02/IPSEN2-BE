@@ -32,7 +32,6 @@ public class ArticleDAO {
         newArticle.setWashsymbol((newArticle.getWashsymbol() == null || newArticle.getWashsymbol().equals("")) ? oldArticle.getWashsymbol() : newArticle.getWashsymbol());
         newArticle.setColor((newArticle.getColor() == null || newArticle.getColor().equals("")) ? oldArticle.getColor() : newArticle.getColor());
         newArticle.setLayout((newArticle.getLayout() == null || newArticle.getLayout().equals("")) ? oldArticle.getLayout() : newArticle.getLayout());
-        newArticle.setLocation((newArticle.getLocation() == null || newArticle.getLocation().equals("") ? oldArticle.getLocation() : newArticle.getLocation()));
         newArticle.setArticleId((newArticle.getArticleId() == null) ? oldArticle.getArticleId() : newArticle.getArticleId());
 
         articleRepository.setArticleInfoById(
@@ -42,7 +41,6 @@ public class ArticleDAO {
             newArticle.getWashsymbol(),
             newArticle.getColor(),
             newArticle.getLayout(),
-            newArticle.getLocation(),
             newArticle.getArticleId()
         );
 
