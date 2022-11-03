@@ -82,11 +82,11 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> addArticle(@RequestBody Article article) {
+    public ResponseEntity<Article> addArticle(@RequestBody Article article) {
         if (this.articleService.addArticle(article) == null) {
-            return ResponseEntity.badRequest().body(false);
+            throw new NullPointerException("Article is empty");
         } else {
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(article);
         }
     }
 
@@ -127,11 +127,11 @@ public class ArticleController {
     }
 
     @PostMapping(value = "/details")
-    public ResponseEntity<Boolean> addArticleDetail(@RequestBody ArticleDetail articleDetail) {
+    public ResponseEntity<ArticleDetail> addArticleDetail(@RequestBody ArticleDetail articleDetail) {
         if (this.articleDetailService.addArticleDetail(articleDetail) == null) {
-            return ResponseEntity.badRequest().body(false);
+            throw new NullPointerException("ArticleDetail is empty");
         } else {
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(articleDetail);
         }
     }
 
@@ -172,11 +172,11 @@ public class ArticleController {
     }
 
     @PostMapping(value = "/prices")
-    public ResponseEntity<Boolean> addArticlePrice(@RequestBody final ArticlePrice articlePrice) {
+    public ResponseEntity<ArticlePrice> addArticlePrice(@RequestBody final ArticlePrice articlePrice) {
         if (this.articlePriceService.addArticlePrice(articlePrice) == null) {
-            return ResponseEntity.badRequest().body(false);
+            throw new NullPointerException("ArticlePrice is empty.");
         } else {
-            return ResponseEntity.ok(true);
+            return ResponseEntity.ok(articlePrice);
         }
     }
 
