@@ -10,24 +10,24 @@ import javax.persistence.Table;
 public class Location {
 
     @Id
-    private int articlenumber;
+    private Long articlenumber;
     private String type_storage;
     private String branch;
 
     public Location() {
     }
 
-    public Location(int articlenumber, String type_storage, String branch) {
+    public Location(Long articlenumber, String type_storage, String branch) {
         this.articlenumber = articlenumber;
         this.type_storage = type_storage;
         this.branch = branch;
     }
 
-    public int getArticlenumber() {
+    public Long getArticlenumber() {
         return articlenumber;
     }
 
-    public void setArticlenumber(int articlenumber) {
+    public void setArticlenumber(Long articlenumber) {
         this.articlenumber = articlenumber;
     }
 
