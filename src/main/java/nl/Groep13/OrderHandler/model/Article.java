@@ -23,9 +23,8 @@ public class Article {
 
     private String composition;
 
-    private String location;
 
-    public Article(Long id, Long priceid, String eancode, String color, String layout, String washsymbol, String composition, String location) {
+    public Article(Long id, Long priceid, String eancode, String color, String layout, String washsymbol, String composition) {
         this.id = id;
         this.priceid = priceid;
         this.eancode = eancode;
@@ -33,7 +32,6 @@ public class Article {
         this.layout = layout;
         this.washsymbol = washsymbol;
         this.composition = composition;
-        this.location = location;
     }
 
     public Article() {
@@ -101,12 +99,5 @@ public class Article {
 
     public void setComposition(String composition) {
         this.composition = composition;
-    }
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
     }
 }

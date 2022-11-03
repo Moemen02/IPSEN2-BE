@@ -17,8 +17,8 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
     @Query("update Article article set"
             + " article.priceid = ?1, article.eancode = ?2,"
             + " article.composition = ?3, article.washsymbol = ?4,"
-            + " article.color = ?5, article.layout = ?6,"
-            + " article.location = ?7 where article.id = ?8")
+            + " article.color = ?5, article.layout = ?6"
+            + " where article.id = ?7")
     void setArticleInfoById (
             Long priceid,
             String eancode,
@@ -26,7 +26,6 @@ public interface ArticleRepository extends JpaRepository<Article, Long> {
             String washsymbol,
             String color,
             String layout,
-            String location,
             Long articleid
     );
 
