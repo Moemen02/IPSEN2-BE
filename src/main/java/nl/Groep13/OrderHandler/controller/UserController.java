@@ -25,6 +25,9 @@ import java.util.Optional;
 @RequestMapping("/api/auth")
 public class UserController {
 
+    public static final String SERVER_GOT_ERROR = "Er is iets fout gegaan op de server, probeer het later opnieuw";
+    public static final String NEW_USER_MADE = "Nieuwe gebruiker aangemaakt";
+    public static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
     @Autowired private UserService userService;
     @Autowired private AuthenticationManager authManager;
 
