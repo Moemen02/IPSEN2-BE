@@ -61,6 +61,7 @@ public class MakeExcelService {
         labelData.put("description", articlePrice.get().getDescription());
         labelData.put("kleur", article.get().getColor());
         labelData.put("metrage","length: " + articlePrice.get().getPtrLength() + "  width: " + articlePrice.get().getPtrWidth());
+        labelData.put("retour", String.valueOf(customer.get().isRetour_fabric()));
         return labelData;
 
 //        if (customer.get().isRetour_fabric()){
