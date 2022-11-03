@@ -22,6 +22,9 @@ import java.util.Optional;
 @RequestMapping("/api/auth")
 public class UserController {
 
+    public static final String SERVER_GOT_ERROR = "Er is iets fout gegaan op de server, probeer het later opnieuw";
+    public static final String NEW_USER_MADE = "Nieuwe gebruiker aangemaakt";
+    public static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
     @Autowired private UserService userService;
     @Autowired private AuthenticationManager authManager;
 
@@ -30,10 +33,10 @@ public class UserController {
         try {
             String token = userService.register(registerRequest);
 
-            if (token.contains("gebuiker bestaat al")) return Map.of("jwtToken", "", "message", "gebuiker bestaat al", "success", false);
-            return Map.of("jwtToken", token, "message", "Nieuwe gebruiker aangemaakt", "success", true);
+            if (token.contains(USER_ALREADY_EXISTS)) return Map.of("jwtToken", "", "message", USER_ALREADY_EXISTS, "success", false);
+            return Map.of("jwtToken", token, "message", NEW_USER_MADE, "success", true);
         } catch (AuthenticationException e) {
-            return Map.of("jwtToken", "", "message", "Er is iets fout gegaan op de server, probeer het later opnieuw", "success", false);
+            return Map.of("jwtToken", "", "message", SERVER_GOT_ERROR, "success", false);
         }
     }
 
