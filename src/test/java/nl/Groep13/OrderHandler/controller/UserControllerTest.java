@@ -15,9 +15,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -92,6 +96,20 @@ class UserControllerTest {
     @Test
     void ShouldReturnNameWhereUserIdIsSameAsGivenParameter(){
         Long ExpectedId = 1L;
+        String Token = getToken();
+        Long labelIdToGet = 1L;
+        String expectedValue = "217123";
+        String httpResponse;
+        String actualValue;
+
+        MvcResult result = (MvcResult) mockMvc.perform(
+                        MockMvcRequestBuilders.get(path+labelIdToGet)
+                                .header("authorization", "Bearer " + Token))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andReturn();
+        httpResponse = result.getResponse().getContentAsString();
 
 
 
