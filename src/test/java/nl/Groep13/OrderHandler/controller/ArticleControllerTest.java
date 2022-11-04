@@ -17,9 +17,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,7 +34,7 @@ public class ArticleControllerTest {
     private JWTUtil jwtUtil;
 
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
     private final String name = "admin";
     private final String email = "admin@admin.com";
@@ -56,7 +53,7 @@ public class ArticleControllerTest {
     public String getToken() throws Exception {
         LoginRequest loginRequest = new LoginRequest(email, password);
         String json = new Gson().toJson(loginRequest);
-        MvcResult result = mvc.perform(post("/api/auth/login")
+        MvcResult result = mockMvc.perform(post("/api/auth/login")
                 .contentType(MediaType.APPLICATION_JSON).content(json)).andReturn();
 
         JWTPayload payload = new Gson().fromJson(result.getResponse().getContentAsString(), JWTPayload.class);
@@ -74,7 +71,7 @@ public class ArticleControllerTest {
 
 
         //Act
-        MvcResult result = (MvcResult) mvc.perform(
+        MvcResult result = (MvcResult) mockMvc.perform(
                 MockMvcRequestBuilders.get(path+articleIdToGet)
                 .header("authorization", "Bearer " + Token))
                 .andExpect(status().isOk())
