@@ -62,4 +62,8 @@ public class UserService implements UserDetailsService {
         userRepository.save(newUser);
         return jwtUtil.generateToken(newUser.getEmail(), newUser.getRole(), newUser.getName(), newUser.getId());
     }
+
+    public Optional<User> getUserById(Long id) {
+        return userDAO.getUserById(id);
+    }
 }
