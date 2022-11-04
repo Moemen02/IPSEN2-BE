@@ -66,6 +66,55 @@ public class ArticleControllerTest {
         articleController = new ArticleController(articleService, articleDetailService, articlePriceService);
     }
 
+
+    @Test
+    public void Should_Retrieve_GivenArticlePrice_On_FilledArticlePrice(){
+        //Arrange
+        ArticlePrice articlePrice = new ArticlePrice(3605L, "Metal", 349, 485, 45, 30.37f, 373.00f, "ThisIsFake");
+
+        //Act
+        ArticlePrice result = articleController.addArticlePrice(articlePrice).getBody();
+
+        //Assert
+        assertThat(articlePrice, is(result));
+    }
+
+    @Test
+    public void Should_Retrieve_NullPointerException_On_EmptyArticlePrice(){
+        //Arrange
+        ArticlePrice emptyArticlePrice = null;
+
+        //Act
+        NullPointerException thrown = assertThrows(NullPointerException.class, () -> articleController.addArticlePrice(emptyArticlePrice));
+
+        //Assert
+        assertThat(thrown.getMessage(), is("ArticlePrice is empty"));
+    }
+
+    @Test
+    public void Should_Retrieve_GivenArticleDetail_On_FilledArticleDetail(){
+        //Arrange
+        ArticleDetail articleDetail = new ArticleDetail("TESTING1", "Nepstoffen", "Holland Haag LE");
+
+        //Act
+        ArticleDetail result = articleController.addArticleDetail(articleDetail).getBody();
+
+        //Assert
+        assertThat(articleDetail, is(result));
+    }
+
+    @Test
+    public void Should_Retrieve_NullPointerException_On_EmptyArticleDetail(){
+        //Arrange
+        ArticleDetail emptyArticleDetail = null;
+
+        //Act
+        NullPointerException thrown = assertThrows(NullPointerException.class, () -> articleController.addArticleDetail(emptyArticleDetail));
+
+        //Assert
+        assertThat(thrown.getMessage(), is("ArticleDetail is empty"));
+    }
+
     @Test
     public void Should_Retrieve_GivenArticle_On_FilledArticle() {
         //Arrange
