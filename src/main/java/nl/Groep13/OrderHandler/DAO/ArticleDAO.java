@@ -65,7 +65,7 @@ public class ArticleDAO {
      *
      * @param id given Long id to select one Article.
      * @throws ChangeSetPersister.NotFoundException if there
-     *                                              is no Article is found with the given id.
+     * is no Article is found with the given id.
      */
     public Optional<Article> getArticle(final Long id) throws ChangeSetPersister.NotFoundException {
         Optional<Article> article = articleRepository.findById(id);

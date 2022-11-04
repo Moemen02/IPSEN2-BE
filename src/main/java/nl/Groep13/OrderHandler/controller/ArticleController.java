@@ -83,7 +83,7 @@ public class ArticleController {
 
     @PostMapping
     public ResponseEntity<Article> addArticle(@RequestBody Article article) {
-        if (this.articleService.addArticle(article) == null) {
+        if (article == null) {
             throw new NullPointerException("Article is empty");
         } else {
             return ResponseEntity.ok(article);
@@ -128,7 +128,7 @@ public class ArticleController {
 
     @PostMapping(value = "/details")
     public ResponseEntity<ArticleDetail> addArticleDetail(@RequestBody ArticleDetail articleDetail) {
-        if (this.articleDetailService.addArticleDetail(articleDetail) == null) {
+        if (articleDetail == null) {
             throw new NullPointerException("ArticleDetail is empty");
         } else {
             return ResponseEntity.ok(articleDetail);
@@ -173,7 +173,7 @@ public class ArticleController {
 
     @PostMapping(value = "/prices")
     public ResponseEntity<ArticlePrice> addArticlePrice(@RequestBody final ArticlePrice articlePrice) {
-        if (this.articlePriceService.addArticlePrice(articlePrice) == null) {
+        if (articlePrice == null) {
             throw new NullPointerException("ArticlePrice is empty.");
         } else {
             return ResponseEntity.ok(articlePrice);
