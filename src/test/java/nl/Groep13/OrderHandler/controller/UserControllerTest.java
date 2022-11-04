@@ -2,6 +2,7 @@ package nl.Groep13.OrderHandler.controller;
 
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.JWTPayload;
+import nl.Groep13.OrderHandler.model.User;
 import nl.Groep13.OrderHandler.model.UserRole;
 import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.record.RegisterRequest;
@@ -38,6 +39,16 @@ class UserControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    public String getToken() throws Exception {
+        LoginRequest loginRequest = new LoginRequest(adminEmail, password);
+        String json = new Gson().toJson(loginRequest);
+        MvcResult result = mvc.perform(post("/api/auth/login")
+                .contentType(MediaType.APPLICATION_JSON).content(json)).andReturn();
+
+        JWTPayload payload = new Gson().fromJson(result.getResponse().getContentAsString(), JWTPayload.class);
+        return payload.getJwtToken();
+    }
 
 
     @Test
@@ -94,22 +105,23 @@ class UserControllerTest {
     }
 
     @Test
-    void ShouldReturnNameWhereUserIdIsSameAsGivenParameter(){
-        Long ExpectedId = 1L;
+    void ShouldReturnNameWhereUserIdIsSameAsGivenParameter() throws Exception {
         String Token = getToken();
-        Long labelIdToGet = 1L;
-        String expectedValue = "217123";
+        Long userIdToGet = 1L;
+        String expectedValue = "Claudio";
         String httpResponse;
         String actualValue;
 
-        MvcResult result = (MvcResult) mockMvc.perform(
-                        MockMvcRequestBuilders.get(path+labelIdToGet)
+        MvcResult result = (MvcResult) mvc.perform(
+                        MockMvcRequestBuilders.get("/api/auth/user/"+ userIdToGet)
                                 .header("authorization", "Bearer " + Token))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andReturn();
         httpResponse = result.getResponse().getContentAsString();
+//        User user =
+//        actualValue = userController.getUserByID(userIdToGet);
 
 
 
