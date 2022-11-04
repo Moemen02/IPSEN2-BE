@@ -13,6 +13,7 @@ import nl.Groep13.OrderHandler.service.ArticlePriceService;
 import nl.Groep13.OrderHandler.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,16 +59,26 @@ public class ArticleController {
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public Optional<Article> getArticle(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
-        return this.articleService.getArticle(id);
+    public ResponseEntity<Optional<Article>> getArticle(@PathVariable Long id)  {
+        try {
+            Optional<Article> anArticle = this.articleService.getArticle(id);
+            return new ResponseEntity<>(anArticle, HttpStatus.FOUND);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public Optional<Article> updateArticle(@PathVariable Long id, @RequestBody Map<String, String> article) throws JsonMappingException, JsonProcessingException {
-        String articleToJson = gson.toJson(article);
-        Article newArticle = gson.fromJson(articleToJson, Article.class);
-        return this.articleService.updateArticle(id, Optional.of(newArticle));
+    public ResponseEntity<Optional<Article>> updateArticle(@PathVariable Long id, @RequestBody Map<String, String> article){
+        try{
+            String articleToJson = gson.toJson(article);
+            Article newArticle = gson.fromJson(articleToJson, Article.class);
+            Optional<Article> updatedArticle = this.articleService.updateArticle(id, Optional.of(newArticle));
+            return new ResponseEntity<>(updatedArticle, HttpStatus.CREATED);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_MODIFIED).body(null);
+        }
     }
 
     @DeleteMapping
