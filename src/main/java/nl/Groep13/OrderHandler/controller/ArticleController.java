@@ -174,7 +174,7 @@ public class ArticleController {
     @PostMapping(value = "/prices")
     public ResponseEntity<ArticlePrice> addArticlePrice(@RequestBody final ArticlePrice articlePrice) {
         if (articlePrice == null) {
-            throw new NullPointerException("ArticlePrice is empty.");
+            throw new NullPointerException("ArticlePrice is empty");
         } else {
             return ResponseEntity.ok(articlePrice);
         }
