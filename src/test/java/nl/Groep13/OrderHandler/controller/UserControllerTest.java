@@ -7,6 +7,7 @@ import nl.Groep13.OrderHandler.model.UserRole;
 import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.record.RegisterRequest;
 import nl.Groep13.OrderHandler.security.JWTUtil;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ class UserControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    private Gson gson = new Gson();
 
     public String getToken() throws Exception {
         LoginRequest loginRequest = new LoginRequest(adminEmail, password);
@@ -108,22 +111,22 @@ class UserControllerTest {
     void ShouldReturnNameWhereUserIdIsSameAsGivenParameter() throws Exception {
         String Token = getToken();
         Long userIdToGet = 1L;
-        String expectedValue = "Claudio";
+        String expectedValue = "admin";
         String httpResponse;
-        String actualValue;
+        String  actualValue;
+
 
         MvcResult result = (MvcResult) mvc.perform(
                         MockMvcRequestBuilders.get("/api/auth/user/"+ userIdToGet)
                                 .header("authorization", "Bearer " + Token))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType(MediaType.valueOf("text/plain;charset=UTF-8")))
                 .andDo(print())
                 .andReturn();
         httpResponse = result.getResponse().getContentAsString();
-//        User user =
-//        actualValue = userController.getUserByID(userIdToGet);
+        actualValue = httpResponse;
 
-
+        Assertions.assertEquals(expectedValue, actualValue);
 
 
 
