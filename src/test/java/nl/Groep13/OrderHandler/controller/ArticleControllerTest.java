@@ -74,7 +74,7 @@ public class ArticleControllerTest {
         MvcResult result = (MvcResult) mockMvc.perform(
                 MockMvcRequestBuilders.get(path+articleIdToGet)
                 .header("authorization", "Bearer " + Token))
-                .andExpect(status().isOk())
+                .andExpect(status().isFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andReturn();
@@ -82,6 +82,32 @@ public class ArticleControllerTest {
         Article newArticle = gson.fromJson(httpResponse, Article.class);
         actualValue = newArticle.getArticleId();
 
+
+        //Assert
+        assertEquals(ExpectedValue, actualValue);
+
+    }
+
+    @Test
+    public void Should_ReturnNotFoundResponse_WhenArticleIdDoesNotExist() throws Exception {
+        //Arrange
+        String Token = getToken();
+        Long articleIdToGet = 132343L;
+        int ExpectedValue = 404;
+        int httpResponse;
+        int actualValue;
+
+
+        //Act
+        MvcResult result = (MvcResult) mockMvc.perform(
+                MockMvcRequestBuilders.get(path+articleIdToGet)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("authorization", "Bearer " + Token))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andReturn();
+        httpResponse = result.getResponse().getStatus();
+        actualValue = httpResponse;
 
         //Assert
         assertEquals(ExpectedValue, actualValue);
