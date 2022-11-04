@@ -28,7 +28,7 @@ public class ArticleService {
         return articleDAO.getArticle(id);
     }
 
-    public Optional<Article> updateArticle(Long id, final Optional<Article> article) {
+    public Optional<Article> updateArticle(Long id, final Optional<Article> article) throws ChangeSetPersister.NotFoundException {
         return articleDAO.updateArticle(id, article);
     }
 

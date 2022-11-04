@@ -1,10 +1,13 @@
 package nl.Groep13.OrderHandler.model;
 
+import lombok.ToString;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.*;
 
 @Entity
+@ToString
 @Table(name = "article")
 public class Article {
 
