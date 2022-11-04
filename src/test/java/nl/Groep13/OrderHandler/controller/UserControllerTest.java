@@ -88,4 +88,14 @@ class UserControllerTest {
         // Assert
         assertEquals(result.getResponse().getErrorMessage(), "Unauthorized");
     }
+
+    @Test
+    void ShouldReturnNameWhereUserIdIsSameAsGivenParameter(){
+        Long ExpectedId = 1L;
+
+
+
+
+
+    }
 }
