@@ -12,10 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.Map;
@@ -25,6 +22,11 @@ import java.util.Optional;
 @RequestMapping("/api/auth")
 public class UserController {
 
+    public static final String SERVER_GOT_ERROR = "Er is iets fout gegaan op de server, probeer het later opnieuw";
+    public static final String NEW_USER_MADE = "Nieuwe gebruiker aangemaakt";
+    public static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
+    public static final String LOGGIN_IN_SUCCESS = "Inloggen was succesful";
+    public static final String INVALID_PASSWORD = "Ongeldige inloggegevens";
     @Autowired private UserService userService;
     @Autowired private AuthenticationManager authManager;
 
@@ -32,10 +34,10 @@ public class UserController {
     public JWTPayload registerHandler(@RequestBody RegisterRequest registerRequest){
         try {
             String token = userService.register(registerRequest);
-            if (token.contains("gebuiker bestaat al")) return new JWTPayload("", "gebuiker bestaat al", false);
-            return new JWTPayload(token, "Nieuwe gebruiker aangemaakt", true);
+            if (token.contains(USER_ALREADY_EXISTS)) return new JWTPayload("", USER_ALREADY_EXISTS, false);
+            return new JWTPayload(token, NEW_USER_MADE, true);
         } catch (AuthenticationException e) {
-            return new JWTPayload("", "Er is iets fout gegaan op de server, probeer het later opnieuw", false);
+            return new JWTPayload("", SERVER_GOT_ERROR, false);
         }
     }
 
@@ -43,9 +45,17 @@ public class UserController {
     public JWTPayload loginHandler(@RequestBody LoginRequest body){
         try {
             String token = userService.login(body, authManager);
-            return new JWTPayload(token, "Inloggen was succesful", true);
+            return new JWTPayload(token, LOGGIN_IN_SUCCESS, true);
         }catch (AuthenticationException authExc){
-            return new JWTPayload("", "Ongeldige inloggegevens", false);
+            return new JWTPayload("", INVALID_PASSWORD, false);
         }
+    }
+
+    @GetMapping("/user/{id}")
+    @ResponseBody
+    public String getUserByID(@PathVariable Long id) {
+        Optional<User> user = userService.getUserById(id);
+        if (user.isPresent()) return user.get().getName();
+        return null;
     }
 }

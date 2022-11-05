@@ -24,6 +24,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
 
+    public static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
+    public static final String COULD_NOT_FIND_USER_WITH_EMAIL = "Could not findUser with email:";
     private final String ROLE_PREFIX = "ROLE_";
     private UserDAO userDAO;
     @Autowired private JWTUtil jwtUtil;
@@ -34,13 +36,13 @@ public class UserService implements UserDetailsService {
         UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         authManager.authenticate(authInputToken);
         User user = userDAO.getUserByEmail(request.email()).get();
-        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName());
+        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId());
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> userRes = userDAO.getUserByEmail(email);
-        if (userRes.isEmpty()) throw new UsernameNotFoundException("Could not findUser with email = " + email);
+        if (userRes.isEmpty()) throw new UsernameNotFoundException(COULD_NOT_FIND_USER_WITH_EMAIL + email);
         User user = userRes.get();
 
 
@@ -52,12 +54,16 @@ public class UserService implements UserDetailsService {
 
     public String register(RegisterRequest registerRequest)  {
         Optional<User> user = userDAO.getUserByEmail(registerRequest.email());
-        if (user.isPresent()) return "gebuiker bestaat al";
+        if (user.isPresent()) return USER_ALREADY_EXISTS;
 
         User newUser = new User(registerRequest.name(), registerRequest.email(), registerRequest.role(), registerRequest.password());
         String encodedPass = passwordEncoder.encode(registerRequest.password());
         newUser.setPassword(encodedPass);
         userRepository.save(newUser);
-        return jwtUtil.generateToken(newUser.getEmail(), newUser.getRole(), newUser.getName());
+        return jwtUtil.generateToken(newUser.getEmail(), newUser.getRole(), newUser.getName(), newUser.getId());
+    }
+
+    public Optional<User> getUserById(Long id) {
+        return userDAO.getUserById(id);
     }
 }
