@@ -18,8 +18,8 @@ public class LabelDAO {
 
     public LabelDAO(LabelRepository labelRepository) {this.labelRepository = labelRepository;}
 
-    public Optional<Label> getLabel(final Long id) throws ChangeSetPersister.NotFoundException {
-        Optional<Label> label = labelRepository.findById(id);
+    public Optional<Label> getLabel(Long id) throws ChangeSetPersister.NotFoundException {
+        Optional<Label> label = labelRepository.findByOrderid(id);
         if (label.isPresent()) {
             return label;
         }

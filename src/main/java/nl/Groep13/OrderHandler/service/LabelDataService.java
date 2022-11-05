@@ -31,7 +31,6 @@ public class LabelDataService {
     ArticleController articleController ;
     ArticleService articleService;
 
-    HashMap<String, String> labelData = new HashMap<>();
 
     public LabelDataService(LabelService labelService, OrderController orderController, LocationController locationController, CustomerController customerController, AdressController adressController, ArticleController articleController, ArticleService articleService) {
         this.labelService = labelService;
@@ -43,7 +42,6 @@ public class LabelDataService {
         this.articleService =  articleService;
     }
 
-    private final String retourLabel = "src/main/resources/Labels/retourLabel.xlsx";
 
     public HashMap<String, String> getLabelData(Long id) throws ChangeSetPersister.NotFoundException, FileNotFoundException {
         Optional<Label> label = labelService.getLabel(id);

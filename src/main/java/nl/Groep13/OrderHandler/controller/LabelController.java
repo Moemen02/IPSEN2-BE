@@ -28,7 +28,6 @@ public class LabelController {
     @ResponseBody
     public HashMap<String,String> getLabelData(@PathVariable Long id) throws FileNotFoundException, ChangeSetPersister.NotFoundException {
        return labelDataService.getLabelData(id);
-
     }
 
 //    @GetMapping

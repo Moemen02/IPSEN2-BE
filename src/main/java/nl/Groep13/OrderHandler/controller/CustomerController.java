@@ -31,7 +31,6 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomers() {
         return ResponseEntity.ok(
