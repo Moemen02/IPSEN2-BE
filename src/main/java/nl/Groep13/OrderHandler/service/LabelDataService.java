@@ -29,14 +29,16 @@ public class LabelDataService {
     CustomerController customerController;
     AdressController adressController;
     ArticleController articleController ;
+    ArticleService articleService;
 
-    public LabelDataService(LabelService labelService, OrderController orderController, LocationController locationController, CustomerController customerController, AdressController adressController, ArticleController articleController) {
+    public LabelDataService(LabelService labelService, OrderController orderController, LocationController locationController, CustomerController customerController, AdressController adressController, ArticleController articleController, ArticleService articleService) {
         this.labelService = labelService;
         this.orderController = orderController;
         this.locationController = locationController;
         this.customerController = customerController;
         this.adressController = adressController;
         this.articleController = articleController;
+        this.articleService =  articleService;
     }
 
     private final String retourLabel = "src/main/resources/Labels/retourLabel.xlsx";
@@ -47,8 +49,9 @@ public class LabelDataService {
         Optional<Location> location = locationController.getLocationByArticlenumber(label.get().getLocationid());
         Optional<Customer> customer = customerController.getCustomerById((long) order.get().getCustomerid());
         Optional<Adress> adress = adressController.getAdress(customer.get().getAddressid());
-        Optional<Article> article = articleController.getArticle((long) order.get().getArticlenumber());
+        Optional<Article> article = articleService.getArticle((long) order.get().getArticlenumber());
         Optional<ArticlePrice> articlePrice = articleController.getArticleById(article.get().getPriceid());
+
 
         HashMap<String, String> labelData = new HashMap<>();
         labelData.put("vervoerder", "HollandHaag BV");
