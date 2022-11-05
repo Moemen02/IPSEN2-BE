@@ -26,9 +26,9 @@ import java.util.Optional;
 @RequestMapping(value = "/api/article")
 public class ArticleController {
 
-    private final ArticleService articleService;
-    private final ArticleDetailService articleDetailService;
-    private final ArticlePriceService articlePriceService;
+    private ArticleService articleService;
+    private ArticleDetailService articleDetailService;
+    private ArticlePriceService articlePriceService;
 
     private static CompleteArticle completeArticle;
     private static Article article;
@@ -44,6 +44,8 @@ public class ArticleController {
         this.articleDetailService = articleDetailService;
         this.articlePriceService = articlePriceService;
     }
+
+
 
     /**
      *
