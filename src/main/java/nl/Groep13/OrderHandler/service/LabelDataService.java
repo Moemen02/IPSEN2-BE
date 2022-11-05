@@ -31,7 +31,7 @@ public class LabelDataService {
     ArticleController articleController ;
     ArticleService articleService;
 
-   private HashMap<String, String> labelData = new HashMap<>();
+    HashMap<String, String> labelData = new HashMap<>();
 
     public LabelDataService(LabelService labelService, OrderController orderController, LocationController locationController, CustomerController customerController, AdressController adressController, ArticleController articleController, ArticleService articleService) {
         this.labelService = labelService;
@@ -53,6 +53,8 @@ public class LabelDataService {
         Optional<Adress> adress = adressController.getAdress(customer.get().getAddressid());
         Optional<Article> article = articleService.getArticle((long) order.get().getArticlenumber());
         Optional<ArticlePrice> articlePrice = articleController.getArticleById(article.get().getPriceid());
+
+        HashMap<String, String> labelData = new HashMap<>();
 
         if (customer.get().isRetour_fabric()) {
             labelData.put("vervoerder", "HollandHaag BV");
