@@ -31,6 +31,8 @@ public class LabelDataService {
     ArticleController articleController ;
     ArticleService articleService;
 
+   private HashMap<String, String> labelData = new HashMap<>();
+
     public LabelDataService(LabelService labelService, OrderController orderController, LocationController locationController, CustomerController customerController, AdressController adressController, ArticleController articleController, ArticleService articleService) {
         this.labelService = labelService;
         this.orderController = orderController;
@@ -52,41 +54,31 @@ public class LabelDataService {
         Optional<Article> article = articleService.getArticle((long) order.get().getArticlenumber());
         Optional<ArticlePrice> articlePrice = articleController.getArticleById(article.get().getPriceid());
 
+        if (customer.get().isRetour_fabric()) {
+            labelData.put("vervoerder", "HollandHaag BV");
+            labelData.put("klant", customer.get().getName());
+            labelData.put("factuurklant", customer.get().getName());
+            labelData.put("straat", adress.get().getStreetname() + " " + adress.get().getHousenumber());
+            labelData.put("postcode", adress.get().getPostalcode());
+//          labelData.put("Land", article.get().getLocation());
+            labelData.put("orderCode", article.get().getEancode());
+            labelData.put("description", articlePrice.get().getDescription());
+            labelData.put("kleur", article.get().getColor());
+            labelData.put("metrage", "length: " + articlePrice.get().getPtrLength() + "  width: " + articlePrice.get().getPtrWidth());
+            labelData.put("retour", String.valueOf(customer.get().isRetour_fabric()));
+            return labelData;
+        }
 
-        HashMap<String, String> labelData = new HashMap<>();
-        labelData.put("vervoerder", "HollandHaag BV");
-        labelData.put("klant", customer.get().getName());
-        labelData.put("factuurklant", customer.get().getName());
-        labelData.put("straat", adress.get().getStreetname() + " " + adress.get().getHousenumber());
-        labelData.put("postcode", adress.get().getPostalcode());
-//      labelData.put("Land", article.get().getLocation());
-        labelData.put("orderCode", article.get().getEancode());
-        labelData.put("description", articlePrice.get().getDescription());
-        labelData.put("kleur", article.get().getColor());
-        labelData.put("metrage","length: " + articlePrice.get().getPtrLength() + "  width: " + articlePrice.get().getPtrWidth());
-        labelData.put("retour", String.valueOf(customer.get().isRetour_fabric()));
-        return labelData;
-
-//        if (customer.get().isRetour_fabric()){
-//            try {
-//                FileInputStream labelTemplate = new FileInputStream(new File(retourLabel));
-//                XSSFWorkbook retourLabel = new XSSFWorkbook(labelTemplate);
-//
-//                Sheet retourInpakLabel = retourLabel.getSheet("Inpaklabel");
-//
-//                Row row = retourInpakLabel.createRow(8);
-//                Cell cell = row.createCell(3);
-//                cell.setCellValue("Holland Haag BV");
-//
-//
-//            }
-//            catch (IOException e){
-//
-//            }
-
-//        }
-
-
-
+        if (!customer.get().isRetour_fabric()) {
+            labelData.put("klant", customer.get().getName());
+            labelData.put("orderCode", article.get().getEancode());
+            labelData.put("description", articlePrice.get().getDescription());
+            labelData.put("kleur", article.get().getColor());
+            labelData.put("metrage", "length: " + articlePrice.get().getPtrLength() + "  width: " + articlePrice.get().getPtrWidth());
+            labelData.put("retour", String.valueOf(customer.get().isRetour_fabric()));
+            labelData.put("opslag", location.get().getType_storage());
+            labelData.put("afdeling", location.get().getBranch());
+        }
+        return null;
     }
 }
