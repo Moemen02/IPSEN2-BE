@@ -1,13 +1,10 @@
 package nl.Groep13.OrderHandler.controller;
 
 import com.google.gson.Gson;
-import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.JWTPayload;
-import nl.Groep13.OrderHandler.model.Label;
 import nl.Groep13.OrderHandler.model.UserRole;
 import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.security.JWTUtil;
-import nl.Groep13.OrderHandler.service.MakeExcelService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -21,7 +21,7 @@ import java.util.Optional;
 
 
 @Service
-public class MakeExcelService {
+public class LabelDataService {
 
     LabelService labelService;
     OrderController orderController;
@@ -30,7 +30,7 @@ public class MakeExcelService {
     AdressController adressController;
     ArticleController articleController ;
 
-    public MakeExcelService(LabelService labelService, OrderController orderController, LocationController locationController, CustomerController customerController, AdressController adressController, ArticleController articleController) {
+    public LabelDataService(LabelService labelService, OrderController orderController, LocationController locationController, CustomerController customerController, AdressController adressController, ArticleController articleController) {
         this.labelService = labelService;
         this.orderController = orderController;
         this.locationController = locationController;
