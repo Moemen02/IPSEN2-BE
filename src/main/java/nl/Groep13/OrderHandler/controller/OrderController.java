@@ -63,13 +63,12 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Boolean> addOrder(@RequestParam Map<String, String> order) {
-        String orderToJson = gson.toJson(order);
-        lOrder newOrder = gson.fromJson(orderToJson, lOrder.class);
-        if (this.orderService.addOrder(newOrder) == null) {
-            return ResponseEntity.badRequest().body(false);
+    public ResponseEntity<lOrder> addOrder(@RequestBody final lOrder order) {
+        if (order == null) {
+            throw  new NullPointerException("Order is empty");
         } else {
-            return ResponseEntity.ok(true);
+            orderService.addOrder(order);
+            return ResponseEntity.ok(order);
         }
     }
 }

@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Article {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long priceid;
@@ -27,8 +28,7 @@ public class Article {
     private String composition;
 
 
-    public Article(Long id, Long priceid, String eancode, String color, String layout, String washsymbol, String composition) {
-        this.id = id;
+    public Article(Long priceid, String eancode, String color, String layout, String washsymbol, String composition) {
         this.priceid = priceid;
         this.eancode = eancode;
         this.color = color;

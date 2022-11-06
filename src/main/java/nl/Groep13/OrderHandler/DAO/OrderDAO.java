@@ -60,7 +60,6 @@ public class OrderDAO {
     }
 
     public lOrder addOrder(final lOrder order){
-        order.setId(null);
         return this.orderRepository.save(order);
     }
 }

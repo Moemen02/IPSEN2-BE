@@ -99,6 +99,7 @@ public class ArticleController {
         if (article == null) {
             throw new NullPointerException("Article is empty");
         } else {
+            articleService.addArticle(article);
             return ResponseEntity.ok(article);
         }
     }
@@ -144,6 +145,7 @@ public class ArticleController {
         if (articleDetail == null) {
             throw new NullPointerException("ArticleDetail is empty");
         } else {
+            articleDetailService.addArticleDetail(articleDetail);
             return ResponseEntity.ok(articleDetail);
         }
     }
@@ -189,6 +191,7 @@ public class ArticleController {
         if (articlePrice == null) {
             throw new NullPointerException("ArticlePrice is empty");
         } else {
+            articlePriceService.addArticlePrice(articlePrice);
             return ResponseEntity.ok(articlePrice);
         }
     }

@@ -63,7 +63,6 @@ public class CustomerDAO {
     }
 
     public Customer addCustomer( Customer customer){
-        customer.setId(null);
         return this.customerRepository.save(customer);
     }
 }

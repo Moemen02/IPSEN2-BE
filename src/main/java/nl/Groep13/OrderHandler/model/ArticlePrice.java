@@ -1,13 +1,12 @@
 package nl.Groep13.OrderHandler.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "article_price")
 public class ArticlePrice {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String type;
     private float width;
@@ -17,8 +16,7 @@ public class ArticlePrice {
     private float aPrice;
     private String description;
 
-    public ArticlePrice(Long id, String type, float width, float ptrWidth, float ptrLength, float vPrice, float aPrice, String description) {
-        this.id = id;
+    public ArticlePrice(String type, float width, float ptrWidth, float ptrLength, float vPrice, float aPrice, String description) {
         this.type = type;
         this.width = width;
         this.ptrWidth = ptrWidth;
