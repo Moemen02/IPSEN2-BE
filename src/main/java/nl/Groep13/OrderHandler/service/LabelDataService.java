@@ -78,6 +78,7 @@ public class LabelDataService {
             labelData.put("retour", String.valueOf(customer.get().isRetour_fabric()));
             labelData.put("opslag", location.get().getType_storage());
             labelData.put("afdeling", location.get().getBranch());
+            return labelData;
         }
         return null;
     }
