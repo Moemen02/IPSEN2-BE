@@ -12,6 +12,7 @@ import nl.Groep13.OrderHandler.repository.ArticleRepository;
 import nl.Groep13.OrderHandler.service.ArticleDetailService;
 import nl.Groep13.OrderHandler.service.ArticlePriceService;
 import nl.Groep13.OrderHandler.service.ArticleService;
+import org.hibernate.id.UUIDGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +24,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.UUID;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -70,7 +73,7 @@ public class ArticleControllerTest {
     @Test
     public void Should_Retrieve_GivenArticlePrice_On_FilledArticlePrice(){
         //Arrange
-        ArticlePrice articlePrice = new ArticlePrice(3605L, "Metal", 349, 485, 45, 30.37f, 373.00f, "ThisIsFake");
+        ArticlePrice articlePrice = new ArticlePrice("Metal", 349, 485, 45, 30.37f, 373.00f, "ThisIsFake");
 
         //Act
         ArticlePrice result = articleController.addArticlePrice(articlePrice).getBody();
@@ -118,9 +121,10 @@ public class ArticleControllerTest {
     @Test
     public void Should_Retrieve_GivenArticle_On_FilledArticle() {
         //Arrange
-        ArticleDetail articleDetail = new ArticleDetail("TESTING1", "Nepstoffen", "Holland Haag LE");
-        ArticlePrice articlePrice = new ArticlePrice(3605L, "Metal", 349, 485, 45, 30.37f, 373.00f, "ThisIsFake");
-        Article article = new Article(3605L, articlePrice.getId(), articleDetail.getEancode(), "GREY", "Solid", "Wqlcd", "100% Steel");
+        String eancode = UUID.randomUUID().toString().split("-")[0];
+        ArticleDetail articleDetail = new ArticleDetail(eancode, "Nepstoffen", "Holland Haag LE");
+        ArticlePrice articlePrice = new ArticlePrice("Metal", 349, 485, 45, 30.37f, 373.00f, "ThisIsFake");
+        Article article = new Article(articlePrice.getId(), articleDetail.getEancode(), "GREY", "Solid", "Wqlcd", "100% Steel");
         articleController.addArticlePrice(articlePrice);
         articleController.addArticleDetail(articleDetail);
 
