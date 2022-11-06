@@ -14,12 +14,11 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
     @Modifying
     @Transactional
     @Query("update Customer customer SET " +
-            "customer.articlenumber = ?1, customer.addressid = ?2," +
-            "customer.name = ?3, customer.perserved_fabric = ?4," +
-            "customer.retour_fabric = ?5 " +
-            "where customer.id = ?6")
+            "customer.addressid = ?1," +
+            "customer.name = ?2, customer.perserved_fabric = ?3," +
+            "customer.retour_fabric = ?4 " +
+            "where customer.id = ?5")
     void setCustomerById(
-            int articlenumber,
             long addressid,
             String name,
             boolean perserved_fabric,

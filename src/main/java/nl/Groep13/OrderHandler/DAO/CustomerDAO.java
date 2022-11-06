@@ -38,14 +38,11 @@ public class CustomerDAO {
 
         newCustomer.setId((newCustomer.getId() == null) ? oldCustomer.getId() : newCustomer.getId());
         newCustomer.setAddressid((newCustomer.getAddressid() == null) ? oldCustomer.getAddressid() : newCustomer.getAddressid());
-        newCustomer.setArticlenumber((newCustomer.getArticlenumber() == 0) ? oldCustomer.getArticlenumber() : newCustomer.getArticlenumber());
         newCustomer.setName((newCustomer.getName() == null) ? oldCustomer.getName() : newCustomer.getName());
         newCustomer.setPerserved_fabric((oldCustomer.isPerserved_fabric() == newCustomer.isPerserved_fabric()) ? oldCustomer.isPerserved_fabric() : newCustomer.isPerserved_fabric());
         newCustomer.setRetour_fabric((oldCustomer.isRetour_fabric() == newCustomer.isRetour_fabric()) ? oldCustomer.isRetour_fabric() : newCustomer.isRetour_fabric());
 
         customerRepository.setCustomerById(
-
-                newCustomer.getArticlenumber(),
                 newCustomer.getAddressid(),
                 newCustomer.getName(),
                 newCustomer.isPerserved_fabric(),

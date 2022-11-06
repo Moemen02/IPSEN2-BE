@@ -11,7 +11,6 @@ public class Customer {
 
     @Id
     private Long id;
-    private int articlenumber;
     private Long addressid;
     private String name;
     private boolean perserved_fabric;
@@ -20,9 +19,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long id, int articlenumber, Long addressid, String name, boolean perserved_fabric, boolean retour_fabric) {
+    public Customer(Long id, Long addressid, String name, boolean perserved_fabric, boolean retour_fabric) {
         this.id = id;
-        this.articlenumber = articlenumber;
         this.addressid = addressid;
         this.name = name;
         this.perserved_fabric = perserved_fabric;
@@ -35,14 +33,6 @@ public class Customer {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getArticlenumber() {
-        return articlenumber;
-    }
-
-    public void setArticlenumber(int articlenumber) {
-        this.articlenumber = articlenumber;
     }
 
     public Long getAddressid() {
