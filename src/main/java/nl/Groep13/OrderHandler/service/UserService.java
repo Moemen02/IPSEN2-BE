@@ -33,7 +33,7 @@ public class UserService implements UserDetailsService {
     @Autowired private UserRepository userRepository;
 
     /**
-     * match user credentials with de credentials in database
+     * Match user credentials with de credentials in database.
      * @param request - email and password
      * @param authManager
      * @return JWT token if user exists and credentials match
@@ -46,7 +46,7 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * get User model form database with email
+     * Get User model form database with email.
      * @param email - user email
      * @return - user model
      * @throws UsernameNotFoundException
@@ -65,9 +65,9 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * register new user in database and generate new JWT token
-     * @param registerRequest - email, name, password, role
-     * @return - new JWT token
+     * Register new user in database and generate new JWT token.
+     * @param registerRequest - email, name, password, role.
+     * @return - new JWT token.
      */
     public String register(RegisterRequest registerRequest)  {
         Optional<User> user = userDAO.getUserByEmail(registerRequest.email());

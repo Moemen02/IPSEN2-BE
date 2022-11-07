@@ -32,7 +32,7 @@ public class UserController {
     @Autowired private AuthenticationManager authManager;
 
     /**
-     * register new user, if email already in database user will not be created and USER_ALREADY_EXISTS will be send back
+     * Register new user, if email already in database user will not be created and USER_ALREADY_EXISTS will be send back
      *
      * @param registerRequest - contains email, name, password and role
      * @return - JWT payload and success message
@@ -50,7 +50,7 @@ public class UserController {
 
     /**
      * End point for user login.
-     * If user credentials are invalid error message INVALID_PASSWORD will be send
+     * If user credentials are invalid error message INVALID_PASSWORD will be returned
      * @param body - email and password
      * @return JWT payload and success message
      */

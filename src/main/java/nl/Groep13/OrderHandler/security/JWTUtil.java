@@ -18,13 +18,13 @@ public class JWTUtil {
     private String secret;
 
     /**
-     * this function returns a JWT token with the user email, role, name and id,
-     * this data is used in the frond-end of the applicaton.
-     * the secret is sored in the ./recources/application.properties
+     * This function returns a JWT token with the user email, role, name and id,
+     * This data is used in the frond-end of the applicaton.
+     * The secret is sored in the ./recources/application.properties
      * @param email - email of user
      * @param role - current role of user: ADMIN/MEDEWERKER - existing roles can be found in model/UserRole
      * @param name - name of user
-     * @param id - id of user as primary key in datatabse
+     * @param id - id of user as primary key in database
      * @return a string containing the JWT token
      * @throws IllegalArgumentException
      * @throws JWTCreationException

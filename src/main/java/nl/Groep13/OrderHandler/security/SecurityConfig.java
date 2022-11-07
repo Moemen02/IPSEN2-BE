@@ -23,7 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired private UserService userService;
 
     /**
-     * configure endpoints security, set role by witch a user can access an end point
+     * Configure endpoints security, set role by witch a user can access an end point.
      * @param http
      * @throws Exception
      */
