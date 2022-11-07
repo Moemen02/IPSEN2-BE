@@ -27,7 +27,6 @@ public class UserController {
     public static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
     public static final String LOGGIN_IN_SUCCESS = "Inloggen was succesful";
     public static final String INVALID_PASSWORD = "Ongeldige inloggegevens";
-    public static final String USER_NOT_FOUND = "Gebruiker niet gevonden";
     @Autowired private UserService userService;
     @Autowired private AuthenticationManager authManager;
 
@@ -74,6 +73,6 @@ public class UserController {
     public String getUserByID(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
         if (user.isPresent()) return user.get().getName();
-        return USER_NOT_FOUND;
+        return "";
     }
 }
