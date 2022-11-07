@@ -32,6 +32,12 @@ public class UserService implements UserDetailsService {
     @Autowired private PasswordEncoder passwordEncoder;
     @Autowired private UserRepository userRepository;
 
+    /**
+     * Match user credentials with de credentials in database.
+     * @param request - email and password
+     * @param authManager
+     * @return JWT token if user exists and credentials match
+     */
     public String login(LoginRequest request, AuthenticationManager authManager) {
         UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         authManager.authenticate(authInputToken);
@@ -39,6 +45,12 @@ public class UserService implements UserDetailsService {
         return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId());
     }
 
+    /**
+     * Get User model form database with email.
+     * @param email - user email
+     * @return - user model
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> userRes = userDAO.getUserByEmail(email);
@@ -52,6 +64,11 @@ public class UserService implements UserDetailsService {
                 Collections.singletonList(new SimpleGrantedAuthority(ROLE_PREFIX + user.getRole())));
     }
 
+    /**
+     * Register new user in database and generate new JWT token.
+     * @param registerRequest - email, name, password, role.
+     * @return - new JWT token.
+     */
     public String register(RegisterRequest registerRequest)  {
         Optional<User> user = userDAO.getUserByEmail(registerRequest.email());
         if (user.isPresent()) return USER_ALREADY_EXISTS;
