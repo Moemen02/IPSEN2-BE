@@ -51,7 +51,7 @@ public class UserController {
     /**
      * End point for user login.
      * If user credentials are invalid error message INVALID_PASSWORD will be send
-     * @param body
+     * @param body - email and password
      * @return JWT payload and success message
      */
     @PostMapping("/login")
