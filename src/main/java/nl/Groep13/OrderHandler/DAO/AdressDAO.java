@@ -1,7 +1,6 @@
 package nl.Groep13.OrderHandler.DAO;
 
 import nl.Groep13.OrderHandler.model.Adress;
-import nl.Groep13.OrderHandler.model.Label;
 import nl.Groep13.OrderHandler.repository.AdressRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;

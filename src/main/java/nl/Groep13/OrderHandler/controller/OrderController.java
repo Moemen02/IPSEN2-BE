@@ -1,7 +1,5 @@
 package nl.Groep13.OrderHandler.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.lOrder;
 import nl.Groep13.OrderHandler.service.OrderService;
@@ -44,7 +42,7 @@ public class OrderController {
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public Optional<lOrder> updateOrder(@PathVariable Long id, @RequestBody Map<String, String> order) throws JsonMappingException, JsonProcessingException{
+    public Optional<lOrder> updateOrder(@PathVariable Long id, @RequestBody Map<String, String> order){
 
         String orderToJson = gson.toJson(order);
         lOrder newOrder = gson.fromJson(orderToJson, lOrder.class);

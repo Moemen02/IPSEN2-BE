@@ -1,7 +1,6 @@
 package nl.Groep13.OrderHandler.DAO;
 
-import nl.Groep13.OrderHandler.model.Article;
-import nl.Groep13.OrderHandler.model.ArticleDetail;
+
 import nl.Groep13.OrderHandler.model.ArticlePrice;
 import nl.Groep13.OrderHandler.repository.ArticlePriceRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;

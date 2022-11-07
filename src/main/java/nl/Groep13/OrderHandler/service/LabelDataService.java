@@ -2,20 +2,12 @@ package nl.Groep13.OrderHandler.service;
 
 import nl.Groep13.OrderHandler.controller.*;
 import nl.Groep13.OrderHandler.model.*;
-import org.apache.coyote.http11.AbstractHttp11JsseProtocol;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.Optional;
 

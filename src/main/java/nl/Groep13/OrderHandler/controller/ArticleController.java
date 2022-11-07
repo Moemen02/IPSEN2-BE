@@ -1,8 +1,6 @@
 package nl.Groep13.OrderHandler.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticleDetail;
@@ -30,12 +28,6 @@ public class ArticleController {
     private ArticleDetailService articleDetailService;
     private ArticlePriceService articlePriceService;
 
-    private static CompleteArticle completeArticle;
-    private static Article article;
-    private static ArticlePrice articlePrice;
-    private static ArticleDetail articleDetail;
-
-    private ObjectMapper objectMapper;
     Gson gson = new Gson();
 
     @Autowired
@@ -117,7 +109,7 @@ public class ArticleController {
 
     @PutMapping(value = "/details/{eancode}")
     @ResponseBody
-    public Optional<ArticleDetail> updateArticleDetail(@PathVariable String eancode, @RequestBody Map<String, String> articleDetail) throws JsonMappingException, JsonProcessingException {
+    public Optional<ArticleDetail> updateArticleDetail(@PathVariable String eancode, @RequestBody Map<String, String> articleDetail){
         String articleDetailToJson = gson.toJson(articleDetail);
         ArticleDetail newArticleDetail = gson.fromJson(articleDetailToJson, ArticleDetail.class);
         return this.articleDetailService.updateArticle(eancode, Optional.of(newArticleDetail));
@@ -169,7 +161,7 @@ public class ArticleController {
 
     @PutMapping(value = "prices/{id}")
     @ResponseBody
-    public Optional<ArticlePrice> updateArticlePrice(@PathVariable Long id, @RequestBody Map<String, String> articlePrice) throws JsonMappingException, JsonProcessingException {
+    public Optional<ArticlePrice> updateArticlePrice(@PathVariable Long id, @RequestBody Map<String, String> articlePrice){
         String articlePriceToJson = gson.toJson(articlePrice);
         ArticlePrice newArticlePrice = gson.fromJson(articlePriceToJson, ArticlePrice.class);
         return this.articlePriceService.updateArticlePrice(id, Optional.of(newArticlePrice));

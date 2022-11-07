@@ -1,7 +1,6 @@
 package nl.Groep13.OrderHandler.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.Location;
 import nl.Groep13.OrderHandler.service.LocationService;
@@ -10,12 +9,11 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping(value = "/api/location")
@@ -47,7 +45,7 @@ public class LocationController {
 
     @PutMapping(value = "/{articlenumber}")
     @ResponseBody
-    public Optional<Location> updateLocation(@PathVariable Long articlenumber, @RequestBody Map<String, String> location) throws JsonMappingException, JsonProcessingException{
+    public Optional<Location> updateLocation(@PathVariable Long articlenumber, @RequestBody Map<String, String> location){
        String locationToJson = gson.toJson(location);
        Location newLocation = gson.fromJson(locationToJson, Location.class);
 

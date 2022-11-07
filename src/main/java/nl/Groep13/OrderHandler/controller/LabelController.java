@@ -30,9 +30,4 @@ public class LabelController {
        return labelDataService.getLabelData(id);
     }
 
-//    @GetMapping
-//    public resp
-
-
-
 }
