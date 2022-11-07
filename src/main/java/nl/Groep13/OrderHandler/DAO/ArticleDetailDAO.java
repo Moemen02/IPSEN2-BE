@@ -36,7 +36,6 @@ public class ArticleDetailDAO {
                 newArticleDetail.getSupplier()
         );
         articleDetailRepository.save(newArticleDetail);
-        System.out.println(Optional.of(newArticleDetail));
         return Optional.of(newArticleDetail);
     }
 

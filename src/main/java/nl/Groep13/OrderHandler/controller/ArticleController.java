@@ -1,6 +1,7 @@
 package nl.Groep13.OrderHandler.controller;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.Article;
 import nl.Groep13.OrderHandler.model.ArticleDetail;
@@ -142,8 +143,6 @@ public class ArticleController {
      * @param eancode
      * @param articleDetail
      * @return ArticleDetail
-     * @throws JsonMappingException In case of any mapping problems with given directory.
-     * @throws JsonProcessingException Leaves errors in case of problems processing the given directory.
      */
     @PutMapping(value = "/details/{eancode}")
     @ResponseBody
@@ -228,8 +227,6 @@ public class ArticleController {
      * @param id
      * @param articlePrice
      * @return ArticlePrice
-     * @throws JsonMappingException In case of any mapping problems with given directory.
-     * @throws JsonProcessingException Leaves errors in case of problems processing the given directory.
      */
     @PutMapping(value = "prices/{id}")
     @ResponseBody
