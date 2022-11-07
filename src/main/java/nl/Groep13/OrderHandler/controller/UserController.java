@@ -27,9 +27,16 @@ public class UserController {
     public static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
     public static final String LOGGIN_IN_SUCCESS = "Inloggen was succesful";
     public static final String INVALID_PASSWORD = "Ongeldige inloggegevens";
+    public static final String USER_NOT_FOUND = "Gebruiker niet gevonden";
     @Autowired private UserService userService;
     @Autowired private AuthenticationManager authManager;
 
+    /**
+     * register new user, if email already in database user will not be created and USER_ALREADY_EXISTS will be send back
+     *
+     * @param registerRequest - contains email, name, password and role
+     * @return - JWT payload and success message
+     */
     @PostMapping("/register")
     public JWTPayload registerHandler(@RequestBody RegisterRequest registerRequest){
         try {
@@ -41,6 +48,12 @@ public class UserController {
         }
     }
 
+    /**
+     * End point for user login.
+     * If user credentials are invalid error message INVALID_PASSWORD will be send
+     * @param body
+     * @return JWT payload and success message
+     */
     @PostMapping("/login")
     public JWTPayload loginHandler(@RequestBody LoginRequest body){
         try {
@@ -51,11 +64,16 @@ public class UserController {
         }
     }
 
+    /**
+     * get user name by given id
+     * @param id - id of user from database
+     * @return - name of user
+     */
     @GetMapping("/user/{id}")
     @ResponseBody
     public String getUserByID(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
         if (user.isPresent()) return user.get().getName();
-        return null;
+        return USER_NOT_FOUND;
     }
 }
