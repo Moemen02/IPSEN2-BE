@@ -1,8 +1,5 @@
 package nl.Groep13.OrderHandler.controller;
 
-import lombok.Getter;
-import lombok.Setter;
-import nl.Groep13.OrderHandler.DAO.UserDAO;
 import nl.Groep13.OrderHandler.model.JWTPayload;
 import nl.Groep13.OrderHandler.model.User;
 import nl.Groep13.OrderHandler.record.LoginRequest;
@@ -11,11 +8,7 @@ import nl.Groep13.OrderHandler.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
