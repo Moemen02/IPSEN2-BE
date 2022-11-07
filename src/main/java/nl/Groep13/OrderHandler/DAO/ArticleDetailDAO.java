@@ -27,15 +27,16 @@ public class ArticleDetailDAO {
         ArticleDetail newArticleDetail = articleDetail.get();
 
         newArticleDetail.setEancode((newArticleDetail.getEancode() == null || newArticleDetail.getEancode().equals("")) ? oldArticleDetail.getEancode() : newArticleDetail.getEancode());
-        newArticleDetail.setProductGroup((newArticleDetail.getProductGroup() == null || newArticleDetail.getProductGroup().equals("")) ? oldArticleDetail.getProductGroup() : newArticleDetail.getProductGroup());
+        newArticleDetail.setProductgroup((newArticleDetail.getProductgroup() == null || newArticleDetail.getProductgroup().equals("")) ? oldArticleDetail.getProductgroup() : newArticleDetail.getProductgroup());
         newArticleDetail.setSupplier((newArticleDetail.getSupplier() == null || newArticleDetail.getSupplier().equals("")) ? oldArticleDetail.getSupplier() : newArticleDetail.getSupplier());
 
         articleDetailRepository.setArticleDetailByEancode(
                 newArticleDetail.getEancode(),
-                newArticleDetail.getProductGroup(),
+                newArticleDetail.getProductgroup(),
                 newArticleDetail.getSupplier()
         );
         articleDetailRepository.save(newArticleDetail);
+        System.out.println(Optional.of(newArticleDetail));
         return Optional.of(newArticleDetail);
     }
 

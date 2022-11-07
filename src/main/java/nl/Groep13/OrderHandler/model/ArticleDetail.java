@@ -1,10 +1,13 @@
 package nl.Groep13.OrderHandler.model;
 
+import lombok.ToString;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
+@ToString
 @Table(name = "article_detail")
 public class ArticleDetail {
 
@@ -31,12 +34,12 @@ public class ArticleDetail {
         this.eancode = eancode;
     }
 
-    public String getProductGroup() {
+    public String getProductgroup() {
         return productgroup;
     }
 
-    public void setProductGroup(String productGroup) {
-        this.productgroup = productGroup;
+    public void setProductgroup(String productgroup) {
+        this.productgroup = productgroup;
     }
 
     public String getSupplier() {
