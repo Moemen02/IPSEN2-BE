@@ -64,7 +64,6 @@ public class LocationDao {
     }
 
     public Location addLocation(final Location location) {
-        location.setArticlenumber(null);
         return this.locationRepository.save(location);
     }
 

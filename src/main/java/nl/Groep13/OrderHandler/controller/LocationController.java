@@ -65,13 +65,12 @@ public class LocationController {
    }
 
    @PostMapping
-    public ResponseEntity<Boolean> addLocation(@RequestParam Map<String, String> location){
-       String locationToJson = gson.toJson(location);
-       Location newLocation = gson.fromJson(locationToJson, Location.class);
-       if (this.locationService.addLocation(newLocation) == null){
-           return ResponseEntity.badRequest().body(false);
+    public ResponseEntity<Location> addLocation(@RequestBody Location location){
+       if (location == null){
+           throw new NullPointerException("Location is empty");
        } else {
-           return ResponseEntity.ok(true);
+           locationService.addLocation(location);
+           return ResponseEntity.ok(location);
        }
    }
 }
