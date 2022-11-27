@@ -40,6 +40,7 @@ public class UserController {
         }
     }
 
+
     /**
      * End point for user login.
      * If user credentials are invalid error message INVALID_PASSWORD will be returned
