@@ -59,7 +59,7 @@ class UserControllerTest {
         // Arrage
         RegisterRequest registerRequest = new RegisterRequest(name, adminEmail, role, password);
         String json = new Gson().toJson(registerRequest);
-        String token = jwtUtil.generateToken(adminEmail, role, name, 1L);
+        String token = jwtUtil.generateToken(adminEmail, role, name, 1L, false);
 
         // Act
         MvcResult result = mvc.perform(post("/api/auth/register")

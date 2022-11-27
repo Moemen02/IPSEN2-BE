@@ -18,6 +18,12 @@ public class UserDAO {
     public Optional<User> getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
+    public User updatePassword(Long id, User newUser) {
+        userRepository.updatePassword(newUser.getPassword(), false, id);
+        return newUser;
+
+    }
     public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
     }

@@ -29,13 +29,14 @@ public class JWTUtil {
      * @throws IllegalArgumentException
      * @throws JWTCreationException
      */
-    public String generateToken(String email, UserRole role, String name, Long id) throws IllegalArgumentException, JWTCreationException {
+    public String generateToken(String email, UserRole role, String name, Long id, boolean defaultPass) throws IllegalArgumentException, JWTCreationException {
         return JWT.create()
                 .withSubject("User Details")
                 .withClaim("email", email)
                 .withClaim("role", role.toString())
                 .withClaim("name", name)
                 .withClaim("id", id)
+                .withClaim("defaultPass", defaultPass)
                 .withIssuedAt(new Date())
                 .withIssuer("Van Der Lelie")
                 .sign(Algorithm.HMAC256(secret));

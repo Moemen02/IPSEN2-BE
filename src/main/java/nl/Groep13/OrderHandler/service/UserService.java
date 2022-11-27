@@ -3,6 +3,7 @@ package nl.Groep13.OrderHandler.service;
 import lombok.AllArgsConstructor;
 import nl.Groep13.OrderHandler.DAO.UserDAO;
 import nl.Groep13.OrderHandler.model.User;
+import nl.Groep13.OrderHandler.record.ChangePassword;
 import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.repository.UserRepository;
 import nl.Groep13.OrderHandler.security.JWTUtil;
@@ -19,13 +20,16 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
 public class UserService implements UserDetailsService {
 
-    public static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
-    public static final String COULD_NOT_FIND_USER_WITH_EMAIL = "Could not findUser with email:";
+    private static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
+    private static final String COULD_NOT_FIND_USER_WITH_EMAIL = "Could not findUser with email:";
+    private static final String DEFAULT_PASSWORD = "Medewerker@";
+
     private final String ROLE_PREFIX = "ROLE_";
     private UserDAO userDAO;
     @Autowired private JWTUtil jwtUtil;
@@ -42,7 +46,7 @@ public class UserService implements UserDetailsService {
         UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         authManager.authenticate(authInputToken);
         User user = userDAO.getUserByEmail(request.email()).get();
-        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId());
+        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId(), user.isDefault_pass());
     }
 
     /**
@@ -73,14 +77,28 @@ public class UserService implements UserDetailsService {
         Optional<User> user = userDAO.getUserByEmail(registerRequest.email());
         if (user.isPresent()) return USER_ALREADY_EXISTS;
 
-        User newUser = new User(registerRequest.name(), registerRequest.email(), registerRequest.role(), registerRequest.password());
-        String encodedPass = passwordEncoder.encode(registerRequest.password());
+//        String encodedPass = passwordEncoder.encode(UUID.randomUUID().toString().replace("-", "").substring(0,7));
+        String encodedPass = passwordEncoder.encode(DEFAULT_PASSWORD);
+        User newUser = new User(registerRequest.name(), registerRequest.email(), registerRequest.role(), encodedPass, true);
         newUser.setPassword(encodedPass);
         userRepository.save(newUser);
-        return jwtUtil.generateToken(newUser.getEmail(), newUser.getRole(), newUser.getName(), newUser.getId());
+        return jwtUtil.generateToken(newUser.getEmail(), newUser.getRole(), newUser.getName(), newUser.getId(), false);
     }
 
     public Optional<User> getUserById(Long id) {
         return userDAO.getUserById(id);
+    }
+
+    public String changePassword(ChangePassword body) {
+        Optional<User> userRes = userDAO.getUserByEmail(body.email());
+        if (userRes.isEmpty()) throw new UsernameNotFoundException(COULD_NOT_FIND_USER_WITH_EMAIL + body.email());
+        User user = userRes.get();
+
+        String encodedPass = passwordEncoder.encode(body.newPassword());
+        user.setPassword(encodedPass);
+        user.setDefault_pass(false);
+        userDAO.updatePassword(user.getId(),user);
+
+        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId(), user.isDefault_pass());
     }
 }
