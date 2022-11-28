@@ -19,7 +19,6 @@ public class UserController {
     private static final String SERVER_GOT_ERROR = "Er is iets fout gegaan op de server, probeer het later opnieuw";
     private static final String NEW_USER_MADE = "Nieuwe gebruiker aangemaakt";
     private static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
-    private static final String LOGGIN_IN_SUCCESS = "Inloggen was succesful";
     private static final String INVALID_PASSWORD = "Ongeldige inloggegevens";
     private static final String CHANGED_PASSWORD_SUCCESS = "Uw nieuwe wachtwoord is opgeslagen";
     private static final String CHANGED_PASSWORD_FALIED = "Er is iets fout gegaan bij het updaten van Uw nieuwe wachtwoord, probeer het later opnieuw";
@@ -54,7 +53,7 @@ public class UserController {
     public JWTPayload loginHandler(@RequestBody LoginRequest body){
         try {
             String token = userService.login(body, authManager);
-            return new JWTPayload(token, LOGGIN_IN_SUCCESS, true);
+            return new JWTPayload(token, "", true);
         }catch (AuthenticationException authExc){
             return new JWTPayload("", INVALID_PASSWORD, false);
         }
