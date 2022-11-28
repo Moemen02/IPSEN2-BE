@@ -29,6 +29,7 @@ public class UserService implements UserDetailsService {
     private static final String USER_ALREADY_EXISTS = "gebuiker bestaat al";
     private static final String COULD_NOT_FIND_USER_WITH_EMAIL = "Could not findUser with email:";
     private static final String DEFAULT_PASSWORD = "Medewerker@";
+    private static final String PASSWORD_DOES_NOT_MATCH = "Wachtwoord komt niet overeen";
 
     private final String ROLE_PREFIX = "ROLE_";
     private UserDAO userDAO;
@@ -89,10 +90,13 @@ public class UserService implements UserDetailsService {
         return userDAO.getUserById(id);
     }
 
-    public String changePassword(ChangePassword body) {
+    public String changePassword(ChangePassword body, AuthenticationManager authManager) {
         Optional<User> userRes = userDAO.getUserByEmail(body.email());
         if (userRes.isEmpty()) throw new UsernameNotFoundException(COULD_NOT_FIND_USER_WITH_EMAIL + body.email());
         User user = userRes.get();
+
+        UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(body.email(), body.oldPassword());
+        authManager.authenticate(authInputToken);
 
         String encodedPass = passwordEncoder.encode(body.newPassword());
         user.setPassword(encodedPass);

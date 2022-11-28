@@ -22,6 +22,7 @@ public class UserController {
     private static final String INVALID_PASSWORD = "Ongeldige inloggegevens";
     private static final String CHANGED_PASSWORD_SUCCESS = "Uw nieuwe wachtwoord is opgeslagen";
     private static final String CHANGED_PASSWORD_FALIED = "Er is iets fout gegaan bij het updaten van Uw nieuwe wachtwoord, probeer het later opnieuw";
+    private static final String PASSWORD_DOES_NOT_MATCH = "Wachtwoord komt niet overeen";
     @Autowired private UserService userService;
     @Autowired private AuthenticationManager authManager;
 
@@ -62,10 +63,13 @@ public class UserController {
     @PostMapping("/changepassword")
     public JWTPayload changePassword(@RequestBody ChangePassword body){
         try {
-            String token = userService.changePassword(body);
+            String token = userService.changePassword(body, authManager);
+            if (token.equals(PASSWORD_DOES_NOT_MATCH)) {
+                return new JWTPayload("", PASSWORD_DOES_NOT_MATCH, false);
+            }
             return new JWTPayload(token, CHANGED_PASSWORD_SUCCESS, true);
         }catch (AuthenticationException authExc){
-            return new JWTPayload("", CHANGED_PASSWORD_FALIED, false);
+            return new JWTPayload("", PASSWORD_DOES_NOT_MATCH, false);
         }
     }
 
