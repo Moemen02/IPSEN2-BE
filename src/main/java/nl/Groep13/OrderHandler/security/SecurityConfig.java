@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -22,6 +23,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired private JWTFilter filter;
     @Autowired private UserService userService;
 
+    /**
+     * Configure endpoints security, set role by witch a user can access an end point.
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -32,6 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/login").permitAll()
                 .antMatchers("/api/auth/register").hasRole("ADMIN")
                 .antMatchers("/api/user/**").hasAnyRole("MEDEWERKER", "ADMIN")
+                .antMatchers("/api/auth/user").hasAnyRole("MEDEWERKER", "ADMIN")
+                .antMatchers("/api/auth/changepassword").hasAnyRole("MEDEWERKER", "ADMIN")
                 .antMatchers("/api/article/**").hasAnyRole("MEDEWERKER", "ADMIN")
                 .antMatchers("/api/customer/**").hasAnyRole("MEDEWERKER", "ADMIN")
                 .antMatchers("/api/location/**").hasAnyRole("MEDEWERKER", "ADMIN")

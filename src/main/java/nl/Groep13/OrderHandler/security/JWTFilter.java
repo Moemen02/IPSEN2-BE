@@ -21,6 +21,14 @@ public class JWTFilter extends OncePerRequestFilter {
     @Autowired private UserService userService;
     @Autowired private JWTUtil jwtUtil;
 
+    /**
+     * get token from header and validate with validateTokenAndRetrieveSubject
+     * @param request
+     * @param response
+     * @param filterChain
+     * @throws ServletException
+     * @throws IOException
+     */
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");

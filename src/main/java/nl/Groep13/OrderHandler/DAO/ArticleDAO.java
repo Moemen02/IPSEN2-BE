@@ -21,31 +21,35 @@ public class ArticleDAO {
         return articleRepository.findAll();
     }
 
-    public Optional<Article> updateArticle(Long id, Optional<Article> article) {
+    public Optional<Article> updateArticle(Long id, Optional<Article> article) throws ChangeSetPersister.NotFoundException {
         Optional<Article> oldArticleById = articleRepository.findById(id);
-        Article oldArticle = oldArticleById.get();
-        Article newArticle = article.get();
+        if (oldArticleById.isPresent()){
+            Article oldArticle = oldArticleById.get();
+            Article newArticle = article.get();
 
-        newArticle.setPriceid((newArticle.getPriceid() == null) ? oldArticle.getPriceid() : newArticle.getPriceid());
-        newArticle.setEancode((newArticle.getEancode() == null || newArticle.getEancode().equals("")) ? oldArticle.getEancode() : newArticle.getEancode());
-        newArticle.setComposition((newArticle.getComposition() == null || newArticle.getComposition().equals("")) ? oldArticle.getComposition() : newArticle.getComposition());
-        newArticle.setWashsymbol((newArticle.getWashsymbol() == null || newArticle.getWashsymbol().equals("")) ? oldArticle.getWashsymbol() : newArticle.getWashsymbol());
-        newArticle.setColor((newArticle.getColor() == null || newArticle.getColor().equals("")) ? oldArticle.getColor() : newArticle.getColor());
-        newArticle.setLayout((newArticle.getLayout() == null || newArticle.getLayout().equals("")) ? oldArticle.getLayout() : newArticle.getLayout());
-        newArticle.setArticleId((newArticle.getArticleId() == null) ? oldArticle.getArticleId() : newArticle.getArticleId());
+            newArticle.setPriceid((newArticle.getPriceid() == null) ? oldArticle.getPriceid() : newArticle.getPriceid());
+            newArticle.setEancode((newArticle.getEancode() == null || newArticle.getEancode().equals("")) ? oldArticle.getEancode() : newArticle.getEancode());
+            newArticle.setComposition((newArticle.getComposition() == null || newArticle.getComposition().equals("")) ? oldArticle.getComposition() : newArticle.getComposition());
+            newArticle.setWashsymbol((newArticle.getWashsymbol() == null || newArticle.getWashsymbol().equals("")) ? oldArticle.getWashsymbol() : newArticle.getWashsymbol());
+            newArticle.setColor((newArticle.getColor() == null || newArticle.getColor().equals("")) ? oldArticle.getColor() : newArticle.getColor());
+            newArticle.setLayout((newArticle.getLayout() == null || newArticle.getLayout().equals("")) ? oldArticle.getLayout() : newArticle.getLayout());
+            newArticle.setArticleId((newArticle.getArticleId() == null) ? oldArticle.getArticleId() : newArticle.getArticleId());
 
-        articleRepository.setArticleInfoById(
-            newArticle.getPriceid(),
-            newArticle.getEancode(),
-            newArticle.getComposition(),
-            newArticle.getWashsymbol(),
-            newArticle.getColor(),
-            newArticle.getLayout(),
-            newArticle.getArticleId()
-        );
+            articleRepository.setArticleInfoById(
+                    newArticle.getPriceid(),
+                    newArticle.getEancode(),
+                    newArticle.getComposition(),
+                    newArticle.getWashsymbol(),
+                    newArticle.getColor(),
+                    newArticle.getLayout(),
+                    newArticle.getArticleId()
+            );
+            articleRepository.save(newArticle);
+            return article;
+        }
 
-        articleRepository.save(newArticle);
-        return article;
+        throw new ChangeSetPersister.NotFoundException();
+
     }
 
     public void deleteArticle(final Long id) throws ChangeSetPersister.NotFoundException {
@@ -65,7 +69,7 @@ public class ArticleDAO {
      *
      * @param id given Long id to select one Article.
      * @throws ChangeSetPersister.NotFoundException if there
-     *                                              is no Article is found with the given id.
+     * is no Article is found with the given id.
      */
     public Optional<Article> getArticle(final Long id) throws ChangeSetPersister.NotFoundException {
         Optional<Article> article = articleRepository.findById(id);

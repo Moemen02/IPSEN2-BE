@@ -1,7 +1,6 @@
 package nl.Groep13.OrderHandler.DAO;
 
-import nl.Groep13.OrderHandler.model.Article;
-import nl.Groep13.OrderHandler.model.ArticleDetail;
+
 import nl.Groep13.OrderHandler.model.ArticlePrice;
 import nl.Groep13.OrderHandler.repository.ArticlePriceRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -36,14 +35,14 @@ public class ArticlePriceDAO {
         ArticlePrice oldArticlePrice = oldArticlePriceById.get();
         ArticlePrice inpArticlePrice = newArticlePrice.get();
 
-        inpArticlePrice.setType((inpArticlePrice.getType() == null) ? oldArticlePrice.getType() : inpArticlePrice.getType());
+        inpArticlePrice.setType((inpArticlePrice.getType() == null || inpArticlePrice.getType().equals("")) ? oldArticlePrice.getType() : inpArticlePrice.getType());
         inpArticlePrice.setWidth((inpArticlePrice.getWidth() == 0) ? oldArticlePrice.getWidth() : inpArticlePrice.getWidth());
         inpArticlePrice.setPtrWidth((inpArticlePrice.getPtrWidth() == 0) ? oldArticlePrice.getPtrWidth() : inpArticlePrice.getPtrWidth());
         inpArticlePrice.setPtrLength((inpArticlePrice.getPtrLength() == 0) ? oldArticlePrice.getPtrLength() : inpArticlePrice.getPtrLength());
         inpArticlePrice.setvPrice((inpArticlePrice.getvPrice() == 0) ? oldArticlePrice.getvPrice() : inpArticlePrice.getvPrice());
         inpArticlePrice.setaPrice((inpArticlePrice.getaPrice() == 0) ? oldArticlePrice.getaPrice() : inpArticlePrice.getaPrice());
-        inpArticlePrice.setDescription((inpArticlePrice.getDescription() == null) ? oldArticlePrice.getDescription() : inpArticlePrice.getDescription());
-        inpArticlePrice.setId((inpArticlePrice.getId() == null) ? oldArticlePrice.getId() : inpArticlePrice.getId());
+        inpArticlePrice.setDescription((inpArticlePrice.getDescription() == null || inpArticlePrice.getDescription().equals("")) ? oldArticlePrice.getDescription() : inpArticlePrice.getDescription());
+        inpArticlePrice.setId((inpArticlePrice.getId() == null || inpArticlePrice.getId().equals("")) ? oldArticlePrice.getId() : inpArticlePrice.getId());
 
         articlePriceRepository.setArticleInfoById(
                 inpArticlePrice.getType(),

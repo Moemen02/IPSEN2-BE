@@ -1,7 +1,7 @@
 package nl.Groep13.OrderHandler.service;
 
 import nl.Groep13.OrderHandler.DAO.ArticleDetailDAO;
-import nl.Groep13.OrderHandler.model.Article;
+
 import nl.Groep13.OrderHandler.model.ArticleDetail;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;

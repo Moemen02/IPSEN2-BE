@@ -1,14 +1,18 @@
 package nl.Groep13.OrderHandler.model;
 
+import lombok.ToString;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.*;
 
 @Entity
+@ToString
 @Table(name = "article")
 public class Article {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Long priceid;
@@ -22,10 +26,9 @@ public class Article {
     private String washsymbol;
 
     private String composition;
-    //    private Location location;
 
-    public Article(Long id, Long priceid, String eancode, String color, String layout, String washsymbol, String composition) {
-        this.id = id;
+
+    public Article(Long priceid, String eancode, String color, String layout, String washsymbol, String composition) {
         this.priceid = priceid;
         this.eancode = eancode;
         this.color = color;
