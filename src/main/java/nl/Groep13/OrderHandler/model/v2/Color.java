@@ -8,12 +8,20 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "waste")
-public class Waste {
+@Table(name = "color")
+public class Color {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private long waste_data;
-    private long waste_description;
+    private String colorName;
+
+    public Color(Long id, String colorName) {
+        this.id = id;
+        this.colorName = colorName;
+    }
+
+    public Color() {
+
+    }
 }
