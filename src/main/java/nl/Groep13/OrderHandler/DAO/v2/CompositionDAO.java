@@ -1,8 +1,8 @@
 package nl.Groep13.OrderHandler.DAO.v2;
 
-import nl.Groep13.OrderHandler.model.v2.Color;
 import nl.Groep13.OrderHandler.model.v2.Composition;
 import nl.Groep13.OrderHandler.repository.v2.CompositionRepository;
+import nl.Groep13.OrderHandler.repository.v2.WasteDataRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +29,20 @@ public class CompositionDAO {
         Optional<Composition> composition = compositionRepository.findById(id);
         if (composition.isPresent()) {
             return composition.get();
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public Composition updateComposition(Long id, Composition newComposition) throws ChangeSetPersister.NotFoundException {
+        if (compositionRepository.findById(id).isPresent()) {
+            compositionRepository.setComposition(newComposition.getCompositionName(), id);
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public void deleteCompositionById( Long id) throws ChangeSetPersister.NotFoundException {
+        if (compositionRepository.findById(id).isPresent()) {
+            compositionRepository.deleteCompositionById(id);
         }
         throw new ChangeSetPersister.NotFoundException();
     }

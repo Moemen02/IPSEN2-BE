@@ -65,7 +65,6 @@ public class WasteDataController {
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.ok(false);
         }
-
         return ResponseEntity.ok(true);
     }
 }
