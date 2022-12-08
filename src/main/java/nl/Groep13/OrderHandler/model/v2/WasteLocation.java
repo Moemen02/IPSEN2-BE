@@ -6,14 +6,16 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Getter@Setter
-@Table(name = "waste")
-public class Waste {
+@Getter
+@Setter
+@Table(name = "waste_location")
+public class WasteLocation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long waste_dataId;
-    private Long waste_descpId;
+    private Long locationId;
+    private Long wasteId;
     private Long usageId;
+
 }
