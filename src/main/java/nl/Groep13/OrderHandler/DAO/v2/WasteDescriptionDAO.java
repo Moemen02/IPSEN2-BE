@@ -1,6 +1,5 @@
 package nl.Groep13.OrderHandler.DAO.v2;
 
-import nl.Groep13.OrderHandler.model.v2.WasteData;
 import nl.Groep13.OrderHandler.model.v2.WasteDescription;
 import nl.Groep13.OrderHandler.repository.v2.WasteDescriptionRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -29,6 +28,46 @@ public class WasteDescriptionDAO {
         Optional<WasteDescription> wasteDescription = wasteDescriptionRepository.findById(id);
         if (wasteDescription.isPresent()) {
             return wasteDescription.get();
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public WasteDescription updateWasteDescription(Long id, WasteDescription newWasteDescription) throws ChangeSetPersister.NotFoundException {
+        Optional<WasteDescription> oldWasteDescriptionById = wasteDescriptionRepository.findById(id);
+        WasteDescription alteredWasteDescription = newWasteDescription;
+        if (oldWasteDescriptionById.isPresent()) {
+            WasteDescription oldWasteDescription = oldWasteDescriptionById.get();
+
+            alteredWasteDescription.setArticleNumber((newWasteDescription.getArticleNumber() == null || newWasteDescription.getArticleNumber().equals("")) ? oldWasteDescription.getArticleNumber() : newWasteDescription.getArticleNumber());
+            alteredWasteDescription.setDescription((newWasteDescription.getDescription() == null || newWasteDescription.getDescription().equals("")) ? oldWasteDescription.getDescription() : newWasteDescription.getDescription());
+            alteredWasteDescription.setClothWidth((newWasteDescription.getClothWidth() == 0) ? oldWasteDescription.getClothWidth() : newWasteDescription.getClothWidth());
+            alteredWasteDescription.setType((newWasteDescription.getType() == null || newWasteDescription.getType().equals("")) ? oldWasteDescription.getType() : newWasteDescription.getType());
+            alteredWasteDescription.setLayout((newWasteDescription.getLayout() == null || newWasteDescription.getLayout().equals("")) ? oldWasteDescription.getLayout() : newWasteDescription.getLayout());
+            alteredWasteDescription.setWashcode((newWasteDescription.getWashcode() == null || newWasteDescription.getWashcode().equals("")) ? oldWasteDescription.getWashcode() : newWasteDescription.getWashcode());
+            alteredWasteDescription.setWeight((newWasteDescription.getWeight() == 0) ? oldWasteDescription.getWeight() : newWasteDescription.getWeight());
+            alteredWasteDescription.setNot_tiltable((newWasteDescription.isNot_tiltable()) != oldWasteDescription.isNot_tiltable() ? newWasteDescription.isNot_tiltable() : oldWasteDescription.isNot_tiltable());
+            alteredWasteDescription.setMinimumStock((newWasteDescription.getMinimumStock() == 0) ? oldWasteDescription.getMinimumStock() : newWasteDescription.getMinimumStock());
+
+            wasteDescriptionRepository.setWasteDescriptionInfoById(
+                    alteredWasteDescription.getArticleNumber(),
+                    alteredWasteDescription.getDescription(),
+                    alteredWasteDescription.getClothWidth(),
+                    alteredWasteDescription.getType(),
+                    alteredWasteDescription.getLayout(),
+                    alteredWasteDescription.getWashcode(),
+                    alteredWasteDescription.getWeight(),
+                    alteredWasteDescription.isNot_tiltable(),
+                    alteredWasteDescription.getMinimumStock(),
+                    alteredWasteDescription.getId()
+            );
+            return alteredWasteDescription;
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public void deleteWasteDescriptionById(Long id) throws ChangeSetPersister.NotFoundException {
+        if (wasteDescriptionRepository.findById(id).isPresent()) {
+            wasteDescriptionRepository.deleteWasteDescriptionById(id);
         }
         throw new ChangeSetPersister.NotFoundException();
     }

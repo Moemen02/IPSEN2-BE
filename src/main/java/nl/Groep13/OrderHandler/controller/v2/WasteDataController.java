@@ -45,4 +45,27 @@ public class WasteDataController {
             return ResponseEntity.ok(wasteData);
         }
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<WasteData> updateWasteData(@PathVariable final Long id, @RequestBody final WasteData wasteData) throws ChangeSetPersister.NotFoundException {
+        try {
+            wasteDataDAO.getWasteDataById(id);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(
+                wasteDataDAO.updateWasteData(id, wasteData)
+        );
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Boolean> deleteWasteData(@PathVariable final Long id) {
+        try {
+            wasteDataDAO.deleteWasteDataById(id);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.ok(false);
+        }
+
+        return ResponseEntity.ok(true);
+    }
 }

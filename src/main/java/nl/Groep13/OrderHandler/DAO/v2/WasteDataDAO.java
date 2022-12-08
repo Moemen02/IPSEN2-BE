@@ -24,30 +24,49 @@ public class WasteDataDAO {
         return this.wasteDataRepository.save(wasteData);
     }
 
-//    public WasteData updateWasteData(Long id, WasteData newWasteData) {
-//        Optional<WasteData> oldWasteDataById = wasteDataRepository.findById(id);
-//        WasteData alteredWasteData = newWasteData;
-//        if (oldWasteDataById.isPresent()) {
-//            WasteData oldWasteData = oldWasteDataById.get();
-//
-//            alteredWasteData.setSupplier((newWasteData.getSupplier() == null || newWasteData.getSupplier().equals("")) ? oldWasteData.getSupplier() : newWasteData.getSupplier());
-//            alteredWasteData.setProductGroup((newWasteData.getProductGroup() == null || newWasteData.getProductGroup().equals("")) ? oldWasteData.getProductGroup() : newWasteData.getProductGroup());
-//            alteredWasteData.setEancode((newWasteData.getEancode() == null || newWasteData.getEancode().equals("")) ? oldWasteData.getEancode() : newWasteData.getEancode());
-//            alteredWasteData.setColorId((newWasteData.getColorId() == null) ? oldWasteData.getColorId() : newWasteData.getColorId());
-//            alteredWasteData.setPatternLength((newWasteData.getPatternLength() == 0) ? oldWasteData.getPatternLength() : newWasteData.getPatternLength());
-//            alteredWasteData.setPatternWidth((newWasteData.getPatternWidth() == 0) ? oldWasteData.getPatternWidth() : newWasteData.getPatternWidth());
-//            alteredWasteData.setCompositionId((newWasteData.getCompositionId() == null) ? oldWasteData.getCompositionId() : newWasteData.getCompositionId());
-//            alteredWasteData.setStockRL((newWasteData.isStockRL() != oldWasteData.isStockRL()) ? newWasteData.isStockRL() : oldWasteData.isStockRL());
-//
-//        }
-//
-//        return alteredWasteData;
-//    }
-
     public WasteData getWasteDataById(Long id) throws ChangeSetPersister.NotFoundException {
         Optional<WasteData> wasteData = wasteDataRepository.findById(id);
         if (wasteData.isPresent()) {
             return wasteData.get();
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public WasteData updateWasteData(Long id, WasteData newWasteData) throws ChangeSetPersister.NotFoundException {
+        Optional<WasteData> oldWasteDataById = wasteDataRepository.findById(id);
+        WasteData alteredWasteData = newWasteData;
+        if (oldWasteDataById.isPresent()) {
+            WasteData oldWasteData = oldWasteDataById.get();
+
+            alteredWasteData.setSupplier((newWasteData.getSupplier() == null || newWasteData.getSupplier().equals("")) ? oldWasteData.getSupplier() : newWasteData.getSupplier());
+            alteredWasteData.setProductGroup((newWasteData.getProductGroup() == null || newWasteData.getProductGroup().equals("")) ? oldWasteData.getProductGroup() : newWasteData.getProductGroup());
+            alteredWasteData.setEancode((newWasteData.getEancode() == null || newWasteData.getEancode().equals("")) ? oldWasteData.getEancode() : newWasteData.getEancode());
+            alteredWasteData.setColorId((newWasteData.getColorId() == null) ? oldWasteData.getColorId() : newWasteData.getColorId());
+            alteredWasteData.setPatternLength((newWasteData.getPatternLength() == 0) ? oldWasteData.getPatternLength() : newWasteData.getPatternLength());
+            alteredWasteData.setPatternWidth((newWasteData.getPatternWidth() == 0) ? oldWasteData.getPatternWidth() : newWasteData.getPatternWidth());
+            alteredWasteData.setCompositionId((newWasteData.getCompositionId() == null) ? oldWasteData.getCompositionId() : newWasteData.getCompositionId());
+            alteredWasteData.setStockRL((newWasteData.isStockRL() != oldWasteData.isStockRL()) ? newWasteData.isStockRL() : oldWasteData.isStockRL());
+
+            wasteDataRepository.setWasteDataInfoById(
+                    alteredWasteData.getSupplier(),
+                    alteredWasteData.getProductGroup(),
+                    alteredWasteData.getEancode(),
+                    alteredWasteData.getColorId(),
+                    alteredWasteData.getPatternLength(),
+                    alteredWasteData.getPatternWidth(),
+                    alteredWasteData.getCompositionId(),
+                    alteredWasteData.isStockRL(),
+                    alteredWasteData.getId()
+            );
+
+            return alteredWasteData;
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public void deleteWasteDataById( Long id) throws ChangeSetPersister.NotFoundException {
+        if (wasteDataRepository.findById(id).isPresent()) {
+            wasteDataRepository.deleteWasteDataById(id);
         }
         throw new ChangeSetPersister.NotFoundException();
     }

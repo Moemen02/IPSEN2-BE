@@ -45,4 +45,27 @@ public class WasteDescriptionController {
             return ResponseEntity.ok(wasteDescription);
         }
     }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<WasteDescription> updateWasteDescription(@PathVariable final Long id, @RequestBody final WasteDescription wasteDescription) throws ChangeSetPersister.NotFoundException {
+        try {
+            wasteDescriptionDAO.getWasteDescriptionById(id);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+        return ResponseEntity.ok(
+                wasteDescriptionDAO.updateWasteDescription(id, wasteDescription)
+        );
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Boolean> deleteWasteDescription(@PathVariable final Long id) {
+        try {
+            wasteDescriptionDAO.deleteWasteDescriptionById(id);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.ok(false);
+        }
+
+        return ResponseEntity.ok(true);
+    }
 }
