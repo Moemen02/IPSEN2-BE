@@ -1,6 +1,7 @@
 package nl.Groep13.OrderHandler.DAO.v2;
 
 import nl.Groep13.OrderHandler.model.v2.Color;
+import nl.Groep13.OrderHandler.model.v2.Composition;
 import nl.Groep13.OrderHandler.repository.v2.ColorRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
@@ -28,6 +29,20 @@ public class ColorDAO {
         Optional<Color> color = colorRepository.findById(id);
         if (color.isPresent()) {
             return color.get();
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public Color updateColor(Long id, Color newColor) throws ChangeSetPersister.NotFoundException {
+        if (colorRepository.findById(id).isPresent()) {
+            colorRepository.setColor(newColor.getColorName(), id);
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public void deleteColorById( Long id) throws ChangeSetPersister.NotFoundException {
+        if (colorRepository.findById(id).isPresent()) {
+            colorRepository.deleteColorById(id);
         }
         throw new ChangeSetPersister.NotFoundException();
     }
