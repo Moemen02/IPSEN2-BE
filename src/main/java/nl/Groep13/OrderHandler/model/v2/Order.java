@@ -8,21 +8,21 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "order")
+@Table(name = "Lorder")
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private Long wasteID;
-    private Long customerID;
-    private boolean finished;
+    private Long ID;
+    private Long WasteID;
+    private Long CustomerID;
+    private boolean Finished;
 
-    public Order(Long id, Long wasteID, Long customerID, boolean finished) {
-        this.id = id;
-        this.wasteID = wasteID;
-        this.customerID = customerID;
-        this.finished = finished;
+    public Order(Long ID, Long wasteID, Long customerID, boolean finished) {
+        this.ID = ID;
+        WasteID = wasteID;
+        CustomerID = customerID;
+        Finished = finished;
     }
 
     public Order() {
