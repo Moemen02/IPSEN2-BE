@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "Lorder")
-public class Order {
+@Table(name = "Waste_order")
+public class WasteOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +18,13 @@ public class Order {
     private Long CustomerID;
     private boolean Finished;
 
-    public Order(Long ID, Long wasteID, Long customerID, boolean finished) {
+    public WasteOrder(Long ID, Long wasteID, Long customerID, boolean finished) {
         this.ID = ID;
         WasteID = wasteID;
         CustomerID = customerID;
         Finished = finished;
     }
 
-    public Order() {
+    public WasteOrder() {
     }
 }
