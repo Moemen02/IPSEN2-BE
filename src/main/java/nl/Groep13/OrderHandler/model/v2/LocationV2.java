@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "Location")
-public class Location {
+public class LocationV2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,13 +18,13 @@ public class Location {
     private Long CompositionID;
     private Long RequirementID;
 
-    public Location(Long ID, Long category_locationID, Long compositionID, Long requirementID) {
+    public LocationV2(Long ID, Long category_locationID, Long compositionID, Long requirementID) {
         this.ID = ID;
         Category_locationID = category_locationID;
         CompositionID = compositionID;
         RequirementID = requirementID;
     }
 
-    public Location() {
+    public LocationV2() {
     }
 }
