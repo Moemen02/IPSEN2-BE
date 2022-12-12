@@ -14,7 +14,7 @@ public interface WasteDescriptionRepository extends JpaRepository<WasteDescripti
     @Modifying
     @Transactional
     @Query("update WasteDescription wastedescription set"
-            + " wastedescription.articleNumber = ?1, wastedescription.description = ?2,"
+            + " wastedescription.articlenumber = ?1, wastedescription.description = ?2,"
             + " wastedescription.clothWidth = ?3, wastedescription.type = ?4,"
             + " wastedescription.layout = ?5, wastedescription.washcode = ?6,"
             + " wastedescription.weight = ?7, wastedescription.not_tiltable = ?8,"

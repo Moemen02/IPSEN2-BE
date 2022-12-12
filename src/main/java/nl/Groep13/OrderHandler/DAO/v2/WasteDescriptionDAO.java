@@ -35,10 +35,11 @@ public class WasteDescriptionDAO {
     public WasteDescription updateWasteDescription(Long id, WasteDescription newWasteDescription) throws ChangeSetPersister.NotFoundException {
         Optional<WasteDescription> oldWasteDescriptionById = wasteDescriptionRepository.findById(id);
         WasteDescription alteredWasteDescription = newWasteDescription;
+        //TODO ask team about if only the ID is needed in the url or must be also given in the Requestbody.
         if (oldWasteDescriptionById.isPresent()) {
             WasteDescription oldWasteDescription = oldWasteDescriptionById.get();
 
-            alteredWasteDescription.setArticleNumber((newWasteDescription.getArticleNumber() == null || newWasteDescription.getArticleNumber().equals("")) ? oldWasteDescription.getArticleNumber() : newWasteDescription.getArticleNumber());
+            alteredWasteDescription.setArticlenumber((newWasteDescription.getArticlenumber() == null || newWasteDescription.getArticlenumber().equals("")) ? oldWasteDescription.getArticlenumber() : newWasteDescription.getArticlenumber());
             alteredWasteDescription.setDescription((newWasteDescription.getDescription() == null || newWasteDescription.getDescription().equals("")) ? oldWasteDescription.getDescription() : newWasteDescription.getDescription());
             alteredWasteDescription.setClothWidth((newWasteDescription.getClothWidth() == 0) ? oldWasteDescription.getClothWidth() : newWasteDescription.getClothWidth());
             alteredWasteDescription.setType((newWasteDescription.getType() == null || newWasteDescription.getType().equals("")) ? oldWasteDescription.getType() : newWasteDescription.getType());
@@ -49,7 +50,7 @@ public class WasteDescriptionDAO {
             alteredWasteDescription.setMinimumStock((newWasteDescription.getMinimumStock() == 0) ? oldWasteDescription.getMinimumStock() : newWasteDescription.getMinimumStock());
 
             wasteDescriptionRepository.setWasteDescriptionInfoById(
-                    alteredWasteDescription.getArticleNumber(),
+                    alteredWasteDescription.getArticlenumber(),
                     alteredWasteDescription.getDescription(),
                     alteredWasteDescription.getClothWidth(),
                     alteredWasteDescription.getType(),

@@ -58,7 +58,7 @@ public class WasteDescriptionController {
         );
     }
 
-    @DeleteMapping
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Boolean> deleteWasteDescription(@PathVariable final Long id) {
         try {
             wasteDescriptionDAO.deleteWasteDescriptionById(id);

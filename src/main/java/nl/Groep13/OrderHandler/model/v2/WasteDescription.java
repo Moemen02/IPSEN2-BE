@@ -14,7 +14,7 @@ public class WasteDescription {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String articleNumber;
+    private String articlenumber;
     private String description;
     //clothWidth = Stofbreedte
     private int clothWidth;
@@ -27,9 +27,9 @@ public class WasteDescription {
     private int minimumStock;
 
 
-    public WasteDescription(Long id, String articleNumber, String description, int clothWidth, String type, String layout, String washcode, int weight, boolean not_tiltable, int minimumStock) {
+    public WasteDescription(Long id, String articlenumber, String description, int clothWidth, String type, String layout, String washcode, int weight, boolean not_tiltable, int minimumStock) {
         this.id = id;
-        this.articleNumber = articleNumber;
+        this.articlenumber = articlenumber;
         this.description = description;
         this.clothWidth = clothWidth;
         this.type = type;
