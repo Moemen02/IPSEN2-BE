@@ -13,7 +13,7 @@ public class Waste {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long waste_dataId;
-    private Long waste_descpId;
-    private Long usageId;
+    private Long Waste_dataID;
+    private Long Waste_descriptionID;
+    private Long usageID;
 }

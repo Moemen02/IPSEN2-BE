@@ -26,14 +26,14 @@ public class User {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
-    private boolean default_pass;
+    private boolean defaultpass;
 
     public User(String name, String email, UserRole role, String password, boolean default_pass) {
         this.name = name;
         this.email = email;
         this.role = role;
         this.password = password;
-        this.default_pass = default_pass;
+        this.defaultpass = default_pass;
     }
 
     public String getEmail() {
