@@ -20,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -47,7 +46,7 @@ public class UserService implements UserDetailsService {
         UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(request.email(), request.password());
         authManager.authenticate(authInputToken);
         User user = userDAO.getUserByEmail(request.email()).get();
-        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId(), user.isDefault_pass());
+        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId(), user.isDefaultpass());
     }
 
     /**
@@ -100,9 +99,9 @@ public class UserService implements UserDetailsService {
 
         String encodedPass = passwordEncoder.encode(body.newPassword());
         user.setPassword(encodedPass);
-        user.setDefault_pass(false);
+        user.setDefaultpass(false);
         userDAO.updatePassword(user.getId(),user);
 
-        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId(), user.isDefault_pass());
+        return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId(), user.isDefaultpass());
     }
 }

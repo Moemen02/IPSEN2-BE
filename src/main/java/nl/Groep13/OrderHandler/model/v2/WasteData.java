@@ -15,24 +15,24 @@ public class WasteData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String supplier;
-    private String productGroup;
+    private String productgroup;
     private String eancode;
-    private Long colorId;
+    private String color;
     private float patternLength;
     private float patternWidth;
-    private Long compositionId;
+    private String composition;
     private boolean stockRL;
 
-    public WasteData(Long id, String supplier, String productGroup, String eancode, Long colorId, float patternLength, float patternWidth, Long compositionId, boolean stockRL) {
+    public WasteData(Long id, String supplier, String eancode, String color, float patternLength, float patternWidth, String composition, boolean stockRL, String productgroup) {
         this.id = id;
         this.supplier = supplier;
-        this.productGroup = productGroup;
         this.eancode = eancode;
-        this.colorId = colorId;
+        this.color = color;
         this.patternLength = patternLength;
         this.patternWidth = patternWidth;
-        this.compositionId = compositionId;
+        this.composition = composition;
         this.stockRL = stockRL;
+        this.productgroup = productgroup;
     }
 
     public WasteData() {

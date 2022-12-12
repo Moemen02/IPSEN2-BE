@@ -39,23 +39,23 @@ public class WasteDataDAO {
             WasteData oldWasteData = oldWasteDataById.get();
 
             alteredWasteData.setSupplier((newWasteData.getSupplier() == null || newWasteData.getSupplier().equals("")) ? oldWasteData.getSupplier() : newWasteData.getSupplier());
-            alteredWasteData.setProductGroup((newWasteData.getProductGroup() == null || newWasteData.getProductGroup().equals("")) ? oldWasteData.getProductGroup() : newWasteData.getProductGroup());
             alteredWasteData.setEancode((newWasteData.getEancode() == null || newWasteData.getEancode().equals("")) ? oldWasteData.getEancode() : newWasteData.getEancode());
-            alteredWasteData.setColorId((newWasteData.getColorId() == null) ? oldWasteData.getColorId() : newWasteData.getColorId());
+            alteredWasteData.setColor((newWasteData.getColor() == null || newWasteData.getColor().equals("")) ? oldWasteData.getColor() : newWasteData.getColor());
             alteredWasteData.setPatternLength((newWasteData.getPatternLength() == 0) ? oldWasteData.getPatternLength() : newWasteData.getPatternLength());
             alteredWasteData.setPatternWidth((newWasteData.getPatternWidth() == 0) ? oldWasteData.getPatternWidth() : newWasteData.getPatternWidth());
-            alteredWasteData.setCompositionId((newWasteData.getCompositionId() == null) ? oldWasteData.getCompositionId() : newWasteData.getCompositionId());
+            alteredWasteData.setComposition((newWasteData.getComposition() == null) ? oldWasteData.getComposition() : newWasteData.getComposition());
             alteredWasteData.setStockRL((newWasteData.isStockRL() != oldWasteData.isStockRL()) ? newWasteData.isStockRL() : oldWasteData.isStockRL());
+            alteredWasteData.setProductgroup((newWasteData.getProductgroup() == null || newWasteData.getProductgroup().equals("")) ? oldWasteData.getProductgroup() : newWasteData.getProductgroup());
 
             wasteDataRepository.setWasteDataInfoById(
                     alteredWasteData.getSupplier(),
-                    alteredWasteData.getProductGroup(),
                     alteredWasteData.getEancode(),
-                    alteredWasteData.getColorId(),
+                    alteredWasteData.getColor(),
                     alteredWasteData.getPatternLength(),
                     alteredWasteData.getPatternWidth(),
-                    alteredWasteData.getCompositionId(),
+                    alteredWasteData.getComposition(),
                     alteredWasteData.isStockRL(),
+                    alteredWasteData.getProductgroup(),
                     alteredWasteData.getId()
             );
 

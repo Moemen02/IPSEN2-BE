@@ -14,20 +14,20 @@ public interface WasteDataRepository extends JpaRepository<WasteData, Long>{
     @Modifying
     @Transactional
     @Query("update WasteData wastedata set"
-            + " wastedata.supplier = ?1, wastedata.productGroup = ?2,"
-            + " wastedata.eancode = ?3, wastedata.colorId = ?4,"
-            + " wastedata.patternLength = ?5, wastedata.patternWidth = ?6,"
-            + " wastedata.compositionId = ?7, wastedata.stockRL = ?8"
+            + " wastedata.supplier = ?1, wastedata.eancode = ?2,"
+            + " wastedata.color = ?3, wastedata.patternLength = ?4,"
+            + " wastedata.patternWidth = ?5, wastedata.composition = ?6,"
+            + " wastedata.stockRL = ?7, wastedata.productgroup = ?8"
             + " where wastedata.id = ?9")
     void setWasteDataInfoById(
             String supplier,
-            String productGroup,
             String eancode,
-            Long colorId,
+            String color,
             float patternLength,
             float patternWidth,
-            Long compositionId,
+            String composition,
             boolean stockRL,
+            String productGroup,
             Long id
     );
 
