@@ -14,6 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Transactional
     @Query("update User user set user.password = ?1, user.defaultpass = ?2 where user.id = ?3")
-    void updatePassword(String password, boolean default_pass, Long id);
+    void updatePassword(String password, boolean defaultpass, Long id);
 
 }
