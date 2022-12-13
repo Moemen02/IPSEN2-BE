@@ -59,10 +59,10 @@ class WasteControllerTest {
         // Configure WasteInterface.getWaste(...).
         String Token = getToken();
         final Waste waste = new Waste();
-        waste.setId(0L);
-        waste.setWaste_dataID(0L);
-        waste.setWaste_descriptionID(0L);
-        waste.setUsageID(0L);
+//        waste.setId(0L);
+//        waste.setWaste_dataID(0L);
+//        waste.setWaste_descriptionID(0L);
+//        waste.setUsageID(0L);
         final List<Waste> wastes = List.of(waste);
         when(mockWasteInterface.getWaste()).thenReturn(wastes);
 
