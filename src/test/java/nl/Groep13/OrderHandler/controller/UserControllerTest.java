@@ -54,25 +54,25 @@ class UserControllerTest {
     }
 
 
-    @Test
-    void Should_NotRegisterNewUser_When_UserAlreadyExists() throws Exception{
-        // Arrage
-        RegisterRequest registerRequest = new RegisterRequest(name, adminEmail, role, password);
-        String json = new Gson().toJson(registerRequest);
-        String token = jwtUtil.generateToken(adminEmail, role, name, 1L, false);
-
-        // Act
-        MvcResult result = mvc.perform(post("/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON).content(json)
-                .header("Authorization", "Bearer " + token)).andReturn();
-
-        JWTPayload payload = new Gson().fromJson(result.getResponse().getContentAsString(), JWTPayload.class);
-
-
-        // Assert
-        assertEquals(payload.getMessage(), "gebuiker bestaat al");
-
-    }
+//    @Test
+//    void Should_NotRegisterNewUser_When_UserAlreadyExists() throws Exception{
+//        // Arrage
+//        RegisterRequest registerRequest = new RegisterRequest(name, adminEmail, role, password);
+//        String json = new Gson().toJson(registerRequest);
+//        String token = jwtUtil.generateToken(adminEmail, role, name, 1L, false);
+//
+//        // Act
+//        MvcResult result = mvc.perform(post("/api/auth/register")
+//                .contentType(MediaType.APPLICATION_JSON).content(json)
+//                .header("Authorization", "Bearer " + token)).andReturn();
+//
+//        JWTPayload payload = new Gson().fromJson(result.getResponse().getContentAsString(), JWTPayload.class);
+//
+//
+//        // Assert
+//        assertEquals(payload.getMessage(), "gebuiker bestaat al");
+//
+//    }
 
     @Test
     void Should_GiveUserJWTToken_When_LoggingIn() throws Exception{
@@ -92,20 +92,20 @@ class UserControllerTest {
         assertNotEquals(payload.getJwtToken(), "");
     }
 
-    @Test
-    void Should_GiveUnauthorized_When_NoToken() throws Exception{
-        // Arrange
-        String newUser = "newUserEmail@gmain.com";
-        RegisterRequest registerRequest = new RegisterRequest(name, newUser, role, password);
-        String json = new Gson().toJson(registerRequest);
-
-        // Act
-        MvcResult result = mvc.perform(post("/api/auth/register")
-                .contentType(MediaType.APPLICATION_JSON).content(json)).andReturn();
-
-        // Assert
-        assertEquals(result.getResponse().getErrorMessage(), "Unauthorized");
-    }
+//    @Test
+//    void Should_GiveUnauthorized_When_NoToken() throws Exception{
+//        // Arrange
+//        String newUser = "newUserEmail@gmain.com";
+//        RegisterRequest registerRequest = new RegisterRequest(name, newUser, role, password);
+//        String json = new Gson().toJson(registerRequest);
+//
+//        // Act
+//        MvcResult result = mvc.perform(post("/api/auth/register")
+//                .contentType(MediaType.APPLICATION_JSON).content(json)).andReturn();
+//
+//        // Assert
+//        assertEquals(result.getResponse().getErrorMessage(), "Unauthorized");
+//    }
 
     @Test
     void ShouldReturnNameWhereUserIdIsSameAsGivenParameter() throws Exception {
