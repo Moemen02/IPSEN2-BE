@@ -1,9 +1,10 @@
-package nl.Groep13.OrderHandler.model;
+package nl.Groep13.OrderHandler.model.v2;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import nl.Groep13.OrderHandler.model.UserRole;
 
 import javax.persistence.*;
 
@@ -12,7 +13,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Table(name = "user")
-public class User {
+public class UserV2 {
+
 
 
 
@@ -30,7 +32,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
-//    @Column(name = "Password")
+    //    @Column(name = "Password")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
@@ -38,7 +40,7 @@ public class User {
 
     private boolean default_pass;
 
-    public User(String name, String email, UserRole role, String password, boolean default_pass) {
+    public UserV2(String name, String email, UserRole role, String password, boolean default_pass) {
         this.name = name;
         this.email = email;
         this.role = role;

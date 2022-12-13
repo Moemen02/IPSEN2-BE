@@ -2,7 +2,6 @@ package nl.Groep13.OrderHandler.controller;
 
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.JWTPayload;
-import nl.Groep13.OrderHandler.model.User;
 import nl.Groep13.OrderHandler.model.UserRole;
 import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.record.RegisterRequest;
@@ -57,7 +56,7 @@ class UserControllerTest {
     @Test
     void Should_NotRegisterNewUser_When_UserAlreadyExists() throws Exception{
         // Arrage
-        RegisterRequest registerRequest = new RegisterRequest(name, adminEmail, role, password);
+        RegisterRequest registerRequest = new RegisterRequest(name, adminEmail, role);
         String json = new Gson().toJson(registerRequest);
         String token = jwtUtil.generateToken(adminEmail, role, name, 1L, false);
 
@@ -96,7 +95,7 @@ class UserControllerTest {
     void Should_GiveUnauthorized_When_NoToken() throws Exception{
         // Arrange
         String newUser = "newUserEmail@gmain.com";
-        RegisterRequest registerRequest = new RegisterRequest(name, newUser, role, password);
+        RegisterRequest registerRequest = new RegisterRequest(name, newUser, role);
         String json = new Gson().toJson(registerRequest);
 
         // Act
