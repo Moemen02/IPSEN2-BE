@@ -69,7 +69,8 @@ public class WasteDescriptionDAO {
     public void deleteWasteDescriptionById(Long id) throws ChangeSetPersister.NotFoundException {
         if (wasteDescriptionRepository.findById(id).isPresent()) {
             wasteDescriptionRepository.deleteWasteDescriptionById(id);
+        } else {
+            throw new ChangeSetPersister.NotFoundException();
         }
-        throw new ChangeSetPersister.NotFoundException();
     }
 }
