@@ -1,4 +1,4 @@
-package nl.Groep13.OrderHandler.controller;
+package nl.Groep13.OrderHandler.controller.v2;
 
 import nl.Groep13.OrderHandler.DAO.v2.WasteDataDAO;
 import nl.Groep13.OrderHandler.controller.v2.WasteDataController;
@@ -111,5 +111,17 @@ public class WasteDataControllerTest {
 
         //Assert
         assertEquals(supposedToBeFalse.getBody(), false);
+    }
+
+    @Test
+    public void Should_Be_Unable_To_Update_OneMil_Id() throws ChangeSetPersister.NotFoundException {
+        Long OneMil = 1000000L;
+        WasteData wasteData = new WasteData(5000L, "Tester", "Zorio-347", "Red", 5f, 0f, "100% PL", false, "Teststoffen");
+
+        //Act
+        ResponseEntity checkStatus = new ResponseEntity<WasteData>(wasteDataController.updateWasteData(OneMil, wasteData).getStatusCode());
+
+        //Assert
+        assertThat(checkStatus.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
 }
