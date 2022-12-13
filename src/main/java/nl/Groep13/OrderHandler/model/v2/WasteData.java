@@ -2,10 +2,12 @@ package nl.Groep13.OrderHandler.model.v2;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
+@ToString
 @Getter
 @Setter
 @Table(name = "waste_data")

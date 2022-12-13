@@ -35,6 +35,8 @@ public class WasteDataDAO {
     public WasteData updateWasteData(Long id, WasteData newWasteData) throws ChangeSetPersister.NotFoundException {
         Optional<WasteData> oldWasteDataById = wasteDataRepository.findById(id);
         WasteData alteredWasteData = newWasteData;
+        System.out.println("Oude data: " + oldWasteDataById.toString());
+        System.out.println("Nieuwe data: " + newWasteData.toString());
         if (oldWasteDataById.isPresent()) {
             WasteData oldWasteData = oldWasteDataById.get();
 
@@ -46,6 +48,7 @@ public class WasteDataDAO {
             alteredWasteData.setComposition((newWasteData.getComposition() == null) ? oldWasteData.getComposition() : newWasteData.getComposition());
             alteredWasteData.setStockRL((newWasteData.isStockRL() != oldWasteData.isStockRL()) ? newWasteData.isStockRL() : oldWasteData.isStockRL());
             alteredWasteData.setProductgroup((newWasteData.getProductgroup() == null || newWasteData.getProductgroup().equals("")) ? oldWasteData.getProductgroup() : newWasteData.getProductgroup());
+            alteredWasteData.setId((newWasteData.getId() == null || newWasteData.getId().equals("")) ? oldWasteData.getId() : newWasteData.getId());
 
             wasteDataRepository.setWasteDataInfoById(
                     alteredWasteData.getSupplier(),
