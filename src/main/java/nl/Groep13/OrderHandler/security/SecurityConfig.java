@@ -43,7 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/article/**").hasAnyRole("MEDEWERKER", "ADMIN")
                 .antMatchers("/api/customer/**").hasAnyRole("MEDEWERKER", "ADMIN")
                 .antMatchers("/api/location/**").hasAnyRole("MEDEWERKER", "ADMIN")
-                .antMatchers("/api/orders/**").hasAnyRole("MEDEWERKER", "ADMIN")
+                .antMatchers("/api/v2/waste_order**").permitAll()
+
                 .and()
                 .userDetailsService(userService)
                 .exceptionHandling()
