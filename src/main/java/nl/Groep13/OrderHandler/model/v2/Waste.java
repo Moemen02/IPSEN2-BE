@@ -14,7 +14,15 @@ public class Waste {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long Waste_dataID;
-    private Long Waste_descriptionID;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Waste_dataID", referencedColumnName = "ID")
+    private WasteData Waste_dataID;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Waste_descriptionID", referencedColumnName = "ID")
+    private WasteDescription Waste_descriptionID;
+
+
     private Long UsageID;
 }
