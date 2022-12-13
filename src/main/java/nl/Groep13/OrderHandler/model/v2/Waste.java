@@ -6,14 +6,23 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Getter@Setter
+@Getter
+@Setter
 @Table(name = "waste")
 public class Waste {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long waste_dataId;
-    private Long waste_descpId;
-    private Long usageId;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Waste_dataID", referencedColumnName = "ID")
+    private WasteData Waste_dataID;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "Waste_descriptionID", referencedColumnName = "ID")
+    private WasteDescription Waste_descriptionID;
+
+
+    private Long UsageID;
 }
