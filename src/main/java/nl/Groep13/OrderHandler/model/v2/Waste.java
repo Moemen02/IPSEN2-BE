@@ -15,5 +15,5 @@ public class Waste {
     private Long id;
     private Long Waste_dataID;
     private Long Waste_descriptionID;
-    private Long usageID;
+    private Long UsageID;
 }
