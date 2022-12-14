@@ -38,7 +38,7 @@ public class WasteOrderController {
     public ResponseEntity<Optional<WasteOrder>> getWasteOrderById(@PathVariable Long ID){
         try{
             Optional<WasteOrder> wasteOrder = this.wasteOrderService.getWasteOrderById(ID);
-            return new ResponseEntity<>(wasteOrder, HttpStatus.FOUND);
+            return new ResponseEntity<>(wasteOrder, HttpStatus.OK);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
