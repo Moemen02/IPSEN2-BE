@@ -1,3 +1,4 @@
+
 //package nl.Groep13.OrderHandler.controller;
 //
 //import com.google.gson.Gson;
@@ -73,25 +74,6 @@
 //        assertEquals(payload.getMessage(), "gebuiker bestaat al");
 //
 //    }
-//
-//    @Test
-//    void Should_GiveUserJWTToken_When_LoggingIn() throws Exception{
-//        // Arrange
-//        LoginRequest loginRequest = new LoginRequest(adminEmail, password);
-//        String json = new Gson().toJson(loginRequest);
-//
-//        // Act
-//        MvcResult result = mvc.perform(post("/api/auth/login")
-//                .contentType(MediaType.APPLICATION_JSON).content(json)).andReturn();
-//
-//        JWTPayload payload = new Gson().fromJson(result.getResponse().getContentAsString(), JWTPayload.class);
-//
-//
-//        // Assert
-//        assertEquals(payload.getMessage(), "Inloggen was succesful");
-//        assertNotEquals(payload.getJwtToken(), "");
-//    }
-//
 //    @Test
 //    void Should_GiveUnauthorized_When_NoToken() throws Exception{
 //        // Arrange
@@ -131,4 +113,4 @@
 //
 //
 //    }
-//}
+//
