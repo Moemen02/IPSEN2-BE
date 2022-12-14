@@ -35,7 +35,6 @@ public class WasteDescriptionDAO {
     public WasteDescription updateWasteDescription(Long id, WasteDescription newWasteDescription) throws ChangeSetPersister.NotFoundException {
         Optional<WasteDescription> oldWasteDescriptionById = wasteDescriptionRepository.findById(id);
         WasteDescription alteredWasteDescription = newWasteDescription;
-        //TODO ask team about if only the ID is needed in the url or must be also given in the Requestbody.
         if (oldWasteDescriptionById.isPresent()) {
             WasteDescription oldWasteDescription = oldWasteDescriptionById.get();
 
@@ -48,6 +47,7 @@ public class WasteDescriptionDAO {
             alteredWasteDescription.setWeight((newWasteDescription.getWeight() == 0) ? oldWasteDescription.getWeight() : newWasteDescription.getWeight());
             alteredWasteDescription.setNot_tiltable((newWasteDescription.isNot_tiltable()) != oldWasteDescription.isNot_tiltable() ? newWasteDescription.isNot_tiltable() : oldWasteDescription.isNot_tiltable());
             alteredWasteDescription.setMinimumStock((newWasteDescription.getMinimumStock() == 0) ? oldWasteDescription.getMinimumStock() : newWasteDescription.getMinimumStock());
+            alteredWasteDescription.setId((newWasteDescription.getId()) == null || newWasteDescription.getId().equals("") ? oldWasteDescription.getId() : newWasteDescription.getId());
 
             wasteDescriptionRepository.setWasteDescriptionInfoById(
                     alteredWasteDescription.getArticlenumber(),
@@ -69,7 +69,8 @@ public class WasteDescriptionDAO {
     public void deleteWasteDescriptionById(Long id) throws ChangeSetPersister.NotFoundException {
         if (wasteDescriptionRepository.findById(id).isPresent()) {
             wasteDescriptionRepository.deleteWasteDescriptionById(id);
+        } else {
+            throw new ChangeSetPersister.NotFoundException();
         }
-        throw new ChangeSetPersister.NotFoundException();
     }
 }

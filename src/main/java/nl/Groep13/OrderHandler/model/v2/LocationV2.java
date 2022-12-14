@@ -15,13 +15,13 @@ public class LocationV2 {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
     private Long Category_locationID;
-    private Long CompositionID;
+    private String Composition;
     private Long RequirementID;
 
-    public LocationV2(Long ID, Long category_locationID, Long compositionID, Long requirementID) {
+    public LocationV2(Long ID, Long category_locationID, String composition, Long requirementID) {
         this.ID = ID;
         Category_locationID = category_locationID;
-        CompositionID = compositionID;
+        Composition = composition;
         RequirementID = requirementID;
     }
 
