@@ -35,8 +35,7 @@ public class WasteDataDAO {
     public WasteData updateWasteData(Long id, WasteData newWasteData) throws ChangeSetPersister.NotFoundException {
         Optional<WasteData> oldWasteDataById = wasteDataRepository.findById(id);
         WasteData alteredWasteData = newWasteData;
-        System.out.println("Oude data: " + oldWasteDataById.toString());
-        System.out.println("Nieuwe data: " + newWasteData.toString());
+
         if (oldWasteDataById.isPresent()) {
             WasteData oldWasteData = oldWasteDataById.get();
 
@@ -70,7 +69,8 @@ public class WasteDataDAO {
     public void deleteWasteDataById( Long id) throws ChangeSetPersister.NotFoundException {
         if (wasteDataRepository.findById(id).isPresent()) {
             wasteDataRepository.deleteWasteDataById(id);
+        } else {
+            throw new ChangeSetPersister.NotFoundException();
         }
-        throw new ChangeSetPersister.NotFoundException();
     }
 }
