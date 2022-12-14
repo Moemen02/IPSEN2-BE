@@ -1,23 +1,50 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
+import nl.Groep13.OrderHandler.DAO.v2.UsageDAO;
 import nl.Groep13.OrderHandler.interfaces.UsageInterface;
+import nl.Groep13.OrderHandler.model.v2.Usage;
+import nl.Groep13.OrderHandler.model.v2.WasteData;
+import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v2/usage")
-public class UsageController {
+public class UsageController{
 
-    private final UsageInterface usageInterface;
+    private final UsageDAO usageDAO;
 
-    public UsageController(UsageInterface usageInterface1){
-        this.usageInterface = usageInterface1;
+    public UsageController(UsageDAO usageDAO){
+        this.usageDAO = usageDAO;
     }
 
     @GetMapping
-    public ResponseEntity<String> getUsage(){
-        return ResponseEntity.ok().body("dit moet een usage item zijn");
+    public ResponseEntity<List<Usage>> getAllUsages() {
+        return ResponseEntity.ok(
+                this.usageDAO.getAllUsages()
+        );
+    }
+
+    @GetMapping(value = "/{id}")
+    @ResponseBody
+    public ResponseEntity<Usage> getUsageById(@PathVariable Long id) {
+        try {
+            Usage checkedUsage = this.usageDAO.getUsageById(id);
+            return new ResponseEntity<>(checkedUsage, HttpStatus.FOUND);
+        } catch (ChangeSetPersister.NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Usage> addUsage(@RequestBody Usage usage) {
+        if (this.usageDAO.addUsage(usage) == null) {
+            throw new NullPointerException("Usage is empty!");
+        } else {
+            return ResponseEntity.ok(usage);
+        }
     }
 }
