@@ -23,6 +23,7 @@ public class Waste {
     @JoinColumn(name = "Waste_descriptionID", referencedColumnName = "ID")
     private WasteDescription Waste_descriptionID;
 
-
-    private Long UsageID;
+    @OneToOne
+    @JoinColumn(name = "UsageID", referencedColumnName = "ID")
+    private Usage UsageID;
 }
