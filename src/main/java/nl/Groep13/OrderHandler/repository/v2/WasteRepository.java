@@ -14,13 +14,9 @@ public interface WasteRepository extends JpaRepository<Waste, Long> {
     @Modifying
     @Transactional
     @Query("update Waste waste set"
-            + " waste.Waste_dataID = ?1,"
-            + " waste.Waste_descriptionID = ?2,"
-            + " waste.UsageID = ?3"
-            + " where waste.id = ?4")
+            + " waste.UsageID.id = ?1"
+            + " where waste.id = ?2")
     void setWasteInfoById (
-            Long wasteDataId,
-            Long wasteDescriptionId,
             Long wasteUsageId,
             Long id
     );

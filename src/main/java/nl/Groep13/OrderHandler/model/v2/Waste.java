@@ -23,7 +23,7 @@ public class Waste {
     @JoinColumn(name = "Waste_descriptionID", referencedColumnName = "ID")
     private WasteDescription Waste_descriptionID;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UsageID", referencedColumnName = "ID")
     private Usage UsageID;
 }
