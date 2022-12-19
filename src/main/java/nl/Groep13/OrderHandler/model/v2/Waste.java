@@ -26,4 +26,8 @@ public class Waste {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UsageID", referencedColumnName = "ID")
     private Usage UsageID;
+
+    public Waste() {
+
+    }
 }

@@ -12,7 +12,6 @@ import nl.Groep13.OrderHandler.repository.v2.WasteRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,14 +20,20 @@ public class WasteDAO implements WasteInterface {
 
     private final WasteRepository wasteRepository;
     private final WasteDataDAO wasteDataDAO;
+    private final WasteDataRepository wasteDataRepository;
     private final WasteDescriptionDAO wasteDescriptionDAO;
+    private final WasteDescriptionRepository wasteDescriptionRepository;
     private final UsageRepository usageRepository;
 
-    public WasteDAO(WasteRepository wasteRepository, WasteDataDAO wasteDataDAO, WasteDescriptionDAO wasteDescriptionDAO, UsageRepository usageRepository) {
+
+    public WasteDAO(WasteRepository wasteRepository, WasteDataDAO wasteDataDAO, WasteDescriptionDAO wasteDescriptionDAO, UsageRepository usageRepository,
+                    WasteDataRepository wasteDataRepository, WasteDescriptionRepository wasteDescriptionRepository) {
         this.wasteRepository = wasteRepository;
         this.wasteDataDAO = wasteDataDAO;
         this.wasteDescriptionDAO = wasteDescriptionDAO;
         this.usageRepository = usageRepository;
+        this.wasteDataRepository = wasteDataRepository;
+        this.wasteDescriptionRepository = wasteDescriptionRepository;
     }
 
     @Override
@@ -78,6 +83,18 @@ public class WasteDAO implements WasteInterface {
             return newWaste;
         }
         throw new ChangeSetPersister.NotFoundException();
+    }
+
+    public void addWaste(final Waste waste) {
+        WasteData wasteData = wasteDataRepository.save(waste.getWaste_dataID());
+        WasteDescription wasteDescription = wasteDescriptionRepository.save(waste.getWaste_descriptionID());
+        Usage usage = usageRepository.findUsageByTypeUsage(waste.getUsageID().getType_usage());
+        waste.setWaste_dataID(wasteData);
+        waste.setWaste_descriptionID(wasteDescription);
+        waste.setUsageID(usage);
+        System.out.println(wasteDataRepository.findById(wasteData.getId()).get());
+        System.out.println(wasteDescriptionRepository.findById(wasteDescription.getId()).get());
+        wasteRepository.save(waste);
     }
 }
 
