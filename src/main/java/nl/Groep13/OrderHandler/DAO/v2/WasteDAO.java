@@ -92,8 +92,6 @@ public class WasteDAO implements WasteInterface {
         waste.setWaste_dataID(wasteData);
         waste.setWaste_descriptionID(wasteDescription);
         waste.setUsageID(usage);
-        System.out.println(wasteDataRepository.findById(wasteData.getId()).get());
-        System.out.println(wasteDescriptionRepository.findById(wasteDescription.getId()).get());
         wasteRepository.save(waste);
     }
 }
