@@ -5,7 +5,9 @@ import nl.Groep13.OrderHandler.repository.v2.WasteDataRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -18,6 +20,10 @@ public class WasteDataDAO {
 
     public List<WasteData> getAllWasteData() {
         return wasteDataRepository.findAll();
+    }
+
+    public List<Object> getAllWasteDataInStock(int stockType) {
+        return wasteDataRepository.getAllWasteInStock(Long.valueOf(stockType));
     }
 
     public WasteData addWasteData(final WasteData wasteData) {
