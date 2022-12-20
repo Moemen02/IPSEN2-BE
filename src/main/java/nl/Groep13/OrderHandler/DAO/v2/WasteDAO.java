@@ -5,9 +5,6 @@ import nl.Groep13.OrderHandler.model.v2.Usage;
 import nl.Groep13.OrderHandler.model.v2.Waste;
 import nl.Groep13.OrderHandler.model.v2.WasteData;
 import nl.Groep13.OrderHandler.model.v2.WasteDescription;
-import nl.Groep13.OrderHandler.repository.v2.UsageRepository;
-import nl.Groep13.OrderHandler.repository.v2.WasteDataRepository;
-import nl.Groep13.OrderHandler.repository.v2.WasteDescriptionRepository;
 import nl.Groep13.OrderHandler.repository.v2.WasteRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
@@ -20,20 +17,14 @@ public class WasteDAO implements WasteInterface {
 
     private final WasteRepository wasteRepository;
     private final WasteDataDAO wasteDataDAO;
-    private final WasteDataRepository wasteDataRepository;
     private final WasteDescriptionDAO wasteDescriptionDAO;
-    private final WasteDescriptionRepository wasteDescriptionRepository;
-    private final UsageRepository usageRepository;
+    private final UsageDAO usageDAO;
 
-
-    public WasteDAO(WasteRepository wasteRepository, WasteDataDAO wasteDataDAO, WasteDescriptionDAO wasteDescriptionDAO, UsageRepository usageRepository,
-                    WasteDataRepository wasteDataRepository, WasteDescriptionRepository wasteDescriptionRepository) {
+    public WasteDAO(WasteRepository wasteRepository, WasteDataDAO wasteDataDAO, WasteDescriptionDAO wasteDescriptionDAO, UsageDAO usageDAO) {
         this.wasteRepository = wasteRepository;
         this.wasteDataDAO = wasteDataDAO;
         this.wasteDescriptionDAO = wasteDescriptionDAO;
-        this.usageRepository = usageRepository;
-        this.wasteDataRepository = wasteDataRepository;
-        this.wasteDescriptionRepository = wasteDescriptionRepository;
+        this.usageDAO = usageDAO;
     }
 
     @Override
@@ -52,7 +43,7 @@ public class WasteDAO implements WasteInterface {
 
     @Override
     public Waste updateWaste(Long id, Waste waste) throws ChangeSetPersister.NotFoundException {
-        Optional<Usage> checkUsageExists = Optional.ofNullable(usageRepository.findUsageByTypeUsage(waste.getUsageID().getType_usage()));
+        Optional<Usage> checkUsageExists = Optional.ofNullable(usageDAO.getUsageByTypeUsage(waste.getUsageID().getType_usage()));
         Optional<Waste> oldWasteById = wasteRepository.findById(id);
         if (checkUsageExists.isPresent() && oldWasteById.isPresent()) {
             Waste oldWaste = oldWasteById.get();
@@ -85,10 +76,10 @@ public class WasteDAO implements WasteInterface {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public void addWaste(final Waste waste) {
-        WasteData wasteData = wasteDataRepository.save(waste.getWaste_dataID());
-        WasteDescription wasteDescription = wasteDescriptionRepository.save(waste.getWaste_descriptionID());
-        Usage usage = usageRepository.findUsageByTypeUsage(waste.getUsageID().getType_usage());
+    public void addWaste(final Waste waste) throws ChangeSetPersister.NotFoundException {
+        WasteData wasteData = wasteDataDAO.addWasteData(waste.getWaste_dataID());
+        WasteDescription wasteDescription = wasteDescriptionDAO.addWasteDescription(waste.getWaste_descriptionID());
+        Usage usage = usageDAO.getUsageByTypeUsage(waste.getUsageID().getType_usage());
         waste.setWaste_dataID(wasteData);
         waste.setWaste_descriptionID(wasteDescription);
         waste.setUsageID(usage);

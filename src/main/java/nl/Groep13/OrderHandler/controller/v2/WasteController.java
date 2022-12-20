@@ -15,12 +15,9 @@ import java.util.List;
 @RequestMapping(value = "/api/v2/waste")
 public class WasteController {
     private final WasteDAO wasteDAO;
-    private final WasteRepository wasteRepository;
 
-    public WasteController(WasteDAO wasteDAO,
-                           WasteRepository wasteRepository) {
+    public WasteController(WasteDAO wasteDAO) {
         this.wasteDAO = wasteDAO;
-        this.wasteRepository = wasteRepository;
     }
 
     @GetMapping
@@ -40,7 +37,7 @@ public class WasteController {
     }
 
     @PostMapping
-    public ResponseEntity<Waste> addWaste (@RequestBody final Waste waste) {
+    public ResponseEntity<Waste> addWaste (@RequestBody final Waste waste) throws ChangeSetPersister.NotFoundException {
         if (waste == null) {
             throw new NullPointerException("Waste is empty");
         } else if (waste.getWaste_dataID() == null) {

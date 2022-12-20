@@ -32,6 +32,13 @@ public class UsageDAO {
         throw new ChangeSetPersister.NotFoundException();
     }
 
+    public Usage getUsageByTypeUsage(String typeUsage) throws ChangeSetPersister.NotFoundException {
+        Optional<Usage> usage = Optional.ofNullable(usageRepository.findUsageByTypeUsage(typeUsage));
+        if (usage.isPresent()) {
+            return usage.get();
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
 
     public Usage addUsage(final Usage usage) {
         return this.usageRepository.save(usage);
