@@ -7,6 +7,7 @@ import nl.Groep13.OrderHandler.repository.v2.WasteRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.List;
 @RequestMapping(value = "/api/v2/waste")
 public class WasteController {
     private final WasteDAO wasteDAO;
+//    private final WasteInterface wasteInterface = null;
 
     public WasteController(WasteDAO wasteDAO) {
         this.wasteDAO = wasteDAO;

@@ -21,6 +21,7 @@ import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -48,17 +49,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class WasteControllerTest {
 
     private final String email = "admin@admin.com";
     private final UserRole role = UserRole.ADMIN;
     private final String password = "adminpass";
-
-    @Mock
-    WasteData fillerData;
-    @Mock
-    WasteDescription fillerDescription;
-    Usage usage = new Usage(3L, "BEHOUD");
 
     @Autowired
     private WasteRepository wasteRepository;
@@ -69,14 +65,14 @@ class WasteControllerTest {
     @Autowired
     private UsageRepository usageRepository;
 
-    @Mock private WasteDAO wasteDAO;
-    @Mock private WasteDataDAO wasteDataDAO;
-    @Mock private WasteDescriptionDAO wasteDescriptionDAO;
-    @Mock private UsageDAO usageDAO;
+    private WasteDataDAO wasteDataDAO;
+    private WasteDescriptionDAO wasteDescriptionDAO;
+    private UsageDAO usageDAO;
 
+    private WasteDAO wasteDAO;
     private WasteController wasteController;
 
-    @BeforeEach
+    @BeforeAll
     public void setUp() {
         wasteDataDAO = new WasteDataDAO(wasteDataRepository);
         wasteDescriptionDAO = new WasteDescriptionDAO(wasteDescriptionRepository);
@@ -144,6 +140,9 @@ class WasteControllerTest {
     @Test
     void AddAndUpdateWasteValue() throws ChangeSetPersister.NotFoundException {
         //Arrange
+        WasteData fillerData = new WasteData(null, "Filler", "ADK-1000 Test", "2398", 2.5f, 3f, "100% PL", false, "Holland Haag Test");
+        WasteDescription fillerDescription = new WasteDescription(null, "ADK-1000 Test", "ForTesting", 50, "Nepstoffen", "Compiled", "wQlsd", 100, false, 0);
+        Usage usage = new Usage(null, "BEHOUD");
         Waste testWaste = new Waste();
         testWaste.setWaste_dataID(fillerData);
         testWaste.setWaste_descriptionID(fillerDescription);
@@ -157,6 +156,7 @@ class WasteControllerTest {
         Waste checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
 
         //Assert
+        assert checkableWaste != null;
         assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getWaste_dataID().getSupplier());
     }
 }

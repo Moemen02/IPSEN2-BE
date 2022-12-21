@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class WasteDAO implements WasteInterface {
+public class WasteDAO {
 
     private final WasteRepository wasteRepository;
     private final WasteDataDAO wasteDataDAO;
@@ -27,12 +27,12 @@ public class WasteDAO implements WasteInterface {
         this.usageDAO = usageDAO;
     }
 
-    @Override
+
     public List<Waste> getWaste() {
         return wasteRepository.findAll();
     }
 
-    @Override
+
     public Waste getWasteById(Long id) throws ChangeSetPersister.NotFoundException {
         Optional<Waste> waste = wasteRepository.findById(id);
         if (waste.isPresent()) {
@@ -41,7 +41,7 @@ public class WasteDAO implements WasteInterface {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    @Override
+
     public Waste updateWaste(Long id, Waste waste) throws ChangeSetPersister.NotFoundException {
         Optional<Usage> checkUsageExists = Optional.ofNullable(usageDAO.getUsageByTypeUsage(waste.getUsageID().getType_usage()));
         Optional<Waste> oldWasteById = wasteRepository.findById(id);
