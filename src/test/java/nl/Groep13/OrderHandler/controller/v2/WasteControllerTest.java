@@ -72,6 +72,7 @@ class WasteControllerTest {
     private WasteDAO wasteDAO;
     private WasteController wasteController;
 
+
     @BeforeAll
     public void setUp() {
         wasteDataDAO = new WasteDataDAO(wasteDataRepository);
