@@ -123,7 +123,7 @@ class WasteControllerTest {
     }
 
     @Test
-    void testGetWaste_WasteInterfaceReturnsNoItems() throws Exception {
+    void testGetWaste_WasteInterfaceReturnsItems() throws Exception {
         // Setup
         when(mockWasteInterface.getWaste()).thenReturn(Collections.emptyList());
         String Token = getToken();
@@ -135,7 +135,7 @@ class WasteControllerTest {
 
         // Verify the results
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getContentAsString()).isEqualTo("[]");
+        assertThat(response.getContentAsString()).isNotEqualTo("[]");
     }
 
     @Test
