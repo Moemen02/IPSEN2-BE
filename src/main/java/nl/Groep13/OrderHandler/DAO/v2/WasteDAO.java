@@ -27,9 +27,9 @@ public class WasteDAO {
     }
 
 
-    public List<ArticleV2> getWaste() {
-        return wasteRepository.findAll();
-    }
+//    public List<ArticleV2> getWaste() {
+//        return wasteRepository.findAll();
+//    }
 
 
     public ArticleV2 getWasteById(Long id) throws ChangeSetPersister.NotFoundException {

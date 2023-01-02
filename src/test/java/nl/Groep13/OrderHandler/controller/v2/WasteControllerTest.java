@@ -104,7 +104,7 @@ class WasteControllerTest {
 //        waste.setWaste_descriptionID(0L);
 //        waste.setUsageID(0L);
         final List<ArticleV2> wastes = List.of(waste);
-        when(mockWasteInterface.getWaste()).thenReturn(wastes);
+//        when(mockWasteInterface.getWaste()).thenReturn(wastes);
 
         // Run the test
         final MockHttpServletResponse response = mockMvc.perform(get("/api/v2/waste")
@@ -120,7 +120,7 @@ class WasteControllerTest {
     @Test
     void testGetWaste_WasteInterfaceReturnsItems() throws Exception {
         // Setup
-        when(mockWasteInterface.getWaste()).thenReturn(Collections.emptyList());
+//        when(mockWasteInterface.getWaste()).thenReturn(Collections.emptyList());
         String Token = getToken();
 
         // Run the test

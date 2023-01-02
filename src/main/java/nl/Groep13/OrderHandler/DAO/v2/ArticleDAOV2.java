@@ -6,6 +6,10 @@ import nl.Groep13.OrderHandler.repository.v2.ArticleRepositoryV2;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 @Component
@@ -18,8 +22,11 @@ public class ArticleDAOV2 implements ArticleInterface {
     }
 
     @Override
-    public List<ArticleV2> getWaste() {
-        return articleRepositoryV2.findAll();
+    public List<ArticleV2> getPagedWaste(int pageNo, int pageSize) {
+
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+        Page<ArticleV2> pagedResult = articleRepositoryV2.findAll(paging);
+        return pagedResult.toList();
     }
 
     @Override

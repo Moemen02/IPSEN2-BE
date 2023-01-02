@@ -22,9 +22,10 @@ public class ArticleControllerV2 {
         this.articleInterface = articleInterface;
     }
 
-    @GetMapping
-    public ResponseEntity<List<ArticleV2>> getWaste(){
-        return ResponseEntity.ok().body(this.articleInterface.getWaste());
+    @GetMapping("/{pageNo}/{pageSize}")
+    public ResponseEntity<List<ArticleV2>> getWaste(@PathVariable int pageNo,
+                                                    @PathVariable int pageSize){
+        return ResponseEntity.ok().body(this.articleInterface.getPagedWaste(pageNo, pageSize));
     }
 
     @GetMapping(value = "/{id}")
