@@ -1,6 +1,7 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
+import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -11,17 +12,19 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v2/waste")
-public class WasteController {
+public class ArticleControllerV2 {
     private final WasteDAO wasteDAO;
 //    private final WasteInterface wasteInterface = null;
+    private final ArticleInterface articleInterface;
 
-    public WasteController(WasteDAO wasteDAO) {
+    public ArticleControllerV2(WasteDAO wasteDAO, ArticleInterface articleInterface) {
         this.wasteDAO = wasteDAO;
+        this.articleInterface = articleInterface;
     }
 
     @GetMapping
     public ResponseEntity<List<ArticleV2>> getWaste(){
-        return ResponseEntity.ok().body(this.wasteDAO.getWaste());
+        return ResponseEntity.ok().body(this.articleInterface.getWaste());
     }
 
     @GetMapping(value = "/{id}")
