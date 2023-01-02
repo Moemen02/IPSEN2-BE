@@ -1,13 +1,10 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
-import nl.Groep13.OrderHandler.interfaces.WasteInterface;
-import nl.Groep13.OrderHandler.model.v2.Waste;
-import nl.Groep13.OrderHandler.repository.v2.WasteRepository;
+import nl.Groep13.OrderHandler.model.v2.ArticleV2;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,15 +20,15 @@ public class WasteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Waste>> getWaste(){
+    public ResponseEntity<List<ArticleV2>> getWaste(){
         return ResponseEntity.ok().body(this.wasteDAO.getWaste());
     }
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<Waste> getWasteById(@PathVariable Long id) {
+    public ResponseEntity<ArticleV2> getWasteById(@PathVariable Long id) {
         try {
-            Waste checkedWaste = this.wasteDAO.getWasteById(id);
+            ArticleV2 checkedWaste = this.wasteDAO.getWasteById(id);
             return new ResponseEntity<>(checkedWaste, HttpStatus.FOUND);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -39,12 +36,12 @@ public class WasteController {
     }
 
     @PostMapping
-    public ResponseEntity<Waste> addWaste (@RequestBody final Waste waste) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException {
         if (waste == null) {
             throw new NullPointerException("Waste is empty");
-        } else if (waste.getWaste_dataID() == null) {
+        } else if (waste.getArticle_dataID() == null) {
             throw new NullPointerException("WasteData is empty");
-        } else if (waste.getWaste_descriptionID() == null) {
+        } else if (waste.getArticle_descriptionID() == null) {
             throw new NullPointerException("WasteDescription is empty");
         } else if (waste.getUsageID() == null) {
             throw new NullPointerException("Usage is empty");
@@ -56,7 +53,7 @@ public class WasteController {
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<Waste> updateWaste(@PathVariable final Long id, @RequestBody final Waste waste) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<ArticleV2> updateWaste(@PathVariable final Long id, @RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException {
         try {
             this.wasteDAO.getWasteById(id);
         } catch (ChangeSetPersister.NotFoundException e) {

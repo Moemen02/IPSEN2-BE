@@ -1,8 +1,7 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import nl.Groep13.OrderHandler.DAO.v2.WasteDescriptionDAO;
-import nl.Groep13.OrderHandler.model.v2.WasteData;
-import nl.Groep13.OrderHandler.model.v2.WasteDescription;
+import nl.Groep13.OrderHandler.model.v2.ArticleDescription;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class WasteDescriptionController {
     }
 
     @GetMapping
-    public ResponseEntity<List<WasteDescription>> getAllWasteDescription() {
+    public ResponseEntity<List<ArticleDescription>> getAllWasteDescription() {
         return ResponseEntity.ok(
                 this.wasteDescriptionDAO.getAllWasteDescription()
         );
@@ -28,9 +27,9 @@ public class WasteDescriptionController {
 
     @GetMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<WasteDescription> getWasteDescriptionById(@PathVariable Long id) {
+    public ResponseEntity<ArticleDescription> getWasteDescriptionById(@PathVariable Long id) {
         try {
-            WasteDescription checkedWasteDescription = this.wasteDescriptionDAO.getWasteDescriptionById(id);
+            ArticleDescription checkedWasteDescription = this.wasteDescriptionDAO.getWasteDescriptionById(id);
             return new ResponseEntity<>(checkedWasteDescription, HttpStatus.FOUND);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -38,7 +37,7 @@ public class WasteDescriptionController {
     }
 
     @PostMapping
-    public ResponseEntity<WasteDescription> addWasteDescription(@RequestBody WasteDescription wasteDescription) {
+    public ResponseEntity<ArticleDescription> addWasteDescription(@RequestBody ArticleDescription wasteDescription) {
         if (this.wasteDescriptionDAO.addWasteDescription(wasteDescription) == null) {
             throw new NullPointerException("WasteData is empty!");
         } else {
@@ -47,7 +46,7 @@ public class WasteDescriptionController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<WasteDescription> updateWasteDescription(@PathVariable final Long id, @RequestBody final WasteDescription wasteDescription) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<ArticleDescription> updateWasteDescription(@PathVariable final Long id, @RequestBody final ArticleDescription wasteDescription) throws ChangeSetPersister.NotFoundException {
         try {
             wasteDescriptionDAO.getWasteDescriptionById(id);
         } catch (ChangeSetPersister.NotFoundException e) {

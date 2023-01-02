@@ -8,26 +8,26 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "waste")
-public class Waste {
+@Table(name = "article")
+public class ArticleV2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Waste_dataID", referencedColumnName = "ID")
-    private WasteData Waste_dataID;
+    @JoinColumn(name = "article_dataID", referencedColumnName = "ID")
+    private ArticleData article_dataID;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Waste_descriptionID", referencedColumnName = "ID")
-    private WasteDescription Waste_descriptionID;
+    @JoinColumn(name = "article_descriptionID", referencedColumnName = "ID")
+    private ArticleDescription article_descriptionID;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "UsageID", referencedColumnName = "ID")
-    private Usage UsageID;
+    private Usage usageID;
 
-    public Waste() {
+    public ArticleV2() {
 
     }
 }

@@ -10,8 +10,8 @@ import javax.persistence.*;
 @ToString
 @Getter
 @Setter
-@Table(name = "waste_description")
-public class WasteDescription {
+@Table(name = "article_description")
+public class ArticleDescription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class WasteDescription {
     private int minimumStock;
 
 
-    public WasteDescription(Long id, String articlenumber, String description, int clothWidth, String type, String layout, String washcode, int weight, boolean not_tiltable, int minimumStock) {
+    public ArticleDescription(Long id, String articlenumber, String description, int clothWidth, String type, String layout, String washcode, int weight, boolean not_tiltable, int minimumStock) {
         this.id = id;
         this.articlenumber = articlenumber;
         this.description = description;
@@ -42,7 +42,7 @@ public class WasteDescription {
         this.minimumStock = minimumStock;
     }
 
-    public WasteDescription() {
+    public ArticleDescription() {
 
     }
 }

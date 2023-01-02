@@ -1,7 +1,6 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import nl.Groep13.OrderHandler.interfaces.OrderLogInterface;
-import nl.Groep13.OrderHandler.interfaces.WasteInterface;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
