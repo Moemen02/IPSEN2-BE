@@ -42,7 +42,7 @@ public class WasteDAO {
     }
 
 
-    public Waste updateWaste(Long id, Waste waste) throws ChangeSetPersister.NotFoundException {
+    public Waste updateWaste(Long id, Waste waste) throws ChangeSetPersister.NotFoundException, IllegalAccessException {
         Optional<Usage> checkUsageExists = Optional.ofNullable(usageDAO.getUsageByTypeUsage(waste.getUsageID().getType_usage()));
         Optional<Waste> oldWasteById = wasteRepository.findById(id);
         if (checkUsageExists.isPresent() && oldWasteById.isPresent()) {
