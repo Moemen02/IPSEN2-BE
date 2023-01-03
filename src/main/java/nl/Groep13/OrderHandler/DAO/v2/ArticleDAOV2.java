@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class ArticleDAOV2 implements ArticleInterface {
@@ -30,8 +31,8 @@ public class ArticleDAOV2 implements ArticleInterface {
     }
 
     @Override
-    public ArticleV2 getWasteById(Long id) throws ChangeSetPersister.NotFoundException {
-        return null;
+    public Optional<ArticleV2> getWasteById(Long id) {
+        return articleRepositoryV2.findById(id);
     }
 
     @Override

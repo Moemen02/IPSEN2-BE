@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v2/waste")
@@ -23,9 +24,13 @@ public class ArticleControllerV2 {
     }
 
     @GetMapping("/{pageNo}/{pageSize}")
-    public ResponseEntity<List<ArticleV2>> getWaste(@PathVariable int pageNo,
+    public ResponseEntity<List<ArticleV2>> getArticles(@PathVariable int pageNo,
                                                     @PathVariable int pageSize){
         return ResponseEntity.ok().body(this.articleInterface.getPagedWaste(pageNo, pageSize));
+    }
+
+    public Optional<ArticleV2> getSingleArticle(Long id){
+        return this.articleInterface.getWasteById(id);
     }
 
     @GetMapping(value = "/{id}")

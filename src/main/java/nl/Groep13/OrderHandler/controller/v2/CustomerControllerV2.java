@@ -52,6 +52,10 @@ public class CustomerControllerV2 {
         return this.customerService.getCustomerById(id);
     }
 
+    public Optional<CustomerV2> getCustomer(Long id) throws ChangeSetPersister.NotFoundException{
+        return this.customerService.getCustomerById(id);
+    }
+
     /**
      * this function updates the customer that matches the input id
      * @param id - this is the input id that you give to the link

@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,9 +24,8 @@ public class CategoryLocationController {
     Gson gson = new Gson();
 
     @Autowired
-    public CategoryLocationController(CategoryLocationService categoryLocationService, Gson gson) {
+    public CategoryLocationController(CategoryLocationService categoryLocationService) {
         this.categoryLocationService = categoryLocationService;
-        this.gson = gson;
     }
 
     @GetMapping(value = "/{ID}")

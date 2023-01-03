@@ -30,4 +30,10 @@ public class ArticleV2 {
     public ArticleV2() {
 
     }
+
+    public ArticleV2(ArticleData article_dataID, ArticleDescription article_descriptionID, Usage usageID) {
+        this.article_dataID = article_dataID;
+        this.article_descriptionID = article_descriptionID;
+        this.usageID = usageID;
+    }
 }
