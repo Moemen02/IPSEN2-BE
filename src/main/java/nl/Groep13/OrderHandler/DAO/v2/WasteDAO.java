@@ -6,6 +6,7 @@ import nl.Groep13.OrderHandler.model.v2.Waste;
 import nl.Groep13.OrderHandler.model.v2.WasteData;
 import nl.Groep13.OrderHandler.model.v2.WasteDescription;
 import nl.Groep13.OrderHandler.repository.v2.WasteRepository;
+import nl.Groep13.OrderHandler.service.V2.AttrCopy;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
@@ -49,10 +50,7 @@ public class WasteDAO {
             Waste oldWaste = oldWasteById.get();
             Waste newWaste = waste;
 
-            newWaste.setWaste_dataID((newWaste.getWaste_dataID() == null) ? oldWaste.getWaste_dataID() : newWaste.getWaste_dataID());
-            newWaste.setWaste_descriptionID((newWaste.getWaste_descriptionID() == null) ? oldWaste.getWaste_descriptionID() : newWaste.getWaste_descriptionID());
-            newWaste.setUsageID((newWaste.getUsageID() == null) ? oldWaste.getUsageID() : newWaste.getUsageID());
-            newWaste.setId((newWaste.getId() == null) ? oldWaste.getId() : newWaste.getId());
+            new AttrCopy().copyAttributes(oldWaste, newWaste);
 
             WasteData newWasteData = newWaste.getWaste_dataID();
             if (newWasteData.getId() == null) {

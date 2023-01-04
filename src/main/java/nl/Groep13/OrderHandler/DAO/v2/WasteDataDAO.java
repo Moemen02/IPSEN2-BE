@@ -40,17 +40,7 @@ public class WasteDataDAO {
         if (oldWasteDataById.isPresent()) {
             WasteData oldWasteData = oldWasteDataById.get();
 
-            new AttrCopy().copyAttributes(oldWasteData, newWasteData);
-
-//            alteredWasteData.setSupplier((newWasteData.getSupplier() == null || newWasteData.getSupplier().equals("")) ? oldWasteData.getSupplier() : newWasteData.getSupplier());
-//            alteredWasteData.setEancode((newWasteData.getEancode() == null || newWasteData.getEancode().equals("")) ? oldWasteData.getEancode() : newWasteData.getEancode());
-//            alteredWasteData.setColor((newWasteData.getColor() == null || newWasteData.getColor().equals("")) ? oldWasteData.getColor() : newWasteData.getColor());
-//            alteredWasteData.setPatternLength((newWasteData.getPatternLength() == 0) ? oldWasteData.getPatternLength() : newWasteData.getPatternLength());
-//            alteredWasteData.setPatternWidth((newWasteData.getPatternWidth() == 0) ? oldWasteData.getPatternWidth() : newWasteData.getPatternWidth());
-//            alteredWasteData.setComposition((newWasteData.getComposition() == null) ? oldWasteData.getComposition() : newWasteData.getComposition());
-//            alteredWasteData.setStockRL((newWasteData.isStockRL() != oldWasteData.isStockRL()) ? newWasteData.isStockRL() : oldWasteData.isStockRL());
-//            alteredWasteData.setProductgroup((newWasteData.getProductgroup() == null || newWasteData.getProductgroup().equals("")) ? oldWasteData.getProductgroup() : newWasteData.getProductgroup());
-//            alteredWasteData.setId((newWasteData.getId() == null || newWasteData.getId().equals("")) ? oldWasteData.getId() : newWasteData.getId());
+            new AttrCopy().copyAttributes(oldWasteData, alteredWasteData);
 
             wasteDataRepository.setWasteDataInfoById(
                     alteredWasteData.getSupplier(),
