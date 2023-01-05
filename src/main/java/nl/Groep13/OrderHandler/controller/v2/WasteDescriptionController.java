@@ -47,7 +47,7 @@ public class WasteDescriptionController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<WasteDescription> updateWasteDescription(@PathVariable final Long id, @RequestBody final WasteDescription wasteDescription) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<WasteDescription> updateWasteDescription(@PathVariable final Long id, @RequestBody final WasteDescription wasteDescription) throws ChangeSetPersister.NotFoundException, IllegalAccessException {
         try {
             wasteDescriptionDAO.getWasteDescriptionById(id);
         } catch (ChangeSetPersister.NotFoundException e) {
