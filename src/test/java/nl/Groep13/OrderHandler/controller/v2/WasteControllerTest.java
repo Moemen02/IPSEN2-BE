@@ -58,8 +58,10 @@ class WasteControllerTest {
 
     @Autowired
     private WasteRepository wasteRepository;
+
     @Autowired
     private WasteDataRepository wasteDataRepository;
+
     @Autowired
     private WasteDescriptionRepository wasteDescriptionRepository;
     @Autowired
