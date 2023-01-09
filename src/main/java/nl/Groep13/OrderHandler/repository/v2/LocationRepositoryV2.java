@@ -15,14 +15,14 @@ public interface LocationRepositoryV2 extends JpaRepository<LocationV2, Long> {
     @Modifying
     @Transactional
     @Query("update LocationV2 location SET " +
-            "location.Category_locationID = ?1," +
-            "location.Composition = ?2," +
-            "location.RequirementID = ?3" +
-            "where location.ID = ?4")
+            "location.category_locationID = ?1," +
+            "location.composition = ?2," +
+            "location.requirementID = ?3" +
+            "where location.id = ?4")
     void setLocationById(
-            Long Category_locationID,
-            String Composition,
-            Long RequirementID,
-            long ID
+            Long category_locationID,
+            String composition,
+            Long requirementID,
+            long id
     );
 }

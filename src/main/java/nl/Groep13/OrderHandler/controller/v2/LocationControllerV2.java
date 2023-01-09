@@ -27,12 +27,12 @@ public class LocationControllerV2 {
     }
 
 
-    @GetMapping(value = "/{ID}")
+    @GetMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<Optional<LocationV2>> getLocationById(@PathVariable Long ID){
+    public ResponseEntity<Optional<LocationV2>> getLocationById(@PathVariable Long id){
         try{
-            Optional<LocationV2> locationV2 = this.locationServiceV2.getLocationById(ID);
-            return new ResponseEntity<>(locationV2, HttpStatus.FOUND);
+            Optional<LocationV2> locationV2 = this.locationServiceV2.getLocationById(id);
+            return new ResponseEntity<>(locationV2, HttpStatus.OK);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

@@ -35,7 +35,7 @@ public class LocationDAOV2 {
             LocationV2 oldLocation = oldLocationById.get();
             LocationV2 newLocation = locationV2.get();
 
-            newLocation.setID((newLocation.getID() == null) ? oldLocation.getID() : newLocation.getID());
+            newLocation.setId((newLocation.getId() == null) ? oldLocation.getId() : newLocation.getId());
             newLocation.setCategory_locationID((newLocation.getCategory_locationID() == null) ? oldLocation.getCategory_locationID() : newLocation.getCategory_locationID());
             newLocation.setComposition((newLocation.getComposition() == null) ? oldLocation.getComposition() : newLocation.getComposition());
             newLocation.setRequirementID((oldLocation.getRequirementID() == null) ? oldLocation.getRequirementID() : newLocation.getRequirementID());
@@ -44,7 +44,7 @@ public class LocationDAOV2 {
                     newLocation.getCategory_locationID(),
                     newLocation.getComposition(),
                     newLocation.getRequirementID(),
-                    newLocation.getID()
+                    newLocation.getId()
             );
             locationRepositoryV2.save(newLocation);
             return locationV2;
