@@ -1,18 +1,36 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import com.google.gson.Gson;
+import nl.Groep13.OrderHandler.DAO.v2.UsageDAO;
+import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
+import nl.Groep13.OrderHandler.DAO.v2.WasteDataDAO;
+import nl.Groep13.OrderHandler.DAO.v2.WasteDescriptionDAO;
 import nl.Groep13.OrderHandler.interfaces.WasteInterface;
 import nl.Groep13.OrderHandler.model.JWTPayload;
 import nl.Groep13.OrderHandler.model.UserRole;
+import nl.Groep13.OrderHandler.model.v2.Usage;
 import nl.Groep13.OrderHandler.model.v2.Waste;
+import nl.Groep13.OrderHandler.model.v2.WasteData;
+import nl.Groep13.OrderHandler.model.v2.WasteDescription;
 import nl.Groep13.OrderHandler.record.LoginRequest;
+import nl.Groep13.OrderHandler.repository.v2.UsageRepository;
+import nl.Groep13.OrderHandler.repository.v2.WasteDataRepository;
+import nl.Groep13.OrderHandler.repository.v2.WasteDescriptionRepository;
+import nl.Groep13.OrderHandler.repository.v2.WasteRepository;
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
@@ -31,11 +49,38 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class WasteControllerTest {
 
     private final String email = "admin@admin.com";
     private final UserRole role = UserRole.ADMIN;
     private final String password = "adminpass";
+
+    @Autowired
+    private WasteRepository wasteRepository;
+    @Autowired
+    private WasteDataRepository wasteDataRepository;
+    @Autowired
+    private WasteDescriptionRepository wasteDescriptionRepository;
+    @Autowired
+    private UsageRepository usageRepository;
+
+    private WasteDataDAO wasteDataDAO;
+    private WasteDescriptionDAO wasteDescriptionDAO;
+    private UsageDAO usageDAO;
+
+    private WasteDAO wasteDAO;
+    private WasteController wasteController;
+
+
+    @BeforeAll
+    public void setUp() {
+        wasteDataDAO = new WasteDataDAO(wasteDataRepository);
+        wasteDescriptionDAO = new WasteDescriptionDAO(wasteDescriptionRepository);
+        usageDAO = new UsageDAO(usageRepository);
+        wasteDAO = new WasteDAO(wasteRepository, wasteDataDAO, wasteDescriptionDAO, usageDAO);
+        wasteController = new WasteController(wasteDAO);
+    }
 
     @Autowired
     private MockMvc mockMvc;
@@ -78,7 +123,7 @@ class WasteControllerTest {
     }
 
     @Test
-    void testGetWaste_WasteInterfaceReturnsNoItems() throws Exception {
+    void testGetWaste_WasteInterfaceReturnsItems() throws Exception {
         // Setup
         when(mockWasteInterface.getWaste()).thenReturn(Collections.emptyList());
         String Token = getToken();
@@ -90,6 +135,29 @@ class WasteControllerTest {
 
         // Verify the results
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
-        assertThat(response.getContentAsString()).isEqualTo("[]");
+        assertThat(response.getContentAsString()).isNotEqualTo("[]");
+    }
+
+    @Test
+    void AddAndUpdateWasteValue() throws ChangeSetPersister.NotFoundException {
+        //Arrange
+        WasteData fillerData = new WasteData(null, "Filler", "ADK-1000 Test", "2398", 2.5f, 3f, "100% PL", false, "Holland Haag Test");
+        WasteDescription fillerDescription = new WasteDescription(null, "ADK-1000 Test", "ForTesting", 50, "Nepstoffen", "Compiled", "wQlsd", 100, false, 0);
+        Usage usage = new Usage(null, "BEHOUD");
+        Waste testWaste = new Waste();
+        testWaste.setWaste_dataID(fillerData);
+        testWaste.setWaste_descriptionID(fillerDescription);
+        testWaste.setUsageID(usage);
+
+        //Act
+        Waste waste = wasteController.addWaste(testWaste).getBody();
+        WasteData altWasteData = waste.getWaste_dataID();
+        altWasteData.setSupplier("Tester");
+        waste.setWaste_dataID(altWasteData);
+        Waste checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
+
+        //Assert
+        assert checkableWaste != null;
+        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getWaste_dataID().getSupplier());
     }
 }

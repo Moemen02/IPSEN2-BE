@@ -1,10 +1,7 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import nl.Groep13.OrderHandler.DAO.v2.WasteDataDAO;
 import nl.Groep13.OrderHandler.DAO.v2.WasteDescriptionDAO;
-import nl.Groep13.OrderHandler.model.v2.WasteData;
 import nl.Groep13.OrderHandler.model.v2.WasteDescription;
-import nl.Groep13.OrderHandler.repository.v2.WasteDataRepository;
 import nl.Groep13.OrderHandler.repository.v2.WasteDescriptionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
