@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface WasteInterface {
     List<Waste> getWaste();
-    Waste getWasteById(Long id) throws ChangeSetPersister.NotFoundException;
+    Waste getWasteById(Long id);
     Waste updateWaste(Long id, Waste newWasteData) throws ChangeSetPersister.NotFoundException;
 }

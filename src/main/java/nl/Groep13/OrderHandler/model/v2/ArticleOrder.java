@@ -20,16 +20,16 @@ public class ArticleOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "ArticleID", referencedColumnName = "ID")
-    private Long articleID;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "articleID", referencedColumnName = "id")
+    private Waste articleID;
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "CustomerID", referencedColumnName = "ID")
     private Long customerID;
     private boolean finished;
 
-    public ArticleOrder(Long id, Long articleID, Long customerID, boolean finished) {
+    public ArticleOrder(Long id, Waste articleID, Long customerID, boolean finished) {
         this.id = id;
         this.articleID = articleID;
         this.customerID = customerID;

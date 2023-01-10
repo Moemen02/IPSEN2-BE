@@ -17,17 +17,12 @@ import nl.Groep13.OrderHandler.repository.v2.UsageRepository;
 import nl.Groep13.OrderHandler.repository.v2.WasteDataRepository;
 import nl.Groep13.OrderHandler.repository.v2.WasteDescriptionRepository;
 import nl.Groep13.OrderHandler.repository.v2.WasteRepository;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -147,19 +142,19 @@ class WasteControllerTest {
         WasteDescription fillerDescription = new WasteDescription(null, "ADK-1000 Test", "ForTesting", 50, "Nepstoffen", "Compiled", "wQlsd", 100, false, 0);
         Usage usage = new Usage(null, "BEHOUD");
         Waste testWaste = new Waste();
-        testWaste.setWaste_dataID(fillerData);
-        testWaste.setWaste_descriptionID(fillerDescription);
+        testWaste.setArticle_dataID(fillerData);
+        testWaste.setArticle_descriptionID(fillerDescription);
         testWaste.setUsageID(usage);
 
         //Act
         Waste waste = wasteController.addWaste(testWaste).getBody();
-        WasteData altWasteData = waste.getWaste_dataID();
+        WasteData altWasteData = waste.getArticle_dataID();
         altWasteData.setSupplier("Tester");
-        waste.setWaste_dataID(altWasteData);
+        waste.setArticle_dataID(altWasteData);
         Waste checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
 
         //Assert
         assert checkableWaste != null;
-        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getWaste_dataID().getSupplier());
+        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getArticle_dataID().getSupplier());
     }
 }
