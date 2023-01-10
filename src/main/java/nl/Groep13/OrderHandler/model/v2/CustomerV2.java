@@ -18,9 +18,9 @@ public class CustomerV2 {
     @Id
     private Long ID;
     private String Name;
-    private String AddressID;
+    private Long AddressID;
 
-    public CustomerV2(String name, String addressID) {
+    public CustomerV2(String name, Long addressID) {
         Name = name;
         AddressID = addressID;
     }

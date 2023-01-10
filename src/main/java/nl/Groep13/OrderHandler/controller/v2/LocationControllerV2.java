@@ -1,6 +1,7 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import com.google.gson.Gson;
+import nl.Groep13.OrderHandler.model.v2.CategoryLocation;
 import nl.Groep13.OrderHandler.model.v2.LocationV2;
 import nl.Groep13.OrderHandler.service.V2.LocationServiceV2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +18,15 @@ import java.util.Optional;
 public class LocationControllerV2 {
 
     private final LocationServiceV2 locationServiceV2;
+    private final CategoryLocationController categoryLocationController;
 
     Gson gson = new Gson();
 
     @Autowired
-    public LocationControllerV2(LocationServiceV2 locationServiceV2, Gson gson) {
+    public LocationControllerV2(LocationServiceV2 locationServiceV2, CategoryLocationController categoryLocationController,Gson gson) {
         this.locationServiceV2 = locationServiceV2;
         this.gson = gson;
+        this.categoryLocationController = categoryLocationController;
     }
 
 
@@ -43,6 +46,10 @@ public class LocationControllerV2 {
         return ResponseEntity.ok(
                 this.locationServiceV2.getAllLocations()
         );
+    }
+
+    public Long getLocationByCategoryLocationID(Long id) throws ChangeSetPersister.NotFoundException {
+        return this.locationServiceV2.getLocationByCategoryLocationID(id);
     }
 
     //TODO UPDATE FUNCTIE NOG SCHRIJVEN

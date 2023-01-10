@@ -49,18 +49,18 @@ public class WasteDAO {
             Waste oldWaste = oldWasteById.get();
             Waste newWaste = waste;
 
-            newWaste.setWaste_dataID((newWaste.getWaste_dataID() == null) ? oldWaste.getWaste_dataID() : newWaste.getWaste_dataID());
-            newWaste.setWaste_descriptionID((newWaste.getWaste_descriptionID() == null) ? oldWaste.getWaste_descriptionID() : newWaste.getWaste_descriptionID());
+            newWaste.setArticle_dataID((newWaste.getArticle_dataID() == null) ? oldWaste.getArticle_dataID() : newWaste.getArticle_dataID());
+            newWaste.setArticle_descriptionID((newWaste.getArticle_descriptionID() == null) ? oldWaste.getArticle_descriptionID() : newWaste.getArticle_descriptionID());
             newWaste.setUsageID((newWaste.getUsageID() == null) ? oldWaste.getUsageID() : newWaste.getUsageID());
             newWaste.setId((newWaste.getId() == null) ? oldWaste.getId() : newWaste.getId());
 
-            WasteData newWasteData = newWaste.getWaste_dataID();
+            WasteData newWasteData = newWaste.getArticle_dataID();
             if (newWasteData.getId() == null) {
-                newWasteData.setId(oldWaste.getWaste_dataID().getId());
+                newWasteData.setId(oldWaste.getArticle_dataID().getId());
             }
-            WasteDescription newWasteDescription = newWaste.getWaste_descriptionID();
+            WasteDescription newWasteDescription = newWaste.getArticle_descriptionID();
             if (newWasteDescription.getId() == null) {
-                newWasteDescription.setId(oldWaste.getWaste_descriptionID().getId());
+                newWasteDescription.setId(oldWaste.getArticle_descriptionID().getId());
             }
             Usage newUsage = checkUsageExists.get();
 
@@ -77,11 +77,11 @@ public class WasteDAO {
     }
 
     public void addWaste(final Waste waste) throws ChangeSetPersister.NotFoundException {
-        WasteData wasteData = wasteDataDAO.addWasteData(waste.getWaste_dataID());
-        WasteDescription wasteDescription = wasteDescriptionDAO.addWasteDescription(waste.getWaste_descriptionID());
+        WasteData wasteData = wasteDataDAO.addWasteData(waste.getArticle_dataID());
+        WasteDescription wasteDescription = wasteDescriptionDAO.addWasteDescription(waste.getArticle_descriptionID());
         Usage usage = usageDAO.getUsageByTypeUsage(waste.getUsageID().getType_usage());
-        waste.setWaste_dataID(wasteData);
-        waste.setWaste_descriptionID(wasteDescription);
+        waste.setArticle_dataID(wasteData);
+        waste.setArticle_descriptionID(wasteDescription);
         waste.setUsageID(usage);
         wasteRepository.save(waste);
     }

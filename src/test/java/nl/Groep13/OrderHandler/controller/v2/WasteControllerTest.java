@@ -105,8 +105,8 @@ class WasteControllerTest {
         String Token = getToken();
         final Waste waste = new Waste();
 //        waste.setId(0L);
-//        waste.setWaste_dataID(0L);
-//        waste.setWaste_descriptionID(0L);
+//        waste.setArticle_dataID(0L);
+//        waste.setArticle_descriptionID(0L);
 //        waste.setUsageID(0L);
         final List<Waste> wastes = List.of(waste);
         when(mockWasteInterface.getWaste()).thenReturn(wastes);
@@ -145,19 +145,19 @@ class WasteControllerTest {
         WasteDescription fillerDescription = new WasteDescription(null, "ADK-1000 Test", "ForTesting", 50, "Nepstoffen", "Compiled", "wQlsd", 100, false, 0);
         Usage usage = new Usage(null, "BEHOUD");
         Waste testWaste = new Waste();
-        testWaste.setWaste_dataID(fillerData);
-        testWaste.setWaste_descriptionID(fillerDescription);
+        testWaste.setArticle_dataID(fillerData);
+        testWaste.setArticle_descriptionID(fillerDescription);
         testWaste.setUsageID(usage);
 
         //Act
         Waste waste = wasteController.addWaste(testWaste).getBody();
-        WasteData altWasteData = waste.getWaste_dataID();
+        WasteData altWasteData = waste.getArticle_dataID();
         altWasteData.setSupplier("Tester");
-        waste.setWaste_dataID(altWasteData);
+        waste.setArticle_dataID(altWasteData);
         Waste checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
 
         //Assert
         assert checkableWaste != null;
-        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getWaste_dataID().getSupplier());
+        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getArticle_dataID().getSupplier());
     }
 }
