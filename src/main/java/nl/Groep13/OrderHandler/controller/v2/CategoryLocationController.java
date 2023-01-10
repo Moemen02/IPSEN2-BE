@@ -1,6 +1,5 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.v2.CategoryLocation;
 import nl.Groep13.OrderHandler.service.V2.CategoryLocationService;
@@ -32,7 +31,7 @@ public class CategoryLocationController {
     public ResponseEntity<Optional<CategoryLocation>> getCategoryLocationsId(@PathVariable Long ID){
         try{
             Optional<CategoryLocation> categoryLocation = this.categoryLocationService.getCategoryLocationById(ID);
-            return new ResponseEntity<>(categoryLocation, HttpStatus.FOUND);
+            return new ResponseEntity<>(categoryLocation, HttpStatus.OK);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
