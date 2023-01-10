@@ -10,7 +10,7 @@ import javax.persistence.*;
 @ToString
 @Getter
 @Setter
-@Table(name = "waste_data")
+@Table(name = "article_data")
 public class WasteData {
 
     @Id
