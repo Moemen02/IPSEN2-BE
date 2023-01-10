@@ -2,12 +2,14 @@ package nl.Groep13.OrderHandler.model.v2;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
+@ToString
 @Table(name = "article")
 public class ArticleV2 {
 

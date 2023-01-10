@@ -3,6 +3,7 @@ package nl.Groep13.OrderHandler.model.v2;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 @Table(name = "article_location")
 public class ArticleLocation {
 

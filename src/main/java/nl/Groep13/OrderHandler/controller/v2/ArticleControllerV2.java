@@ -17,10 +17,12 @@ public class ArticleControllerV2 {
     private final WasteDAO wasteDAO;
 //    private final WasteInterface wasteInterface = null;
     private final ArticleInterface articleInterface;
+    private final WasteLocationController wasteLocationController;
 
-    public ArticleControllerV2(WasteDAO wasteDAO, ArticleInterface articleInterface) {
+    public ArticleControllerV2(WasteDAO wasteDAO, ArticleInterface articleInterface, WasteLocationController wasteLocationController) {
         this.wasteDAO = wasteDAO;
         this.articleInterface = articleInterface;
+        this.wasteLocationController = wasteLocationController;
     }
 
     @GetMapping("/{pageNo}/{pageSize}")
@@ -46,18 +48,20 @@ public class ArticleControllerV2 {
 
     @PostMapping
     public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException {
-        if (waste == null) {
-            throw new NullPointerException("Waste is empty");
-        } else if (waste.getArticle_dataID() == null) {
-            throw new NullPointerException("WasteData is empty");
-        } else if (waste.getArticle_descriptionID() == null) {
-            throw new NullPointerException("WasteDescription is empty");
-        } else if (waste.getUsageID() == null) {
-            throw new NullPointerException("Usage is empty");
-        } else {
-            wasteDAO.addWaste(waste);
-            return ResponseEntity.ok(waste);
-        }
+        System.out.println(wasteLocationController.createLoction(1L, waste));
+        return null;
+//        if (waste == null) {
+//            throw new NullPointerException("Waste is empty");
+//        } else if (waste.getArticle_dataID() == null) {
+//            throw new NullPointerException("WasteData is empty");
+//        } else if (waste.getArticle_descriptionID() == null) {
+//            throw new NullPointerException("WasteDescription is empty");
+//        } else if (waste.getUsageID() == null) {
+//            throw new NullPointerException("Usage is empty");
+//        } else {
+//            wasteDAO.addWaste(waste);
+//            return ResponseEntity.ok(waste);
+//        }
     }
 
     @PutMapping(value = "/{id}")
