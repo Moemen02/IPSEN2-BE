@@ -34,7 +34,7 @@ public interface ArticleDataRepository extends JpaRepository<ArticleData, Long>{
 
     @Transactional
 //    @Query("SELECT wd FROM WasteData wd JOIN Waste w ON w.Waste_dataID.id = wd.id WHERE w.UsageID = 3")
-    @Query(value = "SELECT wd.Eancode, wd.Color, wd.Composition, ws.Articlenumber, ws.Description, ws.Type, ws.Weight FROM waste_data wd JOIN Waste w ON w.Waste_dataID = wd.ID JOIN waste_description ws ON w.Waste_descriptionID = ws.ID WHERE w.UsageID = 3;", nativeQuery = true)
+    @Query(value = "SELECT wd.Eancode, wd.Color, wd.Composition, ws.Articlenumber, ws.Description, ws.Type, ws.Weight FROM article_data wd JOIN article w ON w.article_dataID = wd.ID JOIN article_description ws ON w.article_descriptionID = ws.ID WHERE w.UsageID = 3;", nativeQuery = true)
     List<Object> getAllWasteInStock(Long stockType);
 
     @Transactional
