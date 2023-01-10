@@ -1,6 +1,5 @@
 package nl.Groep13.OrderHandler.DAO.v2;
 
-import nl.Groep13.OrderHandler.interfaces.WasteInterface;
 import nl.Groep13.OrderHandler.model.v2.Usage;
 import nl.Groep13.OrderHandler.model.v2.Waste;
 import nl.Groep13.OrderHandler.model.v2.WasteData;
@@ -52,13 +51,13 @@ public class WasteDAO {
 
             new AttrCopy().copyAttributes(oldWaste, newWaste);
 
-            WasteData newWasteData = newWaste.getWaste_dataID();
+            WasteData newWasteData = newWaste.getArticle_dataID();
             if (newWasteData.getId() == null) {
-                newWasteData.setId(oldWaste.getWaste_dataID().getId());
+                newWasteData.setId(oldWaste.getArticle_dataID().getId());
             }
-            WasteDescription newWasteDescription = newWaste.getWaste_descriptionID();
+            WasteDescription newWasteDescription = newWaste.getArticle_descriptionID();
             if (newWasteDescription.getId() == null) {
-                newWasteDescription.setId(oldWaste.getWaste_descriptionID().getId());
+                newWasteDescription.setId(oldWaste.getArticle_descriptionID().getId());
             }
             Usage newUsage = checkUsageExists.get();
 
@@ -75,11 +74,11 @@ public class WasteDAO {
     }
 
     public void addWaste(final Waste waste) throws ChangeSetPersister.NotFoundException {
-        WasteData wasteData = wasteDataDAO.addWasteData(waste.getWaste_dataID());
-        WasteDescription wasteDescription = wasteDescriptionDAO.addWasteDescription(waste.getWaste_descriptionID());
+        WasteData wasteData = wasteDataDAO.addWasteData(waste.getArticle_dataID());
+        WasteDescription wasteDescription = wasteDescriptionDAO.addWasteDescription(waste.getArticle_descriptionID());
         Usage usage = usageDAO.getUsageByTypeUsage(waste.getUsageID().getType_usage());
-        waste.setWaste_dataID(wasteData);
-        waste.setWaste_descriptionID(wasteDescription);
+        waste.setArticle_dataID(wasteData);
+        waste.setArticle_descriptionID(wasteDescription);
         waste.setUsageID(usage);
         wasteRepository.save(waste);
     }

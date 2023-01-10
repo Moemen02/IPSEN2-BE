@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v2/waste_data")
+@RequestMapping(value = "/api/v2/article_data")
 public class WasteDataController {
     private final WasteDataDAO wasteDataDAO;
 

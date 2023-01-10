@@ -1,7 +1,6 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import nl.Groep13.OrderHandler.DAO.v2.WasteDescriptionDAO;
-import nl.Groep13.OrderHandler.model.v2.WasteData;
 import nl.Groep13.OrderHandler.model.v2.WasteDescription;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v2/waste_description")
+@RequestMapping(value = "/api/v2/article_description")
 public class WasteDescriptionController {
     private final WasteDescriptionDAO wasteDescriptionDAO;
 

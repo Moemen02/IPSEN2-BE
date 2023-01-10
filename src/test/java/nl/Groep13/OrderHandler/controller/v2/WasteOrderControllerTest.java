@@ -51,12 +51,12 @@ class WasteOrderControllerTest {
         Waste_dataID.setPatternWidth(0.0f);
         Waste_dataID.setComposition("composition");
         Waste_dataID.setStockRL(false);
-        waste.setWaste_dataID(Waste_dataID);
+        waste.setArticle_dataID(Waste_dataID);
         final WasteDescription Waste_descriptionID = new WasteDescription();
         Waste_descriptionID.setId(0L);
         Waste_descriptionID.setArticlenumber("articlenumber");
         Waste_descriptionID.setDescription("description");
-        waste.setWaste_descriptionID(Waste_descriptionID);
+        waste.setArticle_descriptionID(Waste_descriptionID);
         final Optional<WasteOrder> wasteOrder = Optional.of(new WasteOrder(0L, waste, 0L, false));
         when(mockWasteOrderService.getWasteOrderById(0L)).thenReturn(wasteOrder);
 
@@ -116,12 +116,12 @@ class WasteOrderControllerTest {
         Waste_dataID.setPatternWidth(0.0f);
         Waste_dataID.setComposition("composition");
         Waste_dataID.setStockRL(false);
-        waste.setWaste_dataID(Waste_dataID);
+        waste.setArticle_dataID(Waste_dataID);
         final WasteDescription Waste_descriptionID = new WasteDescription();
         Waste_descriptionID.setId(0L);
         Waste_descriptionID.setArticlenumber("articlenumber");
         Waste_descriptionID.setDescription("description");
-        waste.setWaste_descriptionID(Waste_descriptionID);
+        waste.setArticle_descriptionID(Waste_descriptionID);
         final List<WasteOrder> wasteOrders = List.of(new WasteOrder(0L, waste, 0L, false));
         when(mockWasteOrderService.getAllWasteOrders()).thenReturn(wasteOrders);
 

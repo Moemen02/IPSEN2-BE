@@ -1,19 +1,16 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
-import nl.Groep13.OrderHandler.interfaces.WasteInterface;
 import nl.Groep13.OrderHandler.model.v2.Waste;
-import nl.Groep13.OrderHandler.repository.v2.WasteRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v2/waste")
+@RequestMapping(value = "/api/v2/article")
 public class WasteController {
     private final WasteDAO wasteDAO;
 //    private final WasteInterface wasteInterface = null;
@@ -42,9 +39,9 @@ public class WasteController {
     public ResponseEntity<Waste> addWaste (@RequestBody final Waste waste) throws ChangeSetPersister.NotFoundException {
         if (waste == null) {
             throw new NullPointerException("Waste is empty");
-        } else if (waste.getWaste_dataID() == null) {
+        } else if (waste.getArticle_dataID() == null) {
             throw new NullPointerException("WasteData is empty");
-        } else if (waste.getWaste_descriptionID() == null) {
+        } else if (waste.getArticle_descriptionID() == null) {
             throw new NullPointerException("WasteDescription is empty");
         } else if (waste.getUsageID() == null) {
             throw new NullPointerException("Usage is empty");
