@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -13,12 +14,15 @@ public class CategoryLocation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
-    private String Location_type;
+    private Long id;
+    private String location_type;
 
-    public CategoryLocation(Long ID, String location_type) {
-        this.ID = ID;
-        Location_type = location_type;
+    //requirementID krijgen hier
+//    private Set<Requirement> requirementID;
+
+    public CategoryLocation(Long id, String location_type) {
+        this.id = id;
+        this.location_type = location_type;
     }
 
     public CategoryLocation() {

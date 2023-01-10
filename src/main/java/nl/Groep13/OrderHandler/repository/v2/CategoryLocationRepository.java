@@ -10,15 +10,15 @@ import javax.transaction.Transactional;
 
 public interface CategoryLocationRepository extends JpaRepository<CategoryLocation, Long> {
 
-    @Modifying
-    @Transactional
-    @Query("update CategoryLocation categoryLocation SET " +
-            "categoryLocation.Location_type = ?1" +
-            "where categoryLocation.ID = ?2")
-    void setCategorylocationById(
-            String Location_type,
-            long ID
-    );
+//    @Modifying
+//    @Transactional
+//    @Query("update CategoryLocation categoryLocation SET " +
+//            "categoryLocation.Location_type = ?1" +
+//            "where categoryLocation.ID = ?2")
+//    void setCategorylocationById(
+//            String Location_type,
+//            long ID
+//    );
 
 
 }
