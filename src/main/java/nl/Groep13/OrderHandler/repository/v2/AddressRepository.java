@@ -12,15 +12,15 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     @Modifying
     @Transactional
     @Query("update Address address SET " +
-            "address.Housenumber = ?1," +
-            "address.Postal_code = ?2," +
-            "address.Streetname = ?3" +
-            "where address.ID = ?4")
+            "address.housenumber = ?1," +
+            "address.postal_code = ?2," +
+            "address.streetname = ?3" +
+            "where address.id = ?4")
     void setAddressById(
-            int Housenumber,
-            String Postal_code,
-            String Streetname,
-            long ID
+            int housenumber,
+            String postal_code,
+            String streetname,
+            long id
     );
 
 }

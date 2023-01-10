@@ -1,7 +1,7 @@
 package nl.Groep13.OrderHandler.service.V2;
 
 import nl.Groep13.OrderHandler.DAO.v2.AddressDAO;
-import nl.Groep13.OrderHandler.DAO.v2.WasteOrderDAO;
+
 import nl.Groep13.OrderHandler.model.v2.Address;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class AddressService {
         return this.addressDAO.getAddressById(ID);
     }
 
-    public Optional<Address> updateAddress(Long ID, Optional<Address> address) throws ChangeSetPersister.NotFoundException{
-        return this.addressDAO.updateAddress(ID, address);
-    }
+//    public Optional<Address> updateAddress(Long ID, Optional<Address> address) throws ChangeSetPersister.NotFoundException{
+//        return this.addressDAO.updateAddress(ID, address);
+//    }
 }
