@@ -2,7 +2,6 @@ package nl.Groep13.OrderHandler.DAO.v2;
 
 import nl.Groep13.OrderHandler.model.v2.WasteOrder;
 import nl.Groep13.OrderHandler.repository.v2.WasteOrderRepository;
-import nl.Groep13.OrderHandler.repository.v2.WasteRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 

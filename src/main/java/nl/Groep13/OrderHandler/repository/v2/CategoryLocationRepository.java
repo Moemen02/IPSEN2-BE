@@ -13,7 +13,7 @@ public interface CategoryLocationRepository extends JpaRepository<CategoryLocati
     @Modifying
     @Transactional
     @Query("update CategoryLocation categoryLocation SET " +
-            "categoryLocation.Location_type = ?1" +
+            "categoryLocation.location_type = ?1" +
             "where categoryLocation.ID = ?2")
     void setCategorylocationById(
             String Location_type,

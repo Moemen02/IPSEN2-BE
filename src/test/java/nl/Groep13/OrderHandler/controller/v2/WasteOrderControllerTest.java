@@ -1,8 +1,8 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import nl.Groep13.OrderHandler.model.v2.Waste;
-import nl.Groep13.OrderHandler.model.v2.WasteData;
-import nl.Groep13.OrderHandler.model.v2.WasteDescription;
+import nl.Groep13.OrderHandler.model.v2.ArticleV2;
+import nl.Groep13.OrderHandler.model.v2.ArticleData;
+import nl.Groep13.OrderHandler.model.v2.ArticleDescription;
 import nl.Groep13.OrderHandler.model.v2.WasteOrder;
 import nl.Groep13.OrderHandler.service.V2.WasteOrderService;
 import org.junit.jupiter.api.Test;
@@ -39,9 +39,9 @@ class WasteOrderControllerTest {
     void testGetWasteOrderById() throws Exception {
         // Setup
         // Configure WasteOrderService.getWasteOrderById(...).
-        final Waste waste = new Waste();
+        final ArticleV2 waste = new ArticleV2();
         waste.setId(0L);
-        final WasteData Waste_dataID = new WasteData();
+        final ArticleData Waste_dataID = new ArticleData();
         Waste_dataID.setId(0L);
         Waste_dataID.setSupplier("supplier");
         Waste_dataID.setProductgroup("productgroup");
@@ -52,7 +52,7 @@ class WasteOrderControllerTest {
         Waste_dataID.setComposition("composition");
         Waste_dataID.setStockRL(false);
         waste.setArticle_dataID(Waste_dataID);
-        final WasteDescription Waste_descriptionID = new WasteDescription();
+        final ArticleDescription Waste_descriptionID = new ArticleDescription();
         Waste_descriptionID.setId(0L);
         Waste_descriptionID.setArticlenumber("articlenumber");
         Waste_descriptionID.setDescription("description");
@@ -104,9 +104,9 @@ class WasteOrderControllerTest {
     void testGetAllWasteOrders() throws Exception {
         // Setup
         // Configure WasteOrderService.getAllWasteOrders(...).
-        final Waste waste = new Waste();
+        final ArticleV2 waste = new ArticleV2();
         waste.setId(0L);
-        final WasteData Waste_dataID = new WasteData();
+        final ArticleData Waste_dataID = new ArticleData();
         Waste_dataID.setId(0L);
         Waste_dataID.setSupplier("supplier");
         Waste_dataID.setProductgroup("productgroup");
@@ -117,7 +117,7 @@ class WasteOrderControllerTest {
         Waste_dataID.setComposition("composition");
         Waste_dataID.setStockRL(false);
         waste.setArticle_dataID(Waste_dataID);
-        final WasteDescription Waste_descriptionID = new WasteDescription();
+        final ArticleDescription Waste_descriptionID = new ArticleDescription();
         Waste_descriptionID.setId(0L);
         Waste_descriptionID.setArticlenumber("articlenumber");
         Waste_descriptionID.setDescription("description");

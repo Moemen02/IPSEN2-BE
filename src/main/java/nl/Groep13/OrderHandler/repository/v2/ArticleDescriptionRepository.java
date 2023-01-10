@@ -1,6 +1,6 @@
 package nl.Groep13.OrderHandler.repository.v2;
 
-import nl.Groep13.OrderHandler.model.v2.WasteDescription;
+import nl.Groep13.OrderHandler.model.v2.ArticleDescription;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,11 +9,11 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 
 @Repository
-public interface WasteDescriptionRepository extends JpaRepository<WasteDescription, Long> {
+public interface ArticleDescriptionRepository extends JpaRepository<ArticleDescription, Long> {
 
     @Modifying
     @Transactional
-    @Query("update WasteDescription wastedescription set"
+    @Query("update ArticleDescription wastedescription set"
             + " wastedescription.articlenumber = ?1, wastedescription.description = ?2,"
             + " wastedescription.clothWidth = ?3, wastedescription.type = ?4,"
             + " wastedescription.layout = ?5, wastedescription.washcode = ?6,"
@@ -35,6 +35,6 @@ public interface WasteDescriptionRepository extends JpaRepository<WasteDescripti
 
     @Modifying
     @Transactional
-    @Query(" delete from WasteDescription where id = ?1")
+    @Query(" delete from ArticleDescription where id = ?1")
     void deleteWasteDescriptionById(Long id);
 }
