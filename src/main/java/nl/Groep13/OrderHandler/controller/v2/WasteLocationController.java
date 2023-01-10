@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping(value = "/api/v2/waste/location")
@@ -65,9 +67,41 @@ public class WasteLocationController {
     }
 
     public void checkWhatLocation(String composition, List<Requirement> requirementList){
+        HashMap<String, Integer> listCompValue = new HashMap<>();
+        HashMap<String, Integer> compValue = new HashMap<>();
         //TODO: get percentage and composition from composition and compare with value of requirement list
         //TODO: when done, get location when is comparison is good
-        System.out.print(composition);
-        System.out.print(requirementList);
+        requirementList.forEach(requirement -> {
+            String req = requirement.getRequirement().toLowerCase();
+            String[] result = req.split(" ");
+
+            if (req.equals("overig")){
+//                System.out.println(requirement.getRequirement());
+            } else{
+                String resultPercentage = result[0].replace("%", "");
+                Integer resultNum = Integer.parseInt(resultPercentage);
+                if (result[1].equals("pes")) {
+                    result[1] = "trevira";
+                }
+                listCompValue.put(result[1], resultNum);
+            }
+        });
+
+        if (composition.contains("/")){
+            int index = composition.indexOf("/");
+            String toSplitValue = composition.substring(composition.lastIndexOf("/") +1);
+            String[] theNewResult = toSplitValue.split(" ");
+            System.out.println(theNewResult[2]);
+            if (index != 1) {
+                String req = composition.substring(0, index);
+                String[] result = req.split(" ");
+                String resultPercentage = result[0].replace("%", "");
+                Integer resultNum = Integer.parseInt(resultPercentage);
+                compValue.put(result[1].toLowerCase(), resultNum);
+            }
+        }
+
+//        System.out.println(compValue + " comp");
+//        System.out.println(listCompValue);
     }
 }
