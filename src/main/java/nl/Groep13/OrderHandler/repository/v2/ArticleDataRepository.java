@@ -38,7 +38,7 @@ public interface ArticleDataRepository extends JpaRepository<ArticleData, Long>{
     List<Object> getAllWasteInStock(Long stockType);
 
     @Transactional
-    @Query("SELECT DISTINCT color FROM WasteData ")
+    @Query("SELECT DISTINCT color FROM ArticleData ")
     List<String> getDistinctColor();
 
     @Modifying
