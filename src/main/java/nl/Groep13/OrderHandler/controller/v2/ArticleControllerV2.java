@@ -3,7 +3,6 @@ package nl.Groep13.OrderHandler.controller.v2;
 import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
-import nl.Groep13.OrderHandler.model.v2.Waste;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import nl.Groep13.OrderHandler.utils.Pager;
@@ -84,10 +83,10 @@ public class ArticleControllerV2 {
     }
 
     @GetMapping
-    public ResponseEntity<List<Waste>> getWaste(@RequestParam int page) {
+    public ResponseEntity<List<ArticleV2>> getWaste(@RequestParam int page) {
 
-        List<Waste> fullList = this.wasteDAO.getWaste();
-        List<Waste> toSend = Pager.getRequestedItems(fullList, page);
+        List<ArticleV2> fullList = this.wasteDAO.getWaste();
+        List<ArticleV2> toSend = Pager.getRequestedItems(fullList, page);
 
         return ResponseEntity.ok()
                 .headers(Pager.addHeaders(fullList.size()))

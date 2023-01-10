@@ -1,15 +1,15 @@
 package nl.Groep13.OrderHandler.DAO.v2;
 
-import nl.Groep13.OrderHandler.repository.v2.WasteDataRepository;
+import nl.Groep13.OrderHandler.repository.v2.ArticleDataRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
 public class CategoryWasteDAO {
-    WasteDataRepository wasteDataRepository;
+    ArticleDataRepository wasteDataRepository;
 
-    public CategoryWasteDAO(WasteDataRepository wasteDataRepository) {
+    public CategoryWasteDAO(ArticleDataRepository wasteDataRepository) {
         this.wasteDataRepository = wasteDataRepository;
     }
 
