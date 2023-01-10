@@ -3,10 +3,16 @@ package nl.Groep13.OrderHandler.controller.v2;
 import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
+import nl.Groep13.OrderHandler.model.v2.Waste;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
+import nl.Groep13.OrderHandler.utils.Pager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -75,5 +81,16 @@ public class ArticleControllerV2 {
         return ResponseEntity.ok(
                 wasteDAO.updateWaste(id, waste)
         );
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Waste>> getWaste(@RequestParam int page) {
+
+        List<Waste> fullList = this.wasteDAO.getWaste();
+        List<Waste> toSend = Pager.getRequestedItems(fullList, page);
+
+        return ResponseEntity.ok()
+                .headers(Pager.addHeaders(fullList.size()))
+                .body(toSend);
     }
 }
