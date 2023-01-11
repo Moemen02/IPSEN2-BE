@@ -1,6 +1,6 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
+import nl.Groep13.OrderHandler.DAO.v2.ArticleDAOV2;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -12,14 +12,14 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/v2/waste")
+@RequestMapping(value = "/api/v2/article")
 public class ArticleControllerV2 {
-    private final WasteDAO wasteDAO;
+    private final ArticleDAOV2 articleDAOV2;
 //    private final WasteInterface wasteInterface = null;
     private final ArticleInterface articleInterface;
 
-    public ArticleControllerV2(WasteDAO wasteDAO, ArticleInterface articleInterface) {
-        this.wasteDAO = wasteDAO;
+    public ArticleControllerV2(ArticleDAOV2 wasteDAO, ArticleInterface articleInterface) {
+        this.articleDAOV2 = wasteDAO;
         this.articleInterface = articleInterface;
     }
 
@@ -36,12 +36,8 @@ public class ArticleControllerV2 {
     @GetMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<ArticleV2> getWasteById(@PathVariable Long id) {
-        try {
-            ArticleV2 checkedWaste = this.wasteDAO.getWasteById(id);
-            return new ResponseEntity<>(checkedWaste, HttpStatus.FOUND);
-        } catch (ChangeSetPersister.NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        ArticleV2 checkedWaste = this.articleDAOV2.getWasteById(id).get();
+        return new ResponseEntity<>(checkedWaste, HttpStatus.FOUND);
     }
 
     @PostMapping
@@ -55,21 +51,17 @@ public class ArticleControllerV2 {
         } else if (waste.getUsageID() == null) {
             throw new NullPointerException("Usage is empty");
         } else {
-            wasteDAO.addWaste(waste);
+            articleDAOV2.addArticle(waste);
             return ResponseEntity.ok(waste);
         }
     }
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<ArticleV2> updateWaste(@PathVariable final Long id, @RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException {
-        try {
-            this.wasteDAO.getWasteById(id);
-        } catch (ChangeSetPersister.NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+    public ResponseEntity<ArticleV2> updateWaste(@PathVariable final Long id, @RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException, IllegalAccessException {
+        this.articleDAOV2.getWasteById(id);
         return ResponseEntity.ok(
-                wasteDAO.updateWaste(id, waste)
+                articleDAOV2.updateWaste(id, waste)
         );
     }
 }

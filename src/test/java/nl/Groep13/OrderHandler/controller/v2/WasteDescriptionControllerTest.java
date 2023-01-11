@@ -112,7 +112,7 @@ public class WasteDescriptionControllerTest {
     }
 
     @Test
-    public void Should_Be_Unable_To_Update_OneMil_Id() throws ChangeSetPersister.NotFoundException {
+    public void Should_Be_Unable_To_Update_OneMil_Id() throws ChangeSetPersister.NotFoundException, IllegalAccessException {
         Long OneMil = 1000000L;
         ArticleDescription wasteDescription = new ArticleDescription(5000L, "Testing", "ForTesting", 50, "FakeStuff", "Patternless", "wQ3nc", 500, false, 0);
         //Act

@@ -1,10 +1,7 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import com.google.gson.Gson;
-import nl.Groep13.OrderHandler.DAO.v2.UsageDAO;
-import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
-import nl.Groep13.OrderHandler.DAO.v2.WasteDataDAO;
-import nl.Groep13.OrderHandler.DAO.v2.WasteDescriptionDAO;
+import nl.Groep13.OrderHandler.DAO.v2.*;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.JWTPayload;
 import nl.Groep13.OrderHandler.model.UserRole;
@@ -64,7 +61,7 @@ class WasteControllerTest {
     private WasteDescriptionDAO wasteDescriptionDAO;
     private UsageDAO usageDAO;
 
-    private WasteDAO wasteDAO;
+    private ArticleDAOV2 wasteDAO;
     private ArticleControllerV2 wasteController;
 
 
@@ -73,7 +70,7 @@ class WasteControllerTest {
         wasteDataDAO = new WasteDataDAO(wasteDataRepository);
         wasteDescriptionDAO = new WasteDescriptionDAO(wasteDescriptionRepository);
         usageDAO = new UsageDAO(usageRepository);
-        wasteDAO = new WasteDAO(wasteRepository, wasteDataDAO, wasteDescriptionDAO, usageDAO);
+        wasteDAO = new ArticleDAOV2(wasteRepository, wasteDataDAO, wasteDescriptionDAO, usageDAO);
 //        wasteController = new ArticleControllerV2(wasteDAO, articleInterface);
     }
 
@@ -124,7 +121,7 @@ class WasteControllerTest {
         String Token = getToken();
 
         // Run the test
-        final MockHttpServletResponse response = mockMvc.perform(get("/api/v2/waste")
+        final MockHttpServletResponse response = mockMvc.perform(get("/api/v2/article")
                         .header("authorization", "Bearer " + Token))
                 .andReturn().getResponse();
 
@@ -133,26 +130,26 @@ class WasteControllerTest {
         assertThat(response.getContentAsString()).isNotEqualTo("[]");
     }
 
-//    @Test
-//    void AddAndUpdateWasteValue() throws ChangeSetPersister.NotFoundException {
-//        //Arrange
-//        ArticleData fillerData = new ArticleData(null, "Filler", "ADK-1000 Test", "2398", 2.5f, 3f, "100% PL", false, "Holland Haag Test");
-//        ArticleDescription fillerDescription = new ArticleDescription(null, "ADK-1000 Test", "ForTesting", 50, "Nepstoffen", "Compiled", "wQlsd", 100, false, 0);
-//        Usage usage = new Usage(null, "BEHOUD");
-//        ArticleV2 testWaste = new ArticleV2();
-//        testWaste.setArticle_dataID(fillerData);
-//        testWaste.setArticle_descriptionID(fillerDescription);
-//        testWaste.setUsageID(usage);
-//
-//        //Act
-//        ArticleV2 waste = wasteController.addWaste(testWaste).getBody();
-//        ArticleData altWasteData = waste.getArticle_dataID();
-//        altWasteData.setSupplier("Tester");
-//        waste.setArticle_dataID(altWasteData);
-//        ArticleV2 checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
-//
-//        //Assert
-//        assert checkableWaste != null;
-//        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getArticle_dataID().getSupplier());
-//    }
+    @Test
+    void AddAndUpdateWasteValue() throws ChangeSetPersister.NotFoundException, IllegalAccessException {
+        //Arrange
+        ArticleData fillerData = new ArticleData(null, "Filler", "ADK-1000 Test", "2398", 2.5f, 3f, "100% PL", false, "Holland Haag Test");
+        ArticleDescription fillerDescription = new ArticleDescription(null, "ADK-1000 Test", "ForTesting", 50, "Nepstoffen", "Compiled", "wQlsd", 100, false, 0);
+        Usage usage = new Usage(null, "AFVAL");
+        ArticleV2 testWaste = new ArticleV2();
+        testWaste.setArticle_dataID(fillerData);
+        testWaste.setArticle_descriptionID(fillerDescription);
+        testWaste.setUsageID(usage);
+
+        //Act
+        ArticleV2 waste = wasteController.addWaste(testWaste).getBody();
+        ArticleData altWasteData = waste.getArticle_dataID();
+        altWasteData.setSupplier("Tester");
+        waste.setArticle_dataID(altWasteData);
+        ArticleV2 checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
+
+        //Assert
+        assert checkableWaste != null;
+        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getArticle_dataID().getSupplier());
+    }
 }
