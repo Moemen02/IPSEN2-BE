@@ -1,6 +1,6 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import nl.Groep13.OrderHandler.interfaces.WasteInterface;
+
 import nl.Groep13.OrderHandler.interfaces.WasteLocationInterface;
 import nl.Groep13.OrderHandler.model.v2.ArticleLocation;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;

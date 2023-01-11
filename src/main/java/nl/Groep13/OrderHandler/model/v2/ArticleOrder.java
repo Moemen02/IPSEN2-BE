@@ -22,14 +22,14 @@ public class ArticleOrder {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "articleID", referencedColumnName = "id")
-    private Waste articleID;
+    private ArticleV2 articleID;
 
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "CustomerID", referencedColumnName = "ID")
-    private Long customerID;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customerID", referencedColumnName = "id")
+    private CustomerV2 customerID;
     private boolean finished;
 
-    public ArticleOrder(Long id, Waste articleID, Long customerID, boolean finished) {
+    public ArticleOrder(Long id, ArticleV2 articleID, CustomerV2 customerID, boolean finished) {
         this.id = id;
         this.articleID = articleID;
         this.customerID = customerID;

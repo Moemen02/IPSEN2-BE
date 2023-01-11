@@ -51,7 +51,7 @@ public class CategoryLocationController {
         List<CategoryLocation> categoryLocations = this.categoryLocationService.getAllCategoryLocations();
         List<Long> idList = new ArrayList<>();
         categoryLocations.forEach(categoryLocation -> {
-            idList.add(categoryLocation.getID());
+            idList.add(categoryLocation.getId());
         });
         return idList;
     }
