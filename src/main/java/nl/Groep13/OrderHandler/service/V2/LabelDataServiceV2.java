@@ -56,6 +56,7 @@ public class LabelDataServiceV2 {
             labelData.put("description", article.get().getArticle_descriptionID().getDescription());
             labelData.put("kleur", article.get().getArticle_dataID().getColor());
             labelData.put("metrage", "length: " + article.get().getArticle_dataID().getPatternLength() + "  width: " + article.get().getArticle_dataID().getPatternWidth());
+            labelData.put("retour", "1");
             return labelData;
         }
         if(article.get().getUsageID().getId() == 2){
@@ -64,6 +65,7 @@ public class LabelDataServiceV2 {
             labelData.put("description", article.get().getArticle_descriptionID().getDescription());
             labelData.put("kleur", article.get().getArticle_dataID().getColor());
             labelData.put("metrage", "length: " + article.get().getArticle_dataID().getPatternLength() + "  width: " + article.get().getArticle_dataID().getPatternWidth());
+            labelData.put("retour", "false");
             return labelData;
         }
         return null;
