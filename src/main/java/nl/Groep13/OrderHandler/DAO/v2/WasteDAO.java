@@ -50,8 +50,6 @@ public class WasteDAO {
 
             newWaste.setArticle_dataID((newWaste.getArticle_dataID() == null) ? oldWaste.getArticle_dataID() : newWaste.getArticle_dataID());
             newWaste.setArticle_descriptionID((newWaste.getArticle_descriptionID() == null) ? oldWaste.getArticle_descriptionID() : newWaste.getArticle_descriptionID());
-            newWaste.setArticle_dataID((newWaste.getArticle_dataID() == null) ? oldWaste.getArticle_dataID() : newWaste.getArticle_dataID());
-            newWaste.setArticle_descriptionID((newWaste.getArticle_descriptionID() == null) ? oldWaste.getArticle_descriptionID() : newWaste.getArticle_descriptionID());
             newWaste.setUsageID((newWaste.getUsageID() == null) ? oldWaste.getUsageID() : newWaste.getUsageID());
             newWaste.setId((newWaste.getId() == null) ? oldWaste.getId() : newWaste.getId());
 

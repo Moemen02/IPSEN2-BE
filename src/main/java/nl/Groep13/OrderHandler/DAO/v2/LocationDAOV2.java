@@ -29,6 +29,14 @@ public class LocationDAOV2 {
         throw new ChangeSetPersister.NotFoundException();
     }
 
+    public Long getLocationByCategoryLocationID(Long id) throws ChangeSetPersister.NotFoundException {
+        Optional<LocationV2> location = Optional.ofNullable(locationRepositoryV2.getLocationByCategoryLocationID(id));
+        if(location.isPresent()){
+            return location.get().getId();
+        }
+        throw new  ChangeSetPersister.NotFoundException();
+    }
+
 //    public Optional<LocationV2> updateLocation(Long ID, Optional<LocationV2> locationV2) throws ChangeSetPersister.NotFoundException{
 //        Optional<LocationV2> oldLocationById = locationRepositoryV2.findById(ID);
 //        if (oldLocationById.isPresent()){
