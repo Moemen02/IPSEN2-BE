@@ -4,10 +4,8 @@ package nl.Groep13.OrderHandler.service.V2;
 import nl.Groep13.OrderHandler.controller.v2.*;
 import nl.Groep13.OrderHandler.interfaces.LabelInterface;
 
-import nl.Groep13.OrderHandler.model.Location;
 import nl.Groep13.OrderHandler.model.v2.*;
 import org.springframework.data.crossstore.ChangeSetPersister;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -23,25 +21,25 @@ public class LabelDataServiceV2 {
     LocationControllerV2 locationControllerV2;
     CustomerControllerV2 customerControllerV2;
     AddressController addressController;
-    WasteController wasteController;
+    ArticleControllerV2 articleControllerV2;
     ArticleOrderService articleOrderService;
 
-    public LabelDataServiceV2(LabelInterface labelInterface, ArticleOrderController articleOrderController, LocationControllerV2 locationControllerV2, CustomerControllerV2 customerControllerV2, AddressController addressController, WasteController wasteController, ArticleOrderService articleOrderService) {
+    public LabelDataServiceV2(LabelInterface labelInterface, ArticleOrderController articleOrderController, LocationControllerV2 locationControllerV2, CustomerControllerV2 customerControllerV2, AddressController addressController, ArticleControllerV2 articleControllerV2, ArticleOrderService articleOrderService) {
         this.labelInterface = labelInterface;
         this.articleOrderController = articleOrderController;
         this.locationControllerV2 = locationControllerV2;
         this.customerControllerV2 = customerControllerV2;
         this.addressController = addressController;
-        this.wasteController = wasteController;
+        this.articleControllerV2 = articleControllerV2;
         this.articleOrderService = articleOrderService;
     }
 
     public HashMap<String, String> getLabelData(Long id) throws ChangeSetPersister.NotFoundException {
         Optional<LabelV2> label = labelInterface.getLabelById(id);
         Optional<ArticleOrder> order = articleOrderController.getWasteOrderById(label.get().getId()).getBody();
-        Optional<CustomerV2> customer = customerControllerV2.getCustomerById(order.get().getCustomerID());
-        Optional<Address> adres = addressController.getAddressById(customer.get().getAddressID()).getBody();
-        Optional<Waste> article = Optional.ofNullable(wasteController.getWasteById(order.get().getId()).getBody());
+        Optional<CustomerV2> customer = customerControllerV2.getCustomerById(order.get().getCustomerID().getID());
+        Optional<Address> adres = addressController.getAddressById(customer.get().getAddressID().getId()).getBody();
+        Optional<ArticleV2> article = Optional.ofNullable(articleControllerV2.getWasteById(order.get().getId()).getBody());
 //      Optional<WasteLocation> articleLocation = wasteController.getArticleLocationById(article.get().getArticleLocationID()).getBody();
 
         HashMap<String, String> labelData = new HashMap<>();
