@@ -30,4 +30,12 @@ public class RequirementController {
     private ResponseEntity<Optional<Requirement>> getRequirementById(@PathVariable Long id){
         return ResponseEntity.ok(this.requirementInterface.getRequirementById(id));
     }
+
+    public List<Requirement> getRequirements(){
+        return this.requirementInterface.getRequirement();
+    }
+
+    public Optional<Requirement> getReqById(Long id){
+        return this.requirementInterface.getRequirementById(id);
+    }
 }

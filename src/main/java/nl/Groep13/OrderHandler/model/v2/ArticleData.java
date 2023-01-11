@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "article_data")
-public class WasteData {
+public class ArticleData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class WasteData {
     private String composition;
     private boolean stockRL;
 
-    public WasteData(Long id, String supplier, String eancode, String color, float patternLength, float patternWidth, String composition, boolean stockRL, String productgroup) {
+    public ArticleData(Long id, String supplier, String eancode, String color, float patternLength, float patternWidth, String composition, boolean stockRL, String productgroup) {
         this.id = id;
         this.supplier = supplier;
         this.eancode = eancode;
@@ -37,7 +37,7 @@ public class WasteData {
         this.productgroup = productgroup;
     }
 
-    public WasteData() {
+    public ArticleData() {
 
     }
 }

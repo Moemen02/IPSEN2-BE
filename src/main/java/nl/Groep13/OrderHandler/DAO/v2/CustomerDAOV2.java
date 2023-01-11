@@ -31,32 +31,32 @@ public class CustomerDAOV2 {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public Optional<CustomerV2> updateCustomer(Long id, Optional<CustomerV2> customer) {
-        Optional<CustomerV2> oldCustomerById = customerRepository.findById(id);
-        CustomerV2 oldCustomer = oldCustomerById.get();
-        CustomerV2 newCustomer = customer.get();
-
-        newCustomer.setID((newCustomer.getID() == null) ? oldCustomer.getID() : newCustomer.getID());
-        newCustomer.setAddressID((newCustomer.getAddressID() == null) ? oldCustomer.getAddressID() : newCustomer.getAddressID());
-        newCustomer.setName((newCustomer.getName() == null) ? oldCustomer.getName() : newCustomer.getName());
-
-        customerRepository.setCustomerById(
-                newCustomer.getAddressID(),
-                newCustomer.getName(),
-                newCustomer.getID()
-        );
-
-        customerRepository.save(newCustomer);
-        return customer;
-
-    }
-
-    public void deleteCustomer(final Long id) throws ChangeSetPersister.NotFoundException{
-        if (customerRepository.findById(id).isPresent()){
-            customerRepository.deleteCustomerById(id);
-        }
-        throw new ChangeSetPersister.NotFoundException();
-    }
+//    public Optional<CustomerV2> updateCustomer(Long id, Optional<CustomerV2> customer) {
+//        Optional<CustomerV2> oldCustomerById = customerRepository.findById(id);
+//        CustomerV2 oldCustomer = oldCustomerById.get();
+//        CustomerV2 newCustomer = customer.get();
+//
+//        newCustomer.setID((newCustomer.getID() == null) ? oldCustomer.getID() : newCustomer.getID());
+//        newCustomer.setAddressID((newCustomer.getAddressID() == null) ? oldCustomer.getAddressID() : newCustomer.getAddressID());
+//        newCustomer.setName((newCustomer.getName() == null) ? oldCustomer.getName() : newCustomer.getName());
+//
+//        customerRepository.setCustomerById(
+//                newCustomer.getAddressID(),
+//                newCustomer.getName(),
+//                newCustomer.getID()
+//        );
+//
+//        customerRepository.save(newCustomer);
+//        return customer;
+//
+//    }
+//
+//    public void deleteCustomer(final Long id) throws ChangeSetPersister.NotFoundException{
+//        if (customerRepository.findById(id).isPresent()){
+//            customerRepository.deleteCustomerById(id);
+//        }
+//        throw new ChangeSetPersister.NotFoundException();
+//    }
 
     public CustomerV2 addCustomer( CustomerV2 customer){
         return this.customerRepository.save(customer);
