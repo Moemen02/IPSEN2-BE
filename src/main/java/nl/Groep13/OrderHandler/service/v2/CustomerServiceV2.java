@@ -1,4 +1,4 @@
-package nl.Groep13.OrderHandler.service.v2;
+package nl.Groep13.OrderHandler.service.V2;
 
 import nl.Groep13.OrderHandler.DAO.v2.CustomerDAOV2;
 import nl.Groep13.OrderHandler.model.v2.CustomerV2;
@@ -25,14 +25,14 @@ public class CustomerServiceV2 {
         return this.customerDAO.getCustomerById(id);
     }
 
-    public Optional<CustomerV2> updateCustomer(Long id, final Optional<CustomerV2> customer) {
-        return this.customerDAO.updateCustomer(id, customer);
+//    public Optional<CustomerV2> updateCustomer(Long id, final Optional<CustomerV2> customer) {
+//        return this.customerDAO.updateCustomer(id, customer);
+//
+//    }
 
-    }
-
-    public void deleteCustomer(final Long id) throws ChangeSetPersister.NotFoundException{
-        this.customerDAO.deleteCustomer(id);
-    }
+//    public void deleteCustomer(final Long id) throws ChangeSetPersister.NotFoundException{
+//        this.customerDAO.deleteCustomer(id);
+//    }
 
     public CustomerV2 addCustomer(final CustomerV2 customer){
         return this.customerDAO.addCustomer(customer);

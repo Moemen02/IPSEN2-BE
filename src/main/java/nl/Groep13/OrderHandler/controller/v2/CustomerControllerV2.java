@@ -2,7 +2,7 @@ package nl.Groep13.OrderHandler.controller.v2;
 
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.v2.CustomerV2;
-import nl.Groep13.OrderHandler.service.v2.CustomerServiceV2;
+import nl.Groep13.OrderHandler.service.V2.CustomerServiceV2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 
@@ -58,7 +58,7 @@ public class CustomerControllerV2 {
 
     /**
      * this function updates the customer that matches the input id
-     * @param id - this is the input id that you give to the link
+     * @param  - this is the input id that you give to the link
      * @param customer - this is a customer
      * @returns a updated model of customer
      */
