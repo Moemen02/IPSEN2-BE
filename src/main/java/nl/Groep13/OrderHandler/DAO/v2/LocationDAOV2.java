@@ -29,28 +29,28 @@ public class LocationDAOV2 {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public Optional<LocationV2> updateLocation(Long ID, Optional<LocationV2> locationV2) throws ChangeSetPersister.NotFoundException{
-        Optional<LocationV2> oldLocationById = locationRepositoryV2.findById(ID);
-        if (oldLocationById.isPresent()){
-            LocationV2 oldLocation = oldLocationById.get();
-            LocationV2 newLocation = locationV2.get();
-
-            newLocation.setID((newLocation.getID() == null) ? oldLocation.getID() : newLocation.getID());
-            newLocation.setCategory_locationID((newLocation.getCategory_locationID() == null) ? oldLocation.getCategory_locationID() : newLocation.getCategory_locationID());
-            newLocation.setComposition((newLocation.getComposition() == null) ? oldLocation.getComposition() : newLocation.getComposition());
-            newLocation.setRequirementID((oldLocation.getRequirementID() == null) ? oldLocation.getRequirementID() : newLocation.getRequirementID());
-
-            locationRepositoryV2.setLocationById(
-                    newLocation.getCategory_locationID(),
-                    newLocation.getComposition(),
-                    newLocation.getRequirementID(),
-                    newLocation.getID()
-            );
-            locationRepositoryV2.save(newLocation);
-            return locationV2;
-        }
-        throw new ChangeSetPersister.NotFoundException();
-    }
-
+//    public Optional<LocationV2> updateLocation(Long ID, Optional<LocationV2> locationV2) throws ChangeSetPersister.NotFoundException{
+//        Optional<LocationV2> oldLocationById = locationRepositoryV2.findById(ID);
+//        if (oldLocationById.isPresent()){
+//            LocationV2 oldLocation = oldLocationById.get();
+//            LocationV2 newLocation = locationV2.get();
+//
+//            newLocation.setID((newLocation.getID() == null) ? oldLocation.getID() : newLocation.getID());
+//            newLocation.setCategory_locationID((newLocation.getCategory_locationID() == null) ? oldLocation.getCategory_locationID() : newLocation.getCategory_locationID());
+//            newLocation.setComposition((newLocation.getComposition() == null) ? oldLocation.getComposition() : newLocation.getComposition());
+//            newLocation.setRequirementID((oldLocation.getRequirementID() == null) ? oldLocation.getRequirementID() : newLocation.getRequirementID());
+//
+//            locationRepositoryV2.setLocationById(
+//                    newLocation.getCategory_locationID(),
+//                    newLocation.getComposition(),
+//                    newLocation.getRequirementID(),
+//                    newLocation.getID()
+//            );
+//            locationRepositoryV2.save(newLocation);
+//            return locationV2;
+//        }
+//        throw new ChangeSetPersister.NotFoundException();
+//    }
+//
 
 }

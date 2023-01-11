@@ -50,15 +50,19 @@ public class WasteDAO {
 
             newWaste.setArticle_dataID((newWaste.getArticle_dataID() == null) ? oldWaste.getArticle_dataID() : newWaste.getArticle_dataID());
             newWaste.setArticle_descriptionID((newWaste.getArticle_descriptionID() == null) ? oldWaste.getArticle_descriptionID() : newWaste.getArticle_descriptionID());
+            newWaste.setArticle_dataID((newWaste.getArticle_dataID() == null) ? oldWaste.getArticle_dataID() : newWaste.getArticle_dataID());
+            newWaste.setArticle_descriptionID((newWaste.getArticle_descriptionID() == null) ? oldWaste.getArticle_descriptionID() : newWaste.getArticle_descriptionID());
             newWaste.setUsageID((newWaste.getUsageID() == null) ? oldWaste.getUsageID() : newWaste.getUsageID());
             newWaste.setId((newWaste.getId() == null) ? oldWaste.getId() : newWaste.getId());
 
             ArticleData newWasteData = newWaste.getArticle_dataID();
             if (newWasteData.getId() == null) {
                 newWasteData.setId(oldWaste.getArticle_dataID().getId());
+                newWasteData.setId(oldWaste.getArticle_dataID().getId());
             }
             ArticleDescription newWasteDescription = newWaste.getArticle_descriptionID();
             if (newWasteDescription.getId() == null) {
+                newWasteDescription.setId(oldWaste.getArticle_descriptionID().getId());
                 newWasteDescription.setId(oldWaste.getArticle_descriptionID().getId());
             }
             Usage newUsage = checkUsageExists.get();
@@ -79,6 +83,8 @@ public class WasteDAO {
         ArticleData wasteData = wasteDataDAO.addWasteData(waste.getArticle_dataID());
         ArticleDescription wasteDescription = wasteDescriptionDAO.addWasteDescription(waste.getArticle_descriptionID());
         Usage usage = usageDAO.getUsageByTypeUsage(waste.getUsageID().getType_usage());
+        waste.setArticle_dataID(wasteData);
+        waste.setArticle_descriptionID(wasteDescription);
         waste.setArticle_dataID(wasteData);
         waste.setArticle_descriptionID(wasteDescription);
         waste.setUsageID(usage);

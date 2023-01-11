@@ -30,23 +30,23 @@ public class CategoryLocationDAO {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public Optional<CategoryLocation> updateCategoryLocation(Long ID, Optional<CategoryLocation> categoryLocation) throws ChangeSetPersister.NotFoundException{
-        Optional<CategoryLocation> oldCategoryLocationById = categoryLocationRepository.findById(ID);
-        if (oldCategoryLocationById.isPresent()){
-            CategoryLocation oldCategoryLocation = oldCategoryLocationById.get();
-            CategoryLocation newCategoryLocation = categoryLocation.get();
-            newCategoryLocation.setID((newCategoryLocation.getID() == null) ? oldCategoryLocation.getID() : newCategoryLocation.getID());
-            newCategoryLocation.setLocation_type((newCategoryLocation.getLocation_type() == null) ? oldCategoryLocation.getLocation_type() : newCategoryLocation.getLocation_type());
-
-            categoryLocationRepository.setCategorylocationById(
-                    newCategoryLocation.getLocation_type(),
-                    newCategoryLocation.getID()
-            );
-            categoryLocationRepository.save(newCategoryLocation);
-            return categoryLocation;
-        }
-        throw new ChangeSetPersister.NotFoundException();
-    }
+//    public Optional<CategoryLocation> updateCategoryLocation(Long ID, Optional<CategoryLocation> categoryLocation) throws ChangeSetPersister.NotFoundException{
+//        Optional<CategoryLocation> oldCategoryLocationById = categoryLocationRepository.findById(ID);
+//        if (oldCategoryLocationById.isPresent()){
+//            CategoryLocation oldCategoryLocation = oldCategoryLocationById.get();
+//            CategoryLocation newCategoryLocation = categoryLocation.get();
+//            newCategoryLocation.setID((newCategoryLocation.getID() == null) ? oldCategoryLocation.getID() : newCategoryLocation.getID());
+//            newCategoryLocation.setLocation_type((newCategoryLocation.getLocation_type() == null) ? oldCategoryLocation.getLocation_type() : newCategoryLocation.getLocation_type());
+//
+//            categoryLocationRepository.setCategorylocationById(
+//                    newCategoryLocation.getLocation_type(),
+//                    newCategoryLocation.getID()
+//            );
+//            categoryLocationRepository.save(newCategoryLocation);
+//            return categoryLocation;
+//        }
+//        throw new ChangeSetPersister.NotFoundException();
+//    }
 
 
 }

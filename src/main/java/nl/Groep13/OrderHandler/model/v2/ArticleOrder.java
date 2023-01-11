@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "Waste_order")
-public class WasteOrder {
+@Table(name = "article_order")
+public class ArticleOrder {
 
     //Eigenaar van het materiaal, oftewel de klant
     //Ordernummer
@@ -18,24 +18,24 @@ public class WasteOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+    private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "WasteID", referencedColumnName = "ID")
-    private ArticleV2 WasteID;
+    @JoinColumn(name = "articleID", referencedColumnName = "id")
+    private Waste articleID;
 
 //    @OneToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "CustomerID", referencedColumnName = "ID")
-    private Long CustomerID;
-    private boolean Finished;
+    private Long customerID;
+    private boolean finished;
 
-    public WasteOrder(Long ID, ArticleV2 wasteID, Long customerID, boolean finished) {
-        this.ID = ID;
-        WasteID = wasteID;
-        CustomerID = customerID;
-        Finished = finished;
+    public ArticleOrder(Long id, Waste articleID, Long customerID, boolean finished) {
+        this.id = id;
+        this.articleID = articleID;
+        this.customerID = customerID;
+        this.finished = finished;
     }
 
-    public WasteOrder() {
+    public ArticleOrder() {
     }
 }

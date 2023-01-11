@@ -34,7 +34,7 @@ public class CategoryLocationController {
     public ResponseEntity<Optional<CategoryLocation>> getCategoryLocationsId(@PathVariable Long ID){
         try{
             Optional<CategoryLocation> categoryLocation = this.categoryLocationService.getCategoryLocationById(ID);
-            return new ResponseEntity<>(categoryLocation, HttpStatus.FOUND);
+            return new ResponseEntity<>(categoryLocation, HttpStatus.OK);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

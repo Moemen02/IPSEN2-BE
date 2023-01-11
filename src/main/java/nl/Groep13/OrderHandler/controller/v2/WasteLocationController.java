@@ -1,5 +1,6 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
+import nl.Groep13.OrderHandler.interfaces.WasteInterface;
 import nl.Groep13.OrderHandler.interfaces.WasteLocationInterface;
 import nl.Groep13.OrderHandler.model.v2.ArticleLocation;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
@@ -8,6 +9,7 @@ import nl.Groep13.OrderHandler.model.v2.Requirement;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

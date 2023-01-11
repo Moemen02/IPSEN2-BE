@@ -1,16 +1,11 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.google.gson.Gson;
-import nl.Groep13.OrderHandler.model.lOrder;
-import nl.Groep13.OrderHandler.model.v2.LocationV2;
-import nl.Groep13.OrderHandler.repository.OrderRepository;
-import nl.Groep13.OrderHandler.service.OrderService;
+import nl.Groep13.OrderHandler.model.v2.ArticleOrder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,10 +20,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
-public class WasteOrderTest {
+public class ArticleOrderTest {
 
     private Gson gson = new Gson();
-    ObjectMapper objectMapper = new ObjectMapper();
     String httpResponse;
 
     @BeforeEach
@@ -39,26 +33,20 @@ public class WasteOrderTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @InjectMocks
-    private OrderService orderServiceMock;
-
-    @Mock
-    private OrderRepository orderRepositoryMock;
-
     @Test
-    public void getWasteOrderById_should_return_expected_id() throws Exception{
+    public void getArticleOrderById_should_return_expected_id() throws Exception{
         //Arrange
         Long expectedId = 9L;
         Long actualId;
-        Long locationIdToGet = expectedId;
+        Long articleOrderIdToGet = expectedId;
 
         //Act
-        MvcResult result = mockMvc.perform(get("/api/v2/waste_order/"+locationIdToGet))
+        MvcResult result = mockMvc.perform(get("/api/v2/article_order/"+articleOrderIdToGet))
                 .andExpect(status().isOk())
                 .andReturn();
         httpResponse = result.getResponse().getContentAsString();
-        LocationV2 responseLocation = gson.fromJson(httpResponse, LocationV2.class);
-        actualId = responseLocation.getID();
+        ArticleOrder responseArticleOrder = gson.fromJson(httpResponse, ArticleOrder.class);
+        actualId = responseArticleOrder.getId();
 
         //Assert
         assertEquals(actualId, expectedId);

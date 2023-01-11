@@ -24,9 +24,9 @@ public class CategoryLocationService {
     public Optional<CategoryLocation> getCategoryLocationById(Long ID) throws ChangeSetPersister.NotFoundException{
         return this.categoryLocationDAO.getCategoryLocationById(ID);
     }
-
-    public Optional<CategoryLocation> updateCategoryLocation(Long ID, Optional<CategoryLocation> categoryLocation) throws ChangeSetPersister.NotFoundException{
-        return this.categoryLocationDAO.updateCategoryLocation(ID, categoryLocation);
-    }
+//
+//    public Optional<CategoryLocation> updateCategoryLocation(Long ID, Optional<CategoryLocation> categoryLocation) throws ChangeSetPersister.NotFoundException{
+//        return this.categoryLocationDAO.updateCategoryLocation(ID, categoryLocation);
+//    }
 
 }
