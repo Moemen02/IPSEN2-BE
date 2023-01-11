@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "waste")
+@Table(name = "article")
 public class Waste {
 
     @Id
@@ -16,15 +16,15 @@ public class Waste {
     private Long id;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Waste_dataID", referencedColumnName = "ID")
-    private WasteData Waste_dataID;
+    @JoinColumn(name = "article_dataID", referencedColumnName = "ID")
+    private WasteData article_dataID;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "Waste_descriptionID", referencedColumnName = "ID")
-    private WasteDescription Waste_descriptionID;
+    @JoinColumn(name = "article_descriptionID", referencedColumnName = "ID")
+    private WasteDescription article_descriptionID;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "UsageID", referencedColumnName = "ID")
+    @JoinColumn(name = "usageID", referencedColumnName = "ID")
     private Usage UsageID;
 
     public Waste() {

@@ -8,21 +8,17 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@Table(name = "Location")
+@Table(name = "location")
 public class LocationV2 {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
-    private Long Category_locationID;
-    private String Composition;
-    private Long RequirementID;
+    private Long id;
+    private Long category_locationID;
 
-    public LocationV2(Long ID, Long category_locationID, String composition, Long requirementID) {
-        this.ID = ID;
-        Category_locationID = category_locationID;
-        Composition = composition;
-        RequirementID = requirementID;
+    public LocationV2(Long id, Long category_locationID) {
+        this.id = id;
+        this.category_locationID = category_locationID;
     }
 
     public LocationV2() {

@@ -25,8 +25,12 @@ public class LocationServiceV2 {
         return this.locationDAOV2.getLocationById(ID);
     }
 
-    public Optional<LocationV2> updateLocation(Long ID, Optional<LocationV2> address) throws ChangeSetPersister.NotFoundException{
-        return this.locationDAOV2.updateLocation(ID, address);
+    public Long getLocationByCategoryLocationID(Long id) throws ChangeSetPersister.NotFoundException {
+        return this.locationDAOV2.getLocationByCategoryLocationID(id);
     }
+
+//    public Optional<LocationV2> updateLocation(Long ID, Optional<LocationV2> address) throws ChangeSetPersister.NotFoundException{
+//        return this.locationDAOV2.updateLocation(ID, address);
+//    }
 
 }
