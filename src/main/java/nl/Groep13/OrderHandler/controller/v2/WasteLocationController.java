@@ -25,6 +25,8 @@ public class WasteLocationController {
     private final CategoryLocationController categoryLocationController;
     private final UsageController usageController;
     private final CustomerControllerV2 customerController;
+    private HashMap<String, Integer> listCompValue = new HashMap<>();
+    private HashMap<String, Integer> compValue = new HashMap<>();
 
     public WasteLocationController(WasteLocationInterface wasteLocationInterface, CategoryLocationController categoryLocationController, UsageController usageController, CustomerControllerV2 customerController) {
         this.wasteLocationInterface = wasteLocationInterface;
@@ -55,6 +57,7 @@ public class WasteLocationController {
         }
         else {
             List<Long> reqIdList = categoryLocationController.getCatLocIds();
+            //foreach location there is I check if the article belongs there
             reqIdList.forEach(id -> {
                 try {
                     checkWhatLocation(article.getArticle_dataID().getComposition(),categoryLocationController.getCatLocationRequirements(id));
@@ -68,9 +71,8 @@ public class WasteLocationController {
         return articleLocation;
     }
 
+    //TODO: make this code cleaner lol
     public void checkWhatLocation(String composition, List<Requirement> requirementList){
-        HashMap<String, Integer> listCompValue = new HashMap<>();
-        HashMap<String, Integer> compValue = new HashMap<>();
         //TODO: get percentage and composition from composition and compare with value of requirement list
         //TODO: when done, get location when is comparison is good
         requirementList.forEach(requirement -> {
@@ -78,6 +80,7 @@ public class WasteLocationController {
             String[] result = req.split(" ");
 
             if (req.equals("overig")){
+                //TODO: get default location and save to DB
 //                System.out.println(requirement.getRequirement());
             } else{
                 String resultPercentage = result[0].replace("%", "");
@@ -93,7 +96,9 @@ public class WasteLocationController {
             int index = composition.indexOf("/");
             String toSplitValue = composition.substring(composition.lastIndexOf("/") +1);
             String[] theNewResult = toSplitValue.split(" ");
-            System.out.println(theNewResult[2]);
+            String resultPercentage1 = theNewResult[1].replace("%", "");
+            Integer firstResNmr= Integer.parseInt(resultPercentage1);
+            compValue.put(theNewResult[2], firstResNmr);
             if (index != 1) {
                 String req = composition.substring(0, index);
                 String[] result = req.split(" ");
@@ -101,9 +106,14 @@ public class WasteLocationController {
                 Integer resultNum = Integer.parseInt(resultPercentage);
                 compValue.put(result[1].toLowerCase(), resultNum);
             }
+        } else {
+            String req = composition.toLowerCase();
+            String[] comReq = req.split(" ");
+            String noPersentage = comReq[0].replace("%", "");
+            Integer noPersNmr= Integer.parseInt(noPersentage);
+            compValue.put(comReq[1], noPersNmr);
+
         }
 
-//        System.out.println(compValue + " comp");
-//        System.out.println(listCompValue);
     }
 }
