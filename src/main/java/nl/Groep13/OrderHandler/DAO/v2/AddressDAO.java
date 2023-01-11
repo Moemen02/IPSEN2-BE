@@ -1,9 +1,9 @@
 package nl.Groep13.OrderHandler.DAO.v2;
 
 import nl.Groep13.OrderHandler.model.v2.Address;
-import nl.Groep13.OrderHandler.model.v2.WasteOrder;
+
 import nl.Groep13.OrderHandler.repository.v2.AddressRepository;
-import nl.Groep13.OrderHandler.repository.v2.WasteOrderRepository;
+
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
@@ -31,27 +31,27 @@ public class AddressDAO {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public Optional<Address> updateAddress(Long ID, Optional<Address> address) throws ChangeSetPersister.NotFoundException{
-        Optional<Address> oldAddressById = addressRepository.findById(ID);
-        if (oldAddressById.isPresent()){
-            Address oldAddress = oldAddressById.get();
-            Address newAddress = address.get();
-
-            newAddress.setID((newAddress.getID() == null) ? oldAddress.getID() : newAddress.getID());
-            newAddress.setHousenumber((newAddress.getHousenumber() == 0) ? oldAddress.getHousenumber() : newAddress.getHousenumber());
-            newAddress.setStreetname((newAddress.getStreetname() == null) ? oldAddress.getStreetname() : newAddress.getStreetname());
-            newAddress.setPostal_code((oldAddress.getPostal_code() == null) ? oldAddress.getPostal_code() : newAddress.getPostal_code());
-
-            addressRepository.setAddressById(
-                    newAddress.getHousenumber(),
-                    newAddress.getPostal_code(),
-                    newAddress.getStreetname(),
-                    newAddress.getID()
-            );
-            addressRepository.save(newAddress);
-            return address;
-        }
-        throw new ChangeSetPersister.NotFoundException();
-    }
+//    public Optional<Address> updateAddress(Long ID, Optional<Address> address) throws ChangeSetPersister.NotFoundException{
+//        Optional<Address> oldAddressById = addressRepository.findById(ID);
+//        if (oldAddressById.isPresent()){
+//            Address oldAddress = oldAddressById.get();
+//            Address newAddress = address.get();
+//
+//            newAddress.setID((newAddress.getID() == null) ? oldAddress.getID() : newAddress.getID());
+//            newAddress.setHousenumber((newAddress.getHousenumber() == 0) ? oldAddress.getHousenumber() : newAddress.getHousenumber());
+//            newAddress.setStreetname((newAddress.getStreetname() == null) ? oldAddress.getStreetname() : newAddress.getStreetname());
+//            newAddress.setPostal_code((oldAddress.getPostal_code() == null) ? oldAddress.getPostal_code() : newAddress.getPostal_code());
+//
+//            addressRepository.setAddressById(
+//                    newAddress.getHousenumber(),
+//                    newAddress.getPostal_code(),
+//                    newAddress.getStreetname(),
+//                    newAddress.getID()
+//            );
+//            addressRepository.save(newAddress);
+//            return address;
+//        }
+//        throw new ChangeSetPersister.NotFoundException();
+//    }
 
 }

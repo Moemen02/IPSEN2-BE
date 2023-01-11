@@ -1,7 +1,6 @@
 package nl.Groep13.OrderHandler.repository.v2;
 
 
-import nl.Groep13.OrderHandler.model.v2.Address;
 import nl.Groep13.OrderHandler.model.v2.LocationV2;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,14 +14,13 @@ public interface LocationRepositoryV2 extends JpaRepository<LocationV2, Long> {
     @Modifying
     @Transactional
     @Query("update LocationV2 location SET " +
-            "location.Category_locationID = ?1," +
-            "location.Composition = ?2," +
-            "location.RequirementID = ?3" +
-            "where location.ID = ?4")
+            "location.category_locationID = ?1" +
+            "where location.id = ?2")
     void setLocationById(
-            Long Category_locationID,
-            String Composition,
-            Long RequirementID,
-            long ID
+            Long category_locationID,
+            long id
     );
+
+    @Query("select location.id from LocationV2 location where location.category_locationID = ?1")
+    LocationV2 getLocationByCategoryLocationID(Long id);
 }

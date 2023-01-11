@@ -13,16 +13,16 @@ public class Address {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
-    private String Postal_code;
-    private int Housenumber;
-    private String Streetname;
+    private Long id;
+    private String postal_code;
+    private int housenumber;
+    private String streetname;
 
-    public Address(Long ID, String postal_code, int housenumber, String streetname) {
-        this.ID = ID;
-        Postal_code = postal_code;
-        Housenumber = housenumber;
-        Streetname = streetname;
+    public Address(Long id, String postal_code, int housenumber, String streetname) {
+        this.id = id;
+        this.postal_code = postal_code;
+        this.housenumber = housenumber;
+        this.streetname = streetname;
     }
 
     public Address() {
