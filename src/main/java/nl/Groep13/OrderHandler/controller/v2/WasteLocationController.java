@@ -9,13 +9,13 @@ import nl.Groep13.OrderHandler.model.v2.Requirement;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v2/waste/location")
@@ -25,7 +25,8 @@ public class WasteLocationController {
     private final CategoryLocationController categoryLocationController;
     private final UsageController usageController;
     private final CustomerControllerV2 customerController;
-    private HashMap<String, Integer> listCompValue = new HashMap<>();
+//    private HashMap<String, Integer> listCompValue = new HashMap<>();
+    private HashMap<Long, HashMap<String, Integer>> listCompValue = new HashMap<>();
     private HashMap<String, Integer> compValue = new HashMap<>();
 
     public WasteLocationController(WasteLocationInterface wasteLocationInterface, CategoryLocationController categoryLocationController, UsageController usageController, CustomerControllerV2 customerController) {
@@ -42,6 +43,8 @@ public class WasteLocationController {
 
 
     public ArticleLocation createLoction(Long customerID, ArticleV2 article) throws ChangeSetPersister.NotFoundException {
+        compValue = new HashMap<>();
+        listCompValue = new HashMap<>();
         ArticleLocation articleLocation = new ArticleLocation();
         Long UsageID = article.getUsageID().getId();
         //TODO: maak check of de klant stof wilt hebben of niet
@@ -60,11 +63,12 @@ public class WasteLocationController {
             //foreach location there is I check if the article belongs there
             reqIdList.forEach(id -> {
                 try {
-                    checkWhatLocation(article.getArticle_dataID().getComposition(),categoryLocationController.getCatLocationRequirements(id));
+                    checkWhatLocation(id, article.getArticle_dataID().getComposition(),categoryLocationController.getCatLocationRequirements(id));
                 } catch (ChangeSetPersister.NotFoundException e) {
                     throw new RuntimeException(e);
                 }
             });
+            setLocation(compValue, article);
         }
 
         //TODO:
@@ -72,23 +76,17 @@ public class WasteLocationController {
     }
 
     //TODO: make this code cleaner lol
-    public void checkWhatLocation(String composition, List<Requirement> requirementList){
+    public void checkWhatLocation(Long requirementId, String composition, List<Requirement> requirementList){
         //TODO: get percentage and composition from composition and compare with value of requirement list
         //TODO: when done, get location when is comparison is good
+        HashMap<String, Integer> requirementUsage = new HashMap<>();
         requirementList.forEach(requirement -> {
             String req = requirement.getRequirement().toLowerCase();
             String[] result = req.split(" ");
-
-            if (req.equals("overig")){
-                //TODO: get default location and save to DB
-//                System.out.println(requirement.getRequirement());
-            } else{
-                String resultPercentage = result[0].replace("%", "");
-                Integer resultNum = Integer.parseInt(resultPercentage);
-                if (result[1].equals("pes")) {
-                    result[1] = "trevira";
-                }
-                listCompValue.put(result[1], resultNum);
+            if (!req.equals("overig")){
+                Integer reqPerc = removePercentage(result[0]);
+                requirementUsage.put(result[1], reqPerc);
+                listCompValue.put(requirementId, requirementUsage);
             }
         });
 
@@ -112,8 +110,72 @@ public class WasteLocationController {
             String noPersentage = comReq[0].replace("%", "");
             Integer noPersNmr= Integer.parseInt(noPersentage);
             compValue.put(comReq[1], noPersNmr);
-
         }
 
+    }
+
+    public Integer removePercentage(String stringToUpdate){
+        String resultPercentage = stringToUpdate.replace("%", "");
+        return Integer.parseInt(resultPercentage);
+    }
+
+    public void setLocation(HashMap<String, Integer> compValue, ArticleV2 article){
+        System.out.println(compValue.keySet() + " 3");
+        ArrayList<String> comValArr = new ArrayList<>(compValue.keySet());
+        ArrayList<Integer> comValArrVal = new ArrayList<>(compValue.values());
+
+        for (Map.Entry<Long, HashMap<String, Integer>> entry : listCompValue.entrySet()){
+            if (entry.getKey().equals(1L)){
+
+                entry.getValue().keySet().forEach(value -> {
+                    if (comValArr.contains(value)){
+                        comValArrVal.forEach(comval -> {
+                            if (comval.equals(entry.getValue().get(value))) {
+                                //TODO save to db
+                                System.out.println("match!");
+                            }
+                        });
+                    }
+                });
+            }
+            else if (entry.getKey().equals(2L)){
+
+                entry.getValue().keySet().forEach(value -> {
+                    if (comValArr.contains(value)){
+                        System.out.println("match! 2");
+                    }
+                });
+            }
+
+            else if (entry.getKey().equals(4L)){
+
+                entry.getValue().keySet().forEach(value -> {
+                    if (comValArr.contains(value)){
+                        System.out.println("match! 4");
+                        System.out.println(entry.getValue().get(value));
+                    }
+                });
+            }
+
+            else if (entry.getKey().equals(5L)){
+
+                entry.getValue().keySet().forEach(value -> {
+                    if (comValArr.contains(value)){
+                        System.out.println("match! 5");
+                        System.out.println(entry.getValue().get(value));
+                    }
+                });
+            }
+
+            else if (entry.getKey().equals(6L)){
+
+                entry.getValue().keySet().forEach(value -> {
+                    if (comValArr.contains(value)){
+                        System.out.println("match! 6");
+                        System.out.println(entry.getValue().get(value));
+                    }
+                });
+            }
+        }
     }
 }
