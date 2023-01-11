@@ -25,14 +25,14 @@ public class CustomerServiceV2 {
         return this.customerDAO.getCustomerById(id);
     }
 
-    public Optional<CustomerV2> updateCustomer(Long id, final Optional<CustomerV2> customer) {
-        return this.customerDAO.updateCustomer(id, customer);
-
-    }
-
-    public void deleteCustomer(final Long id) throws ChangeSetPersister.NotFoundException{
-        this.customerDAO.deleteCustomer(id);
-    }
+//    public Optional<CustomerV2> updateCustomer(Long id, final Optional<CustomerV2> customer) {
+//        return this.customerDAO.updateCustomer(id, customer);
+//
+//    }
+//
+//    public void deleteCustomer(final Long id) throws ChangeSetPersister.NotFoundException{
+//        this.customerDAO.deleteCustomer(id);
+//    }
 
     public CustomerV2 addCustomer(final CustomerV2 customer){
         return this.customerDAO.addCustomer(customer);
