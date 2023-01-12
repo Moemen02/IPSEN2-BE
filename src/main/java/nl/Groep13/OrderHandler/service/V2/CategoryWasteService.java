@@ -4,7 +4,6 @@ import nl.Groep13.OrderHandler.DAO.v2.CategoryWasteDAO;
 import nl.Groep13.OrderHandler.DAO.v2.WasteDataDAO;
 import nl.Groep13.OrderHandler.model.v2.Category;
 import nl.Groep13.OrderHandler.model.v2.Composition;
-import nl.Groep13.OrderHandler.model.v2.WasteData;
 import nl.Groep13.OrderHandler.record.CompositionRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

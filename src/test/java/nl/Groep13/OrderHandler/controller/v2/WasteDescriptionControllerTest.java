@@ -1,8 +1,8 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import nl.Groep13.OrderHandler.DAO.v2.WasteDescriptionDAO;
-import nl.Groep13.OrderHandler.model.v2.WasteDescription;
-import nl.Groep13.OrderHandler.repository.v2.WasteDescriptionRepository;
+import nl.Groep13.OrderHandler.model.v2.ArticleDescription;
+import nl.Groep13.OrderHandler.repository.v2.ArticleDescriptionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +31,7 @@ public class WasteDescriptionControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private WasteDescriptionRepository wasteDescriptionRepository;
+    private ArticleDescriptionRepository wasteDescriptionRepository;
 
     private WasteDescriptionController wasteDescriptionController;
 
@@ -47,7 +47,7 @@ public class WasteDescriptionControllerTest {
     @Test
     public void Should_Retrieve_WasteDescriptionList() {
         //Arrange
-        List<WasteDescription> wasteDescriptionList;
+        List<ArticleDescription> wasteDescriptionList;
 
         //Act
         wasteDescriptionList = wasteDescriptionController.getAllWasteDescription().getBody();
@@ -59,7 +59,7 @@ public class WasteDescriptionControllerTest {
     @Test
     public void Should_Retrieve_Id_One_WasteData() {
         //Arrange
-        WasteDescription wasteDescription;
+        ArticleDescription wasteDescription;
 
         //Act
         wasteDescription = wasteDescriptionController.getWasteDescriptionById(1L).getBody();
@@ -74,7 +74,7 @@ public class WasteDescriptionControllerTest {
         Long OneMil = 1000000L;
 
         //Act
-        ResponseEntity checkStatus = new ResponseEntity<WasteDescription>(wasteDescriptionController.getWasteDescriptionById(OneMil).getStatusCode());
+        ResponseEntity checkStatus = new ResponseEntity<ArticleDescription>(wasteDescriptionController.getWasteDescriptionById(OneMil).getStatusCode());
 
         //Assert
         assertThat(checkStatus.getStatusCode(), is(HttpStatus.NOT_FOUND));
@@ -83,14 +83,14 @@ public class WasteDescriptionControllerTest {
     @Test
     public void Should_Retrieve_GivenWasteData_On_FilledWasteData() {
         //Arrange
-        WasteDescription wasteDescription = new WasteDescription(5000L, "Testing", "ForTesting", 50, "FakeStuff", "Patternless", "wQ3nc", 500, false, 0);
-        WasteDescription checkIfPresentBeforeTest = wasteDescriptionController.getWasteDescriptionById(wasteDescription.getId()).getBody();
+        ArticleDescription wasteDescription = new ArticleDescription(5000L, "Testing", "ForTesting", 50, "FakeStuff", "Patternless", "wQ3nc", 500, false, 0);
+        ArticleDescription checkIfPresentBeforeTest = wasteDescriptionController.getWasteDescriptionById(wasteDescription.getId()).getBody();
         if (checkIfPresentBeforeTest != null) {
             wasteDescriptionController.deleteWasteDescription(5000L);
         }
 
         //Act
-        WasteDescription result = wasteDescriptionController.addWasteDescription(wasteDescription).getBody();
+        ArticleDescription result = wasteDescriptionController.addWasteDescription(wasteDescription).getBody();
 
         //Assert
         assertThat(wasteDescription, is(result));
@@ -99,7 +99,7 @@ public class WasteDescriptionControllerTest {
     @Test
     public void Should_Delete_And_Notify_If_It_Existed() {
         //Arrange
-        WasteDescription checkIfNotPresentBeforeTest = wasteDescriptionController.getWasteDescriptionById(7000L).getBody();
+        ArticleDescription checkIfNotPresentBeforeTest = wasteDescriptionController.getWasteDescriptionById(7000L).getBody();
         if (checkIfNotPresentBeforeTest != null) {
             wasteDescriptionController.deleteWasteDescription(7000L);
         }
@@ -114,9 +114,9 @@ public class WasteDescriptionControllerTest {
     @Test
     public void Should_Be_Unable_To_Update_OneMil_Id() throws ChangeSetPersister.NotFoundException {
         Long OneMil = 1000000L;
-        WasteDescription wasteDescription = new WasteDescription(5000L, "Testing", "ForTesting", 50, "FakeStuff", "Patternless", "wQ3nc", 500, false, 0);
+        ArticleDescription wasteDescription = new ArticleDescription(5000L, "Testing", "ForTesting", 50, "FakeStuff", "Patternless", "wQ3nc", 500, false, 0);
         //Act
-        ResponseEntity checkStatus = new ResponseEntity<WasteDescription>(wasteDescriptionController.updateWasteDescription(OneMil, wasteDescription).getStatusCode());
+        ResponseEntity checkStatus = new ResponseEntity<ArticleDescription>(wasteDescriptionController.updateWasteDescription(OneMil, wasteDescription).getStatusCode());
 
         //Assert
         assertThat(checkStatus.getStatusCode(), is(HttpStatus.NOT_FOUND));

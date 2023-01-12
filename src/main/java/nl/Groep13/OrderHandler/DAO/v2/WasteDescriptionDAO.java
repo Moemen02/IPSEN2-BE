@@ -1,7 +1,7 @@
 package nl.Groep13.OrderHandler.DAO.v2;
 
-import nl.Groep13.OrderHandler.model.v2.WasteDescription;
-import nl.Groep13.OrderHandler.repository.v2.WasteDescriptionRepository;
+import nl.Groep13.OrderHandler.model.v2.ArticleDescription;
+import nl.Groep13.OrderHandler.repository.v2.ArticleDescriptionRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
@@ -10,33 +10,33 @@ import java.util.Optional;
 
 @Component
 public class WasteDescriptionDAO {
-    private final WasteDescriptionRepository wasteDescriptionRepository;
+    private final ArticleDescriptionRepository wasteDescriptionRepository;
 
-    public WasteDescriptionDAO(WasteDescriptionRepository wasteDescriptionRepository) {
+    public WasteDescriptionDAO(ArticleDescriptionRepository wasteDescriptionRepository) {
         this.wasteDescriptionRepository = wasteDescriptionRepository;
     }
 
-    public List<WasteDescription> getAllWasteDescription() {
+    public List<ArticleDescription> getAllWasteDescription() {
         return wasteDescriptionRepository.findAll();
     }
 
-    public WasteDescription addWasteDescription(final WasteDescription wasteDescription) {
+    public ArticleDescription addWasteDescription(final ArticleDescription wasteDescription) {
         return this.wasteDescriptionRepository.save(wasteDescription);
     }
 
-    public WasteDescription getWasteDescriptionById(Long id) throws ChangeSetPersister.NotFoundException {
-        Optional<WasteDescription> wasteDescription = wasteDescriptionRepository.findById(id);
+    public ArticleDescription getWasteDescriptionById(Long id) throws ChangeSetPersister.NotFoundException {
+        Optional<ArticleDescription> wasteDescription = wasteDescriptionRepository.findById(id);
         if (wasteDescription.isPresent()) {
             return wasteDescription.get();
         }
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public WasteDescription updateWasteDescription(Long id, WasteDescription newWasteDescription) throws ChangeSetPersister.NotFoundException {
-        Optional<WasteDescription> oldWasteDescriptionById = wasteDescriptionRepository.findById(id);
-        WasteDescription alteredWasteDescription = newWasteDescription;
+    public ArticleDescription updateWasteDescription(Long id, ArticleDescription newWasteDescription) throws ChangeSetPersister.NotFoundException {
+        Optional<ArticleDescription> oldWasteDescriptionById = wasteDescriptionRepository.findById(id);
+        ArticleDescription alteredWasteDescription = newWasteDescription;
         if (oldWasteDescriptionById.isPresent()) {
-            WasteDescription oldWasteDescription = oldWasteDescriptionById.get();
+            ArticleDescription oldWasteDescription = oldWasteDescriptionById.get();
 
             alteredWasteDescription.setArticlenumber((newWasteDescription.getArticlenumber() == null || newWasteDescription.getArticlenumber().equals("")) ? oldWasteDescription.getArticlenumber() : newWasteDescription.getArticlenumber());
             alteredWasteDescription.setDescription((newWasteDescription.getDescription() == null || newWasteDescription.getDescription().equals("")) ? oldWasteDescription.getDescription() : newWasteDescription.getDescription());

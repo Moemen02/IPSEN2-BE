@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -17,8 +19,8 @@ public class CategoryLocation {
     private Long id;
     private String location_type;
 
-    //requirementID krijgen hier
-//    private Set<Requirement> requirementID;
+//    @ElementCollection
+    private String requirementID;
 
     public CategoryLocation(Long id, String location_type) {
         this.id = id;
