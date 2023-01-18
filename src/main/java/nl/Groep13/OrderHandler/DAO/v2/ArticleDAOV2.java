@@ -52,10 +52,9 @@ public class ArticleDAOV2 implements ArticleInterface {
         if (checkUsageExists.isPresent() && oldWasteById.isPresent()) {
             ArticleV2 oldWaste = oldWasteById.get();
             ArticleV2 newWaste = articleV2;
-            System.out.println(newWaste.getArticle_dataID().getProductgroup());
 
-            new AttrCopy().copyAttributes(oldWaste, newWaste);
-
+//            new AttrCopy().copyAttributes(oldWaste, newWaste);
+            newWaste.setId(id);
             ArticleData newWasteData = newWaste.getArticle_dataID();
             if (newWasteData.getId() == null) {
                 newWasteData.setId(oldWaste.getArticle_dataID().getId());
@@ -69,8 +68,6 @@ public class ArticleDAOV2 implements ArticleInterface {
 
             wasteDataDAO.updateWasteData(newWasteData.getId(), newWasteData);
             wasteDescriptionDAO.updateWasteDescription(newWasteDescription.getId(), newWasteDescription);
-
-            System.out.println(newWaste.getArticle_dataID().getProductgroup());
 
             articleRepositoryV2.setWasteInfoById(
                     newUsage.getId(),

@@ -3,6 +3,7 @@ package nl.Groep13.OrderHandler.model.v2;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import nl.Groep13.OrderHandler.interfaces.UpdateIncludeAttribute;
 
 import javax.persistence.*;
 
@@ -16,12 +17,20 @@ public class ArticleData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @UpdateIncludeAttribute(CheckWhich = UpdateIncludeAttribute.CheckWhich.Null)
     private String supplier;
+    @UpdateIncludeAttribute(CheckWhich = UpdateIncludeAttribute.CheckWhich.Null)
     private String productgroup;
+    @UpdateIncludeAttribute(CheckWhich = UpdateIncludeAttribute.CheckWhich.Null)
     private String eancode;
+    @UpdateIncludeAttribute(CheckWhich = UpdateIncludeAttribute.CheckWhich.Null)
     private String color;
+    @UpdateIncludeAttribute(CheckWhich = UpdateIncludeAttribute.CheckWhich.IsFloat)
     private float patternLength;
+    @UpdateIncludeAttribute(CheckWhich = UpdateIncludeAttribute.CheckWhich.IsFloat)
     private float patternWidth;
+    @UpdateIncludeAttribute(CheckWhich = UpdateIncludeAttribute.CheckWhich.Null)
     private String composition;
     private boolean stockRL;
 

@@ -39,7 +39,7 @@ public class WasteDescriptionDAO {
         if (oldWasteDescriptionById.isPresent()) {
             ArticleDescription oldWasteDescription = oldWasteDescriptionById.get();
 
-            new AttrCopy().copyAttributes(oldWasteDescription, alteredWasteDescription);
+            new AttrCopy().copyAttributes(alteredWasteDescription, oldWasteDescription);
 
             wasteDescriptionRepository.setWasteDescriptionInfoById(
                     alteredWasteDescription.getArticlenumber(),

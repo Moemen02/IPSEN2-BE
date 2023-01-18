@@ -40,7 +40,7 @@ public class WasteDataDAO {
         if (oldWasteDataById.isPresent()) {
             ArticleData oldWasteData = oldWasteDataById.get();
 
-            new AttrCopy().copyAttributes(oldWasteData, alteredWasteData);
+            new AttrCopy().copyAttributes(alteredWasteData, oldWasteData);
 
             wasteDataRepository.setWasteDataInfoById(
                     alteredWasteData.getSupplier(),
