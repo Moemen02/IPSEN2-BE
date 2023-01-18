@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -18,9 +16,12 @@ public class CustomerV2 {
     @Id
     private Long ID;
     private String Name;
-    private String AddressID;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "addressID", referencedColumnName = "id")
+    private Address AddressID;
 
-    public CustomerV2(String name, String addressID) {
+    public CustomerV2(Long ID, String name, Address addressID) {
+        this.ID = ID;
         Name = name;
         AddressID = addressID;
     }

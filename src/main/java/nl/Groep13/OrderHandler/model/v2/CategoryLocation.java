@@ -16,14 +16,14 @@ public class CategoryLocation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+    private Long id;
     private String location_type;
 
 //    @ElementCollection
     private String requirementID;
 
-    public CategoryLocation(Long ID, String location_type) {
-        this.ID = ID;
+    public CategoryLocation(Long id, String location_type) {
+        this.id = id;
         this.location_type = location_type;
     }
 

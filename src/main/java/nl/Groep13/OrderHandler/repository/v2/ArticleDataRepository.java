@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Repository
 public interface ArticleDataRepository extends JpaRepository<ArticleData, Long>{
@@ -30,6 +31,15 @@ public interface ArticleDataRepository extends JpaRepository<ArticleData, Long>{
             String productGroup,
             Long id
     );
+
+    @Transactional
+//    @Query("SELECT wd FROM WasteData wd JOIN Waste w ON w.Waste_dataID.id = wd.id WHERE w.UsageID = 3")
+    @Query(value = "SELECT wd.Eancode, wd.Color, wd.Composition, ws.Articlenumber, ws.Description, ws.Type, ws.Weight FROM article_data wd JOIN article w ON w.article_dataID = wd.ID JOIN article_description ws ON w.article_descriptionID = ws.ID WHERE w.UsageID = 3;", nativeQuery = true)
+    List<Object> getAllWasteInStock(Long stockType);
+
+    @Transactional
+    @Query("SELECT DISTINCT color FROM ArticleData ")
+    List<String> getDistinctColor();
 
     @Modifying
     @Transactional

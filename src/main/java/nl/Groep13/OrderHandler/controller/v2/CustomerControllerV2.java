@@ -2,7 +2,7 @@ package nl.Groep13.OrderHandler.controller.v2;
 
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.v2.CustomerV2;
-import nl.Groep13.OrderHandler.service.v2.CustomerServiceV2;
+import nl.Groep13.OrderHandler.service.V2.CustomerServiceV2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 
@@ -58,29 +58,29 @@ public class CustomerControllerV2 {
 
     /**
      * this function updates the customer that matches the input id
-     * @param id - this is the input id that you give to the link
+     * @param  - this is the input id that you give to the link
      * @param customer - this is a customer
      * @returns a updated model of customer
      */
-    @PutMapping(value = "/{id}")
-    @ResponseBody
-    public Optional<CustomerV2> updateCustomer(@PathVariable Long id, @RequestBody Map<String, String> customer){
-        String customerToJson = gson.toJson(customer);
-        CustomerV2 newCustomer = gson.fromJson(customerToJson, CustomerV2.class);
+//    @PutMapping(value = "/{id}")
+//    @ResponseBody
+//    public Optional<CustomerV2> updateCustomer(@PathVariable Long id, @RequestBody Map<String, String> customer){
+//        String customerToJson = gson.toJson(customer);
+//        CustomerV2 newCustomer = gson.fromJson(customerToJson, CustomerV2.class);
+//
+//        return this.customerService.updateCustomer(id, Optional.of(newCustomer));
+//
+//    }
 
-        return this.customerService.updateCustomer(id, Optional.of(newCustomer));
-
-    }
-
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteCustomer(@PathVariable final Long id) {
-        try {
-            customerService.deleteCustomer(id);
-        } catch (ChangeSetPersister.NotFoundException e) {
-            return ResponseEntity.ok(false);
-        }
-        return ResponseEntity.ok(true);
-    }
+//    @DeleteMapping
+//    public ResponseEntity<Boolean> deleteCustomer(@PathVariable final Long id) {
+//        try {
+//            customerService.deleteCustomer(id);
+//        } catch (ChangeSetPersister.NotFoundException e) {
+//            return ResponseEntity.ok(false);
+//        }
+//        return ResponseEntity.ok(true);
+//    }
 
     @PostMapping
     public ResponseEntity<Boolean> addCustomer(@RequestParam Map<String, String> customer) {

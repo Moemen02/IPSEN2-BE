@@ -1,6 +1,5 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.model.v2.Address;
 import nl.Groep13.OrderHandler.service.V2.AddressService;
@@ -22,7 +21,7 @@ public class AddressController {
     Gson gson = new Gson();
 
     @Autowired
-    public AddressController(AddressService addressService, ObjectMapper objectMapper, Gson gson) {
+    public AddressController(AddressService addressService, Gson gson) {
         this.addressService = addressService;
         this.gson = gson;
     }
@@ -32,7 +31,7 @@ public class AddressController {
     public ResponseEntity<Optional<Address>> getAddressById(@PathVariable Long ID){
         try{
             Optional<Address> address = this.addressService.getAddressById(ID);
-            return new ResponseEntity<>(address, HttpStatus.FOUND);
+            return new ResponseEntity<>(address, HttpStatus.OK);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }

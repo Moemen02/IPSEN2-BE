@@ -1,7 +1,7 @@
 package nl.Groep13.OrderHandler.DAO.v2;
 
-import nl.Groep13.OrderHandler.model.v2.WasteOrder;
-import nl.Groep13.OrderHandler.repository.v2.WasteOrderRepository;
+import nl.Groep13.OrderHandler.model.v2.ArticleOrder;
+import nl.Groep13.OrderHandler.repository.v2.ArticleOrderRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
@@ -9,52 +9,52 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class WasteOrderDAO {
+public class ArticleOrderDAO {
 
-    private final WasteOrderRepository wasteOrderRepository;
+    private final ArticleOrderRepository articleOrderRepository;
 
-    public WasteOrderDAO(WasteOrderRepository wasteOrderRepository) {
-        this.wasteOrderRepository = wasteOrderRepository;
+    public ArticleOrderDAO(ArticleOrderRepository articleOrderRepository) {
+        this.articleOrderRepository = articleOrderRepository;
     }
 
-    public List<WasteOrder> getAllWasteOrders(){
-        return wasteOrderRepository.findAll();
+    public List<ArticleOrder> getAllArticleOrders(){
+        return articleOrderRepository.findAll();
     }
 
-    public Optional<WasteOrder> getWasteOrderById(final Long ID) throws ChangeSetPersister.NotFoundException{
-        Optional<WasteOrder> wasteOrder = wasteOrderRepository.findById(ID);
-        if (wasteOrder.isPresent()) {
-            return wasteOrder;
+    public Optional<ArticleOrder> getArticleOrderById(final Long ID) throws ChangeSetPersister.NotFoundException{
+        Optional<ArticleOrder> articleOrder = articleOrderRepository.findById(ID);
+        if (articleOrder.isPresent()) {
+            return articleOrder;
         }
         throw new ChangeSetPersister.NotFoundException();
     }
 
-//    public Optional<WasteOrder> updateWasteOrder(Long ID, Optional<WasteOrder> wasteOrder) throws ChangeSetPersister.NotFoundException{
-//        Optional<WasteOrder> oldWasteOrderById = wasteOrderRepository.findById(ID);
+//    public Optional<ArticleOrder> updateWasteOrder(Long ID, Optional<ArticleOrder> wasteOrder) throws ChangeSetPersister.NotFoundException{
+//        Optional<ArticleOrder> oldWasteOrderById = articleOrderRepository.findById(ID);
 //        if (oldWasteOrderById.isPresent()){
-//            WasteOrder oldWasteOrder = oldWasteOrderById.get();
-//            WasteOrder newWasteOrder = wasteOrder.get();
+//            ArticleOrder oldWasteOrder = oldWasteOrderById.get();
+//            ArticleOrder newWasteOrder = wasteOrder.get();
 //
 //            newWasteOrder.setID((newWasteOrder.getID() == null) ? oldWasteOrder.getID() : newWasteOrder.getID());
 //            newWasteOrder.setWasteID((newWasteOrder.getWasteID() == null) ? oldWasteOrder.getWasteID() : newWasteOrder.getWasteID());
 //            newWasteOrder.setCustomerID((newWasteOrder.getCustomerID() == null) ? oldWasteOrder.getCustomerID() : newWasteOrder.getCustomerID());
 //            newWasteOrder.setFinished((oldWasteOrder.isFinished() == newWasteOrder.isFinished()) ? oldWasteOrder.isFinished() : newWasteOrder.isFinished());
 //
-//            wasteOrderRepository.setWasteOrderById(
+//            articleOrderRepository.setWasteOrderById(
 //                    newWasteOrder.getCustomerID(),
 //                    newWasteOrder.getWasteID(),
 //                    newWasteOrder.isFinished(),
 //                    newWasteOrder.getID()
 //            );
-//            wasteOrderRepository.save(newWasteOrder);
+//            articleOrderRepository.save(newWasteOrder);
 //            return wasteOrder;
 //        }
 //        throw new ChangeSetPersister.NotFoundException();
 //    }
 
 //    public void deleteOrderWaste(final Long ID) throws ChangeSetPersister.NotFoundException{
-//        if (wasteOrderRepository.findById(ID).isPresent()){
-//            wasteOrderRepository.deleteWasteOrdersByID(ID);
+//        if (articleOrderRepository.findById(ID).isPresent()){
+//            articleOrderRepository.deleteWasteOrdersByID(ID);
 //        }
 //        throw new ChangeSetPersister.NotFoundException();
 //    }

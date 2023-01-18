@@ -17,7 +17,7 @@ public interface CustomerRepositoryV2 extends JpaRepository<CustomerV2, Long> {
     @Query("update CustomerV2 customer SET " +
             "customer.Name = ?1," +
             "customer.AddressID = ?2 where customer.ID = ?3")
-    void setCustomerById(String Name, String AddressID, long ID);
+    void setCustomerById(Long Name, String AddressID, long ID);
 
     @Modifying
     @Transactional

@@ -26,6 +26,7 @@ public class UserController {
     @Autowired private UserService userService;
     @Autowired private AuthenticationManager authManager;
 
+
     /**
      * Register new user, if email already in database user will not be created and USER_ALREADY_EXISTS will be send back
      *
