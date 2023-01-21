@@ -20,14 +20,15 @@ import java.util.Optional;
 @RequestMapping(value = "/api/v2/article")
 public class ArticleControllerV2 {
     private final ArticleDAOV2 articleDAOV2;
-//    private final WasteInterface wasteInterface = null;
     private final ArticleInterface articleInterface;
+    private final UsageController usageController;
     private final WasteLocationController wasteLocationController;
 
-    public ArticleControllerV2(ArticleDAOV2 wasteDAO, ArticleInterface articleInterface, WasteLocationController wasteLocationController) {
+    public ArticleControllerV2(ArticleDAOV2 wasteDAO, ArticleInterface articleInterface, WasteLocationController wasteLocationController, UsageController usageController) {
         this.articleDAOV2 = wasteDAO;
         this.articleInterface = articleInterface;
         this.wasteLocationController = wasteLocationController;
+        this.usageController = usageController;
     }
 
     @GetMapping("/{pageNo}/{pageSize}")
@@ -55,9 +56,8 @@ public class ArticleControllerV2 {
             throw new NullPointerException("WasteData is empty");
         } else if (waste.getArticle_descriptionID() == null) {
             throw new NullPointerException("WasteDescription is empty");
-        } else if (waste.getUsageID() == null) {
-            throw new NullPointerException("Usage is empty");
         } else {
+            usageController.setUsageType(waste.getArticle_dataID());
             articleDAOV2.addArticle(waste);
             return ResponseEntity.ok(waste);
         }
@@ -75,7 +75,7 @@ public class ArticleControllerV2 {
     @GetMapping
     public ResponseEntity<List<ArticleV2>> getWaste(@RequestParam int page) {
 
-        List<ArticleV2> fullList = this.wasteDAO.getWaste();
+        List<ArticleV2> fullList = this.articleDAOV2.getArticle();
         List<ArticleV2> toSend = Pager.getRequestedItems(fullList, page);
 
         return ResponseEntity.ok()

@@ -1,6 +1,6 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import nl.Groep13.OrderHandler.DAO.v2.WasteDescriptionDAO;
+import nl.Groep13.OrderHandler.DAO.v2.ArticleDescriptionDAO;
 import nl.Groep13.OrderHandler.model.v2.ArticleDescription;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
@@ -11,17 +11,17 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v2/article_description")
-public class WasteDescriptionController {
-    private final WasteDescriptionDAO wasteDescriptionDAO;
+public class ArticleDescriptionController {
+    private final ArticleDescriptionDAO articleDescriptionDAO;
 
-    public WasteDescriptionController(WasteDescriptionDAO wasteDescriptionDAO) {
-        this.wasteDescriptionDAO = wasteDescriptionDAO;
+    public ArticleDescriptionController(ArticleDescriptionDAO articleDescriptionDAO) {
+        this.articleDescriptionDAO = articleDescriptionDAO;
     }
 
     @GetMapping
     public ResponseEntity<List<ArticleDescription>> getAllWasteDescription() {
         return ResponseEntity.ok(
-                this.wasteDescriptionDAO.getAllWasteDescription()
+                this.articleDescriptionDAO.getAllWasteDescription()
         );
     }
 
@@ -29,7 +29,7 @@ public class WasteDescriptionController {
     @ResponseBody
     public ResponseEntity<ArticleDescription> getWasteDescriptionById(@PathVariable Long id) {
         try {
-            ArticleDescription checkedWasteDescription = this.wasteDescriptionDAO.getWasteDescriptionById(id);
+            ArticleDescription checkedWasteDescription = this.articleDescriptionDAO.getWasteDescriptionById(id);
             return new ResponseEntity<>(checkedWasteDescription, HttpStatus.FOUND);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -38,7 +38,7 @@ public class WasteDescriptionController {
 
     @PostMapping
     public ResponseEntity<ArticleDescription> addWasteDescription(@RequestBody ArticleDescription wasteDescription) {
-        if (this.wasteDescriptionDAO.addWasteDescription(wasteDescription) == null) {
+        if (this.articleDescriptionDAO.addWasteDescription(wasteDescription) == null) {
             throw new NullPointerException("WasteData is empty!");
         } else {
             return ResponseEntity.ok(wasteDescription);
@@ -48,19 +48,19 @@ public class WasteDescriptionController {
     @PutMapping(value = "/{id}")
     public ResponseEntity<ArticleDescription> updateWasteDescription(@PathVariable final Long id, @RequestBody final ArticleDescription wasteDescription) throws ChangeSetPersister.NotFoundException, IllegalAccessException {
         try {
-            wasteDescriptionDAO.getWasteDescriptionById(id);
+            articleDescriptionDAO.getWasteDescriptionById(id);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
         return ResponseEntity.ok(
-                wasteDescriptionDAO.updateWasteDescription(id, wasteDescription)
+                articleDescriptionDAO.updateWasteDescription(id, wasteDescription)
         );
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Boolean> deleteWasteDescription(@PathVariable final Long id) {
         try {
-            wasteDescriptionDAO.deleteWasteDescriptionById(id);
+            articleDescriptionDAO.deleteWasteDescriptionById(id);
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.ok(false);
         }

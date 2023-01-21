@@ -28,7 +28,7 @@ public class AttrCopy {
     private boolean isNullOrEmpty(Field field, UpdateIncludeAttribute annotation) {
         switch (annotation.CheckWhich()) {
             case Null -> {
-                return field != null;
+                return field == null;
             }
             case String -> {
                 return field.toString().isEmpty();

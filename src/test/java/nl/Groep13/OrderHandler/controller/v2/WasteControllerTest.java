@@ -30,11 +30,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -57,8 +55,8 @@ class WasteControllerTest {
     @Autowired
     private UsageRepository usageRepository;
 
-    private WasteDataDAO wasteDataDAO;
-    private WasteDescriptionDAO wasteDescriptionDAO;
+    private ArticleDataDAO articleDataDAO;
+    private ArticleDescriptionDAO articleDescriptionDAO;
     private UsageDAO usageDAO;
 
     private ArticleDAOV2 wasteDAO;
@@ -67,10 +65,10 @@ class WasteControllerTest {
 
     @BeforeAll
     public void setUp() {
-        wasteDataDAO = new WasteDataDAO(wasteDataRepository);
-        wasteDescriptionDAO = new WasteDescriptionDAO(wasteDescriptionRepository);
+        articleDataDAO = new ArticleDataDAO(wasteDataRepository);
+        articleDescriptionDAO = new ArticleDescriptionDAO(wasteDescriptionRepository);
         usageDAO = new UsageDAO(usageRepository);
-        wasteDAO = new ArticleDAOV2(wasteRepository, wasteDataDAO, wasteDescriptionDAO, usageDAO);
+        wasteDAO = new ArticleDAOV2(wasteRepository, articleDataDAO, articleDescriptionDAO, usageDAO);
 //        wasteController = new ArticleControllerV2(wasteDAO, articleInterface);
     }
 

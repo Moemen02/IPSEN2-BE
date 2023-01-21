@@ -6,16 +6,14 @@ import nl.Groep13.OrderHandler.repository.v2.ArticleDataRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
-public class WasteDataDAO {
+public class ArticleDataDAO {
     private final ArticleDataRepository wasteDataRepository;
 
-    public WasteDataDAO(ArticleDataRepository wasteDataRepository) {
+    public ArticleDataDAO(ArticleDataRepository wasteDataRepository) {
         this.wasteDataRepository = wasteDataRepository;
     }
 
@@ -46,7 +44,7 @@ public class WasteDataDAO {
         if (oldWasteDataById.isPresent()) {
             ArticleData oldWasteData = oldWasteDataById.get();
 
-            new AttrCopy().copyAttributes(alteredWasteData, oldWasteData);
+            new AttrCopy().copyAttributes(oldWasteData, alteredWasteData);
 
             wasteDataRepository.setWasteDataInfoById(
                     alteredWasteData.getSupplier(),

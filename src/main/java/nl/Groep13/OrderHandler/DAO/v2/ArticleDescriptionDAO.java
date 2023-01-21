@@ -10,10 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class WasteDescriptionDAO {
+public class ArticleDescriptionDAO {
     private final ArticleDescriptionRepository wasteDescriptionRepository;
 
-    public WasteDescriptionDAO(ArticleDescriptionRepository wasteDescriptionRepository) {
+    public ArticleDescriptionDAO(ArticleDescriptionRepository wasteDescriptionRepository) {
         this.wasteDescriptionRepository = wasteDescriptionRepository;
     }
 
@@ -39,7 +39,7 @@ public class WasteDescriptionDAO {
         if (oldWasteDescriptionById.isPresent()) {
             ArticleDescription oldWasteDescription = oldWasteDescriptionById.get();
 
-            new AttrCopy().copyAttributes(alteredWasteDescription, oldWasteDescription);
+            new AttrCopy().copyAttributes(oldWasteDescription, alteredWasteDescription);
 
             wasteDescriptionRepository.setWasteDescriptionInfoById(
                     alteredWasteDescription.getArticlenumber(),
