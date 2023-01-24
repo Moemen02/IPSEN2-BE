@@ -8,7 +8,7 @@ public interface WasteLocationInterface {
 
     List<ArticleLocation> getAllWasteLocations();
     ArticleLocation getWasteLocationById(Long id);
-    ArticleLocation addWasteLocation(ArticleLocation wasteLocation);
+    ArticleLocation addWasteLocation(ArticleLocation articleLocation);
     ArticleLocation updateWasteLocation(Long id, ArticleLocation wasteLocation);
 
 }
