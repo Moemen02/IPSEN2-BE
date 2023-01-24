@@ -37,6 +37,10 @@ public class LocationDAOV2 {
         throw new  ChangeSetPersister.NotFoundException();
     }
 
+    public LocationV2 saveLocation(LocationV2 location){
+        return locationRepositoryV2.save(location);
+    }
+
 //    public Optional<LocationV2> updateLocation(Long ID, Optional<LocationV2> locationV2) throws ChangeSetPersister.NotFoundException{
 //        Optional<LocationV2> oldLocationById = locationRepositoryV2.findById(ID);
 //        if (oldLocationById.isPresent()){
