@@ -51,11 +51,11 @@ public class ArticleControllerV2 {
     @PostMapping
     public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException {
         if (waste == null) {
-            throw new NullPointerException("Waste is empty");
+            throw new NullPointerException("Article is empty");
         } else if (waste.getArticle_dataID() == null) {
-            throw new NullPointerException("WasteData is empty");
+            throw new NullPointerException("ArticleData is empty");
         } else if (waste.getArticle_descriptionID() == null) {
-            throw new NullPointerException("WasteDescription is empty");
+            throw new NullPointerException("ArticleDescription is empty");
         } else {
             usageController.setUsageType(waste.getArticle_dataID());
             articleDAOV2.addArticle(waste);
