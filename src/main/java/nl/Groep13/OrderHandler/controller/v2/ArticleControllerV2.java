@@ -54,8 +54,7 @@ public class ArticleControllerV2 {
         ArticleV2 articleV2 = new ArticleV2();
         articleV2.setArticle_dataID(waste._article_dataID());
         articleV2.setArticle_descriptionID(waste._article_descriptionID());
-
-        usageController.setUsageType(articleV2.getArticle_dataID());
+        articleV2.setUsageID(usageController.getUsageById(usageController.setUsageType(articleV2.getArticle_dataID())).getBody());
         articleDAOV2.addArticle(articleV2);
         return ResponseEntity.ok(articleV2);
     }
