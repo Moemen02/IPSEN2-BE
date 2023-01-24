@@ -127,18 +127,7 @@ public class WasteLocationController {
         for (Map.Entry<Long, HashMap<String, Integer>> entry : listCompValue.entrySet()){
             if (entry.getKey().equals(1L)){
 
-                entry.getValue().keySet().forEach(value -> {
-                    if (comValArr.contains(value)){
-                        comValArrVal.forEach(comval -> {
-                            if (comval.equals(entry.getValue().get(value))) {
-                                LocationV2 newLocation = new LocationV2(entry.getKey());
-                                LocationV2 savedLocation = locationController.saveLocation(newLocation);
-                                ArticleLocation articleLocation = new ArticleLocation(savedLocation.getId(), article.getId(), UsageID);
-                                wasteLocationInterface.addWasteLocation(articleLocation);
-                            }
-                        });
-                    }
-                });
+                savingArticleLocation(article, UsageID, comValArr, comValArrVal, entry);
             }
             else if (entry.getKey().equals(2L)){
 
@@ -172,51 +161,33 @@ public class WasteLocationController {
 
             else if (entry.getKey().equals(4L)){
 
-                entry.getValue().keySet().forEach(value -> {
-                    if (comValArr.contains(value)){
-                        comValArrVal.forEach(comval -> {
-                            if (comval.equals(entry.getValue().get(value))) {
-                                LocationV2 newLocation = new LocationV2(entry.getKey());
-                                LocationV2 savedLocation = locationController.saveLocation(newLocation);
-                                ArticleLocation articleLocation = new ArticleLocation(savedLocation.getId(), article.getId(), UsageID);
-                                wasteLocationInterface.addWasteLocation(articleLocation);
-                            }
-                        });
-                    }
-                });
+                savingArticleLocation(article, UsageID, comValArr, comValArrVal, entry);
             }
 
             else if (entry.getKey().equals(5L)){
 
-                entry.getValue().keySet().forEach(value -> {
-                    if (comValArr.contains(value)){
-                        comValArrVal.forEach(comval -> {
-                            if (comval.equals(entry.getValue().get(value))) {
-                                LocationV2 newLocation = new LocationV2(entry.getKey());
-                                LocationV2 savedLocation = locationController.saveLocation(newLocation);
-                                ArticleLocation articleLocation = new ArticleLocation(savedLocation.getId(), article.getId(), UsageID);
-                                wasteLocationInterface.addWasteLocation(articleLocation);
-                            }
-                        });
-                    }
-                });
+                savingArticleLocation(article, UsageID, comValArr, comValArrVal, entry);
             }
 
             else if (entry.getKey().equals(6L)){
 
-                entry.getValue().keySet().forEach(value -> {
-                    if (comValArr.contains(value)){
-                        comValArrVal.forEach(comval -> {
-                            if (comval.equals(entry.getValue().get(value))) {
-                                LocationV2 newLocation = new LocationV2(entry.getKey());
-                                LocationV2 savedLocation = locationController.saveLocation(newLocation);
-                                ArticleLocation articleLocation = new ArticleLocation(savedLocation.getId(), article.getId(), UsageID);
-                                wasteLocationInterface.addWasteLocation(articleLocation);
-                            }
-                        });
+                savingArticleLocation(article, UsageID, comValArr, comValArrVal, entry);
+            }
+        }
+    }
+
+    private void savingArticleLocation(ArticleV2 article, Long UsageID, ArrayList<String> comValArr, ArrayList<Integer> comValArrVal, Map.Entry<Long, HashMap<String, Integer>> entry) {
+        entry.getValue().keySet().forEach(value -> {
+            if (comValArr.contains(value)){
+                comValArrVal.forEach(comval -> {
+                    if (comval.equals(entry.getValue().get(value))) {
+                        LocationV2 newLocation = new LocationV2(entry.getKey());
+                        LocationV2 savedLocation = locationController.saveLocation(newLocation);
+                        ArticleLocation articleLocation = new ArticleLocation(savedLocation.getId(), article.getId(), UsageID);
+                        wasteLocationInterface.addWasteLocation(articleLocation);
                     }
                 });
             }
-        }
+        });
     }
 }
