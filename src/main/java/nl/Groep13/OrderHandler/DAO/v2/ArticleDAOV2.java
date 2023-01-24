@@ -83,10 +83,10 @@ public class ArticleDAOV2 implements ArticleInterface {
     public void addArticle(final ArticleV2 articleV2) throws ChangeSetPersister.NotFoundException {
         ArticleData wasteData = articleDataDAO.addWasteData(articleV2.getArticle_dataID());
         ArticleDescription wasteDescription = articleDescriptionDAO.addWasteDescription(articleV2.getArticle_descriptionID());
-        Usage usage = usageDAO.getUsageByTypeUsage(articleV2.getUsageID().getType_usage());
+//        Usage usage = usageDAO.getUsageByTypeUsage(articleV2.getUsageID().getType_usage());
         articleV2.setArticle_dataID(wasteData);
         articleV2.setArticle_descriptionID(wasteDescription);
-        articleV2.setUsageID(usage);
+//        articleV2.setUsageID(usage);
         articleRepositoryV2.save(articleV2);
     }
 }

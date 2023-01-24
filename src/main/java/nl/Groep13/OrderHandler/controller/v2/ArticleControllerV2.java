@@ -3,6 +3,7 @@ package nl.Groep13.OrderHandler.controller.v2;
 import nl.Groep13.OrderHandler.DAO.v2.ArticleDAOV2;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
+import nl.Groep13.OrderHandler.record.ArticleRec;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import nl.Groep13.OrderHandler.utils.Pager;
@@ -49,18 +50,14 @@ public class ArticleControllerV2 {
     }
 
     @PostMapping
-    public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException {
-        if (waste == null) {
-            throw new NullPointerException("Article is empty");
-        } else if (waste.getArticle_dataID() == null) {
-            throw new NullPointerException("ArticleData is empty");
-        } else if (waste.getArticle_descriptionID() == null) {
-            throw new NullPointerException("ArticleDescription is empty");
-        } else {
-            usageController.setUsageType(waste.getArticle_dataID());
-            articleDAOV2.addArticle(waste);
-            return ResponseEntity.ok(waste);
-        }
+    public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleRec waste) throws ChangeSetPersister.NotFoundException {
+        ArticleV2 articleV2 = new ArticleV2();
+        articleV2.setArticle_dataID(waste._article_dataID());
+        articleV2.setArticle_descriptionID(waste._article_descriptionID());
+
+        usageController.setUsageType(articleV2.getArticle_dataID());
+        articleDAOV2.addArticle(articleV2);
+        return ResponseEntity.ok(articleV2);
     }
 
     @PutMapping(value = "/{id}")
