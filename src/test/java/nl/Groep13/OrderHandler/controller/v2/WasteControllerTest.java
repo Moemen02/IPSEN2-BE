@@ -1,10 +1,7 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import com.google.gson.Gson;
-import nl.Groep13.OrderHandler.DAO.v2.UsageDAO;
-import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
-import nl.Groep13.OrderHandler.DAO.v2.WasteDataDAO;
-import nl.Groep13.OrderHandler.DAO.v2.WasteDescriptionDAO;
+import nl.Groep13.OrderHandler.DAO.v2.*;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.JWTPayload;
 import nl.Groep13.OrderHandler.model.UserRole;
@@ -12,6 +9,7 @@ import nl.Groep13.OrderHandler.model.v2.Usage;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
 import nl.Groep13.OrderHandler.model.v2.ArticleData;
 import nl.Groep13.OrderHandler.model.v2.ArticleDescription;
+import nl.Groep13.OrderHandler.record.ArticleRec;
 import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.repository.v2.UsageRepository;
 import nl.Groep13.OrderHandler.repository.v2.ArticleDataRepository;
@@ -33,11 +31,9 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
@@ -60,20 +56,20 @@ class WasteControllerTest {
     @Autowired
     private UsageRepository usageRepository;
 
-    private WasteDataDAO wasteDataDAO;
-    private WasteDescriptionDAO wasteDescriptionDAO;
+    private ArticleDataDAO articleDataDAO;
+    private ArticleDescriptionDAO articleDescriptionDAO;
     private UsageDAO usageDAO;
 
-    private WasteDAO wasteDAO;
+    private ArticleDAOV2 wasteDAO;
     private ArticleControllerV2 wasteController;
 
 
     @BeforeAll
     public void setUp() {
-        wasteDataDAO = new WasteDataDAO(wasteDataRepository);
-        wasteDescriptionDAO = new WasteDescriptionDAO(wasteDescriptionRepository);
+        articleDataDAO = new ArticleDataDAO(wasteDataRepository);
+        articleDescriptionDAO = new ArticleDescriptionDAO(wasteDescriptionRepository);
         usageDAO = new UsageDAO(usageRepository);
-        wasteDAO = new WasteDAO(wasteRepository, wasteDataDAO, wasteDescriptionDAO, usageDAO);
+        wasteDAO = new ArticleDAOV2(wasteRepository, articleDataDAO, articleDescriptionDAO, usageDAO);
 //        wasteController = new ArticleControllerV2(wasteDAO, articleInterface);
     }
 
@@ -124,7 +120,7 @@ class WasteControllerTest {
         String Token = getToken();
 
         // Run the test
-        final MockHttpServletResponse response = mockMvc.perform(get("/api/v2/waste")
+        final MockHttpServletResponse response = mockMvc.perform(get("/api/v2/article")
                         .header("authorization", "Bearer " + Token))
                 .andReturn().getResponse();
 
@@ -133,26 +129,26 @@ class WasteControllerTest {
         assertThat(response.getContentAsString()).isNotEqualTo("[]");
     }
 
-//    @Test
-//    void AddAndUpdateWasteValue() throws ChangeSetPersister.NotFoundException {
-//        //Arrange
-//        ArticleData fillerData = new ArticleData(null, "Filler", "ADK-1000 Test", "2398", 2.5f, 3f, "100% PL", false, "Holland Haag Test");
-//        ArticleDescription fillerDescription = new ArticleDescription(null, "ADK-1000 Test", "ForTesting", 50, "Nepstoffen", "Compiled", "wQlsd", 100, false, 0);
-//        Usage usage = new Usage(null, "BEHOUD");
-//        ArticleV2 testWaste = new ArticleV2();
+    @Test
+    void AddAndUpdateWasteValue() throws ChangeSetPersister.NotFoundException, IllegalAccessException {
+        //Arrange
+        ArticleData fillerData = new ArticleData(null, "Filler", "ADK-1000 Test", "2398", 2.5f, 3f, "100% PL", false, "Holland Haag Test");
+        ArticleDescription fillerDescription = new ArticleDescription(null, "ADK-1000 Test", "ForTesting", 50, "Nepstoffen", "Compiled", "wQlsd", 100, false, 0);
+        Usage usage = new Usage(null, "AFVAL");
+        ArticleRec testWaste = new ArticleRec(null, fillerData, fillerDescription, usage);
 //        testWaste.setArticle_dataID(fillerData);
 //        testWaste.setArticle_descriptionID(fillerDescription);
 //        testWaste.setUsageID(usage);
-//
-//        //Act
-//        ArticleV2 waste = wasteController.addWaste(testWaste).getBody();
-//        ArticleData altWasteData = waste.getArticle_dataID();
-//        altWasteData.setSupplier("Tester");
-//        waste.setArticle_dataID(altWasteData);
-//        ArticleV2 checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
-//
-//        //Assert
-//        assert checkableWaste != null;
-//        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getArticle_dataID().getSupplier());
-//    }
+
+        //Act
+        ArticleV2 waste = wasteController.addWaste(testWaste).getBody();
+        ArticleData altWasteData = waste.getArticle_dataID();
+        altWasteData.setSupplier("Tester");
+        waste.setArticle_dataID(altWasteData);
+        ArticleV2 checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
+
+        //Assert
+        assert checkableWaste != null;
+        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getArticle_dataID().getSupplier());
+    }
 }

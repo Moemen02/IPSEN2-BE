@@ -10,5 +10,5 @@ public interface ArticleInterface {
 //    List<ArticleV2> getWaste();
     List<ArticleV2> getPagedWaste(int pageNo, int pageSize);
     Optional<ArticleV2> getWasteById(Long id);
-    ArticleV2 updateWaste(Long id, ArticleV2 newWasteData) throws ChangeSetPersister.NotFoundException;
+    ArticleV2 updateWaste(Long id, ArticleV2 newWasteData) throws ChangeSetPersister.NotFoundException, IllegalAccessException;
 }
