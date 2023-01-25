@@ -2,7 +2,8 @@ package nl.Groep13.OrderHandler.controller.v2;
 
 import com.google.gson.Gson;
 import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
-import nl.Groep13.OrderHandler.model.v2.ArticleOrder;
+import nl.Groep13.OrderHandler.controller.ArticleController;
+import nl.Groep13.OrderHandler.model.v2.*;
 import nl.Groep13.OrderHandler.service.ArticleService;
 import nl.Groep13.OrderHandler.service.V2.ArticleOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +22,20 @@ public class ArticleOrderController {
 
     private final ArticleOrderService articleOrderService;
     private final WasteLocationController wasteLocationController;
+    private final LocationControllerV2 locationControllerV2;
+    private final CategoryLocationController categoryLocationController;
+    private final ArticleController articleController;
 
     Gson gson = new Gson();
 
     @Autowired
 
-    public ArticleOrderController(ArticleOrderService articleOrderService, ArticleService articleService, WasteDAO wasteDAO, ArticleControllerV2 articleControllerV2, WasteLocationController wasteLocationController, Gson gson) {
+    public ArticleOrderController(ArticleOrderService articleOrderService, ArticleService articleService, WasteDAO wasteDAO, ArticleControllerV2 articleControllerV2, WasteLocationController wasteLocationController, LocationControllerV2 locationControllerV2, CategoryLocationController categoryLocationController, ArticleController articleController, Gson gson) {
         this.articleOrderService = articleOrderService;
         this.wasteLocationController = wasteLocationController;
+        this.locationControllerV2 = locationControllerV2;
+        this.categoryLocationController = categoryLocationController;
+        this.articleController = articleController;
         this.gson = gson;
     }
 
@@ -44,15 +51,12 @@ public class ArticleOrderController {
         }
     }
 
-    @GetMapping("/{id}/moemen")
-    public Long getLocation(@PathVariable Long id) throws ChangeSetPersister.NotFoundException {
-        Long articleLocationId = this.wasteLocationController.getArticleLocationById(id).get().getArticleID();
-        Long articleOrderAId = this.articleOrderService.getArticleOrderById(id).get().getId();
-
-        if (articleOrderAId == articleLocationId){
-            return this.wasteLocationController.getArticleLocationById(id).get().getLocationID();
-        }
-        return null;
+    @GetMapping("/{orderId}/moemen")
+    public String getLocation(@PathVariable Long orderId) throws ChangeSetPersister.NotFoundException {
+        ArticleV2 article = this.getWasteOrderById(orderId).getBody().get().getArticleID();
+        Long articleLocation = wasteLocationController.getArticleLocationByOrderId(article.getId()).getLocationID();
+        Long locationV2 = locationControllerV2.getLocationByArticleLocation(articleLocation).getCategory_locationID();
+        return categoryLocationController.getCategoryLocationByLocation(locationV2).getLocation_type();
     }
 
     @GetMapping

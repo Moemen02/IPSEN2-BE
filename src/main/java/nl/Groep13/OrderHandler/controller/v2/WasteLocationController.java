@@ -25,6 +25,11 @@ public class WasteLocationController {
     private HashMap<Long, HashMap<String, Integer>> listCompValue = new HashMap<>();
     private HashMap<String, Integer> compValue = new HashMap<>();
 
+
+    public ArticleLocation getArticleLocationByOrderId(long orderId){
+        return wasteLocationInterface.getArticleLocationByOrderId(orderId).get();
+    }
+
     public WasteLocationController(WasteLocationInterface wasteLocationInterface, CategoryLocationController categoryLocationController, UsageController usageController, CustomerControllerV2 customerController, LocationControllerV2 locationController) {
         this.wasteLocationInterface = wasteLocationInterface;
         this.categoryLocationController = categoryLocationController;

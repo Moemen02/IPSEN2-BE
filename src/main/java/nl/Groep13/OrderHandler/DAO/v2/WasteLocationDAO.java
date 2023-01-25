@@ -37,4 +37,9 @@ public class WasteLocationDAO implements WasteLocationInterface {
     public ArticleLocation updateWasteLocation(Long id, ArticleLocation wasteLocation) {
         return null;
     }
+
+    @Override
+    public Optional<ArticleLocation> getArticleLocationByOrderId(long orderId) {
+        return wasteLocationRepository.getArticleLocationByOrderId(orderId);
+    }
 }

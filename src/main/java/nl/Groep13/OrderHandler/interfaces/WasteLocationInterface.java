@@ -12,4 +12,5 @@ public interface WasteLocationInterface {
     ArticleLocation addWasteLocation(ArticleLocation articleLocation);
     ArticleLocation updateWasteLocation(Long id, ArticleLocation wasteLocation);
 
+    Optional<ArticleLocation> getArticleLocationByOrderId(long orderId);
 }
