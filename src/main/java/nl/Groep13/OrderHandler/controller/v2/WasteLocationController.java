@@ -6,13 +6,11 @@ import nl.Groep13.OrderHandler.model.v2.*;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/api/v2/waste/location")
@@ -38,6 +36,11 @@ public class WasteLocationController {
     @GetMapping
     public ResponseEntity<String> getWasteLocation(){
         return ResponseEntity.ok().body("dit moet een wastelocation item zijn");
+    }
+
+    @GetMapping("/{id}")
+    public Optional<ArticleLocation> getArticleLocationById(@PathVariable Long id){
+        return this.wasteLocationInterface.getWasteLocationById(id);
     }
 
 
