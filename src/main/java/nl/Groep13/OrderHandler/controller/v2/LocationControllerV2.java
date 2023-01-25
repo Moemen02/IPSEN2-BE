@@ -52,6 +52,10 @@ public class LocationControllerV2 {
         return this.locationServiceV2.getLocationByCategoryLocationID(id);
     }
 
+    public LocationV2 saveLocation(LocationV2 location){
+        return this.locationServiceV2.saveLocation(location);
+    }
+
     //TODO UPDATE FUNCTIE NOG SCHRIJVEN
 
 

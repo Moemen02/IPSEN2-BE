@@ -1,6 +1,8 @@
 package nl.Groep13.OrderHandler.repository.v2;
 
 import nl.Groep13.OrderHandler.model.v2.ArticleOrder;
+import nl.Groep13.OrderHandler.model.v2.ArticleV2;
+import nl.Groep13.OrderHandler.model.v2.CustomerV2;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -18,8 +20,8 @@ public interface ArticleOrderRepository extends JpaRepository<ArticleOrder, Long
             " articleOrder.finished = ?3" +
             "  where articleOrder.id = ?4")
     void setArticleOrderById(
-            long customerID,
-            Long articleID,
+            CustomerV2 customerID,
+            ArticleV2 articleID,
             Boolean finished,
             long id
     );
