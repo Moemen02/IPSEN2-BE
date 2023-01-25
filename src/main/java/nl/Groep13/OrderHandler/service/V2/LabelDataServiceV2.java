@@ -1,14 +1,21 @@
 package nl.Groep13.OrderHandler.service.V2;
 
 
+import jdk.swing.interop.SwingInterOpUtils;
 import nl.Groep13.OrderHandler.controller.v2.*;
 import nl.Groep13.OrderHandler.interfaces.LabelInterface;
 
 import nl.Groep13.OrderHandler.model.v2.*;
+import nl.Groep13.OrderHandler.utils.LabelCreation;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.util.Base64;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -23,6 +30,9 @@ public class LabelDataServiceV2 {
     AddressController addressController;
     ArticleControllerV2 articleControllerV2;
     ArticleOrderService articleOrderService;
+
+    LabelCreation labelCreation = new LabelCreation(this);
+
 
     public LabelDataServiceV2(LabelInterface labelInterface, ArticleOrderController articleOrderController, LocationControllerV2 locationControllerV2, CustomerControllerV2 customerControllerV2, AddressController addressController, ArticleControllerV2 articleControllerV2, ArticleOrderService articleOrderService) {
         this.labelInterface = labelInterface;
@@ -68,6 +78,28 @@ public class LabelDataServiceV2 {
         }
         return null;
     }
+    public Map<String, String> getLabelImage(Long id) throws Exception {
+        HashMap<String, String> label = labelCreation.createLabel(id);
 
+        if (label == null) {
+            HashMap<String, String> noLabel = new HashMap<>();
+            noLabel.put("content", "noLabel");
+            return noLabel;
+        }
+
+        String path;
+
+        if (label.get("retour").equals("true")) path = "images/retourLabel.png";
+        else path = "images/magazijnLabel.png";
+
+//        File file = new ClassPathResource(path).getFile();
+        File file = new File("src/main/resources/" + path);
+        String encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
+        Map<String, String> jsonMap = new HashMap<>();
+        jsonMap.put("content", encodeImage);
+        jsonMap.put("name", label.get("klant"));
+
+        return jsonMap;
+    }
 
 }
