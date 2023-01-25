@@ -1,7 +1,7 @@
 package nl.Groep13.OrderHandler.service.V2;
 
 
-import jdk.swing.interop.SwingInterOpUtils;
+
 import nl.Groep13.OrderHandler.controller.v2.*;
 import nl.Groep13.OrderHandler.interfaces.LabelInterface;
 
@@ -46,14 +46,15 @@ public class LabelDataServiceV2 {
 
     public HashMap<String, String> getLabelData(Long id) throws ChangeSetPersister.NotFoundException {
         Optional<LabelV2> label = labelInterface.getLabelById(id);
-        Optional<ArticleOrder> order = articleOrderController.getWasteOrderById(label.get().getId()).getBody();
+        Optional<ArticleOrder> order = articleOrderController.getWasteOrderById(label.get().getArticleOrderId().getId()).getBody();
         Optional<CustomerV2> customer = customerControllerV2.getCustomerById(order.get().getCustomerID().getID());
         Optional<Address> adres = addressController.getAddressById(customer.get().getAddressID().getId()).getBody();
-        Optional<ArticleV2> article = Optional.ofNullable(articleControllerV2.getWasteById(order.get().getId()).getBody());
+        Optional<ArticleV2> article = Optional.ofNullable(articleControllerV2.getWasteById(order.get().getArticleID().getId()).getBody());
 //      Optional<WasteLocation> articleLocation = wasteController.getArticleLocationById(article.get().getArticleLocationID()).getBody();
 
         HashMap<String, String> labelData = new HashMap<>();
 
+        System.out.println(article.get().getUsageID().getId());
         if (article.get().getUsageID().getId() == 1){
             labelData.put("vervoerder", "HollandHaag BV");
             labelData.put("klant", customer.get().getName());
