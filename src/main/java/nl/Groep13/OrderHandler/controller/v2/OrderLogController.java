@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/api/v2/order/log")
 public class OrderLogController {
@@ -23,8 +25,8 @@ public class OrderLogController {
     }
 
     @GetMapping
-    public ResponseEntity<String> getOrderLog(){
-        return ResponseEntity.ok().body("dit moet een order log item zijn");
+    public ResponseEntity<List<OrderLog>> getOrderLog(){
+        return ResponseEntity.ok().body(this.orderLogInterface.getAllOrderLogs());
     }
 
     @PostMapping

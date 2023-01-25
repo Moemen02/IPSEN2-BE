@@ -18,7 +18,7 @@ public class OrderLogDAO implements OrderLogInterface {
 
     @Override
     public List<OrderLog> getAllOrderLogs() {
-        return null;
+        return this.orderLogRepository.findAll();
     }
 
     @Override
