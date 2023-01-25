@@ -1,7 +1,7 @@
 package nl.Groep13.OrderHandler.service.V2;
 
 import nl.Groep13.OrderHandler.DAO.v2.CategoryWasteDAO;
-import nl.Groep13.OrderHandler.DAO.v2.WasteDataDAO;
+import nl.Groep13.OrderHandler.DAO.v2.ArticleDataDAO;
 import nl.Groep13.OrderHandler.model.v2.Category;
 import nl.Groep13.OrderHandler.model.v2.Composition;
 import nl.Groep13.OrderHandler.record.CompositionRequest;
@@ -9,19 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class CategoryWasteService {
     @Autowired
     private CategoryWasteDAO categoryWasteDAO;
     @Autowired
-    private WasteDataDAO wasteDataDAO;
+    private ArticleDataDAO articleDataDAO;
 
     public List<Category> calcAllWaste(CompositionRequest compositionRequest) {
-        List<Object> wasteData = wasteDataDAO.getAllWasteDataInStock(compositionRequest.stockType());
+        List<Object> wasteData = articleDataDAO.getAllWasteDataInStock(compositionRequest.stockType());
         List<Category> similarWaste = new ArrayList<>();
 
         for (int i = 0; i < wasteData.size(); i++) {

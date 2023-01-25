@@ -104,4 +104,8 @@ public class UserService implements UserDetailsService {
 
         return jwtUtil.generateToken(user.getEmail(), user.getRole(), user.getName(), user.getId(), user.isDefault_pass());
     }
+
+    public User getAuthUser (String email) {
+        return userDAO.getUserByEmail(email).get();
+    }
 }
