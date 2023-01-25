@@ -29,33 +29,27 @@ public class ArticleOrderDAO {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-//    public Optional<ArticleOrder> updateWasteOrder(Long ID, Optional<ArticleOrder> wasteOrder) throws ChangeSetPersister.NotFoundException{
-//        Optional<ArticleOrder> oldWasteOrderById = articleOrderRepository.findById(ID);
-//        if (oldWasteOrderById.isPresent()){
-//            ArticleOrder oldWasteOrder = oldWasteOrderById.get();
-//            ArticleOrder newWasteOrder = wasteOrder.get();
-//
-//            newWasteOrder.setID((newWasteOrder.getID() == null) ? oldWasteOrder.getID() : newWasteOrder.getID());
-//            newWasteOrder.setWasteID((newWasteOrder.getWasteID() == null) ? oldWasteOrder.getWasteID() : newWasteOrder.getWasteID());
-//            newWasteOrder.setCustomerID((newWasteOrder.getCustomerID() == null) ? oldWasteOrder.getCustomerID() : newWasteOrder.getCustomerID());
-//            newWasteOrder.setFinished((oldWasteOrder.isFinished() == newWasteOrder.isFinished()) ? oldWasteOrder.isFinished() : newWasteOrder.isFinished());
-//
-//            articleOrderRepository.setWasteOrderById(
-//                    newWasteOrder.getCustomerID(),
-//                    newWasteOrder.getWasteID(),
-//                    newWasteOrder.isFinished(),
-//                    newWasteOrder.getID()
-//            );
-//            articleOrderRepository.save(newWasteOrder);
-//            return wasteOrder;
-//        }
-//        throw new ChangeSetPersister.NotFoundException();
-//    }
+    public Optional<ArticleOrder> updateWasteOrder(Long ID, Optional<ArticleOrder> articleOrder) throws ChangeSetPersister.NotFoundException{
+        Optional<ArticleOrder> oldWasteOrderById = articleOrderRepository.findById(ID);
+        if (oldWasteOrderById.isPresent()){
+            ArticleOrder newWasteOrder = articleOrder.get();
+            ArticleOrder oldWasteOrder = oldWasteOrderById.get();
 
-//    public void deleteOrderWaste(final Long ID) throws ChangeSetPersister.NotFoundException{
-//        if (articleOrderRepository.findById(ID).isPresent()){
-//            articleOrderRepository.deleteWasteOrdersByID(ID);
-//        }
-//        throw new ChangeSetPersister.NotFoundException();
-//    }
+            newWasteOrder.setArticleID(oldWasteOrderById.get().getArticleID());
+            newWasteOrder.setCustomerID(oldWasteOrderById.get().getCustomerID());
+            newWasteOrder.setFinished(true);
+            newWasteOrder.setId(oldWasteOrderById.get().getId());
+
+            articleOrderRepository.setArticleOrderById(
+                    newWasteOrder.getCustomerID(),
+                    newWasteOrder.getArticleID(),
+                    newWasteOrder.isFinished(),
+                    newWasteOrder.getId()
+            );
+            articleOrderRepository.save(newWasteOrder);
+            return Optional.of(newWasteOrder);
+        }
+        throw new ChangeSetPersister.NotFoundException();
+    }
+
 }

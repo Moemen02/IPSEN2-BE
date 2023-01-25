@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,7 +39,8 @@ public class LabelControllerV2 {
 
     @GetMapping(value = "/data/{id}")
     @ResponseBody
-    public HashMap<String,String> getLabelData(@PathVariable Long id) throws FileNotFoundException, ChangeSetPersister.NotFoundException {
-        return labelDataServiceV2.getLabelData(id);
+    public Map<String,String> getLabelData(@PathVariable Long id) throws Exception {
+//        return labelDataServiceV2.getLabelData(id);
+        return labelDataServiceV2.getLabelImage(id);
     }
 }
