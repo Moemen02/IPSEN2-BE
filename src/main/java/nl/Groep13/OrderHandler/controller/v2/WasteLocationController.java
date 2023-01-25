@@ -2,10 +2,7 @@ package nl.Groep13.OrderHandler.controller.v2;
 
 
 import nl.Groep13.OrderHandler.interfaces.WasteLocationInterface;
-import nl.Groep13.OrderHandler.model.v2.ArticleLocation;
-import nl.Groep13.OrderHandler.model.v2.ArticleV2;
-import nl.Groep13.OrderHandler.model.v2.CustomerV2;
-import nl.Groep13.OrderHandler.model.v2.Requirement;
+import nl.Groep13.OrderHandler.model.v2.*;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,15 +22,17 @@ public class WasteLocationController {
     private final CategoryLocationController categoryLocationController;
     private final UsageController usageController;
     private final CustomerControllerV2 customerController;
+    private final LocationControllerV2 locationController;
 //    private HashMap<String, Integer> listCompValue = new HashMap<>();
     private HashMap<Long, HashMap<String, Integer>> listCompValue = new HashMap<>();
     private HashMap<String, Integer> compValue = new HashMap<>();
 
-    public WasteLocationController(WasteLocationInterface wasteLocationInterface, CategoryLocationController categoryLocationController, UsageController usageController, CustomerControllerV2 customerController) {
+    public WasteLocationController(WasteLocationInterface wasteLocationInterface, CategoryLocationController categoryLocationController, UsageController usageController, CustomerControllerV2 customerController, LocationControllerV2 locationController) {
         this.wasteLocationInterface = wasteLocationInterface;
         this.categoryLocationController = categoryLocationController;
         this.usageController = usageController;
         this.customerController = customerController;
+        this.locationController = locationController;
     }
 
     @GetMapping
@@ -54,7 +53,7 @@ public class WasteLocationController {
         //TODO: haal usage op om te weten wat er mee gedaan moet worden
         String usageType = usageController.getUsageType(article.getUsageID().getId());
         if (usageType.equals("RETOUR")){
-            articleLocation = new ArticleLocation(0L, 0L, UsageID);
+            articleLocation = new ArticleLocation(0L, article.getId(), UsageID);
             //TODO: save to database
             return articleLocation;
         }
@@ -68,7 +67,7 @@ public class WasteLocationController {
                     throw new RuntimeException(e);
                 }
             });
-            setLocation(compValue, article);
+            setLocation(compValue, article, UsageID);
         }
 
         //TODO:
@@ -119,63 +118,76 @@ public class WasteLocationController {
         return Integer.parseInt(resultPercentage);
     }
 
-    public void setLocation(HashMap<String, Integer> compValue, ArticleV2 article){
-        System.out.println(compValue.keySet() + " 3");
+    public void setLocation(HashMap<String, Integer> compValue, ArticleV2 article, Long UsageID){
         ArrayList<String> comValArr = new ArrayList<>(compValue.keySet());
         ArrayList<Integer> comValArrVal = new ArrayList<>(compValue.values());
+
+        System.out.println(listCompValue);
 
         for (Map.Entry<Long, HashMap<String, Integer>> entry : listCompValue.entrySet()){
             if (entry.getKey().equals(1L)){
 
-                entry.getValue().keySet().forEach(value -> {
-                    if (comValArr.contains(value)){
-                        comValArrVal.forEach(comval -> {
-                            if (comval.equals(entry.getValue().get(value))) {
-                                //TODO save to db
-                                System.out.println("match!");
-                            }
-                        });
-                    }
-                });
+                savingArticleLocation(article, UsageID, comValArr, comValArrVal, entry);
             }
             else if (entry.getKey().equals(2L)){
 
                 entry.getValue().keySet().forEach(value -> {
                     if (comValArr.contains(value)){
-                        System.out.println("match! 2");
+                        comValArrVal.forEach(comval -> {
+                            if (comval >= 50 && comval <= 99){
+                                LocationV2 newLocation = new LocationV2(entry.getKey());
+                                LocationV2 savedLocation = locationController.saveLocation(newLocation);
+                                ArticleLocation articleLocation = new ArticleLocation(savedLocation.getId(), article.getId(), UsageID);
+                                wasteLocationInterface.addWasteLocation(articleLocation);
+                            }
+                        });
                     }
+                });
+            }
+
+            else if (entry.getKey().equals(3L)){
+
+                entry.getValue().keySet().forEach(value -> {
+                    comValArrVal.forEach(comval -> {
+                        if (comval >= 20 && comval <= 49){
+                            LocationV2 newLocation = new LocationV2(entry.getKey());
+                            LocationV2 savedLocation = locationController.saveLocation(newLocation);
+                            ArticleLocation articleLocation = new ArticleLocation(savedLocation.getId(), article.getId(), UsageID);
+                            wasteLocationInterface.addWasteLocation(articleLocation);
+                        }
+                    });
                 });
             }
 
             else if (entry.getKey().equals(4L)){
 
-                entry.getValue().keySet().forEach(value -> {
-                    if (comValArr.contains(value)){
-                        System.out.println("match! 4");
-                        System.out.println(entry.getValue().get(value));
-                    }
-                });
+                savingArticleLocation(article, UsageID, comValArr, comValArrVal, entry);
             }
 
             else if (entry.getKey().equals(5L)){
 
-                entry.getValue().keySet().forEach(value -> {
-                    if (comValArr.contains(value)){
-                        System.out.println("match! 5");
-                        System.out.println(entry.getValue().get(value));
-                    }
-                });
+                savingArticleLocation(article, UsageID, comValArr, comValArrVal, entry);
             }
 
             else if (entry.getKey().equals(6L)){
 
-                entry.getValue().keySet().forEach(value -> {
-                    if (comValArr.contains(value)){
-                        System.out.println("match! 6");
-                        System.out.println(entry.getValue().get(value));
+                savingArticleLocation(article, UsageID, comValArr, comValArrVal, entry);
+            }
+        }
+    }
+
+    private void savingArticleLocation(ArticleV2 article, Long UsageID, ArrayList<String> comValArr, ArrayList<Integer> comValArrVal, Map.Entry<Long, HashMap<String, Integer>> entry) {
+        entry.getValue().keySet().forEach(value -> {
+            if (comValArr.contains(value)){
+                comValArrVal.forEach(comval -> {
+                    if (comval.equals(entry.getValue().get(value))) {
+                        LocationV2 newLocation = new LocationV2(entry.getKey());
+                        LocationV2 savedLocation = locationController.saveLocation(newLocation);
+                        ArticleLocation articleLocation = new ArticleLocation(savedLocation.getId(), article.getId(), UsageID);
+                        wasteLocationInterface.addWasteLocation(articleLocation);
                     }
                 });
             }
-        }
+        });
     }
 }
