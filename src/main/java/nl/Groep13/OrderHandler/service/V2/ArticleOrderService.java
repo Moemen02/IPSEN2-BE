@@ -25,7 +25,7 @@ public class ArticleOrderService {
         return this.articleOrderDAO.getArticleOrderById(ID);
     }
 
-//    public Optional<ArticleOrder> updateWasteOrder(Long ID, Optional<ArticleOrder> wasteOrder) throws ChangeSetPersister.NotFoundException{
-//        return this.wasteOrderDAO.updateWasteOrder(ID, wasteOrder);
-//    }
+    public Optional<ArticleOrder> updateWasteOrder(Long ID, Optional<ArticleOrder> articleOrder) throws ChangeSetPersister.NotFoundException{
+        return this.articleOrderDAO.updateWasteOrder(ID, articleOrder);
+    }
 }
