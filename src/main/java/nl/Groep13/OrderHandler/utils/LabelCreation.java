@@ -96,14 +96,6 @@ public class LabelCreation {
         }
     }
 
-    public HashMap<String, String> createPDF() {
-        File file = new File("src/main/resources/" + "path");
-        String encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
-        Map<String, String> jsonMap = new HashMap<>();
-        jsonMap.put("content", encodeImage);
-        jsonMap.put("name", "label.get(klant)");
-        return null;
-    }
 
     private void toPdf(String templateName){
         try {
