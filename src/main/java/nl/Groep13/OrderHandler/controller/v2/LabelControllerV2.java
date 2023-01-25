@@ -43,4 +43,10 @@ public class LabelControllerV2 {
 //        return labelDataServiceV2.getLabelData(id);
         return labelDataServiceV2.getLabelImage(id);
     }
+
+    @GetMapping(value = "/pdf/{id}")
+    @ResponseBody
+    public Map <String, String> getPDF(@PathVariable Long id) throws  Exception{
+        return labelDataServiceV2.getPDFData(id);
+    }
 }

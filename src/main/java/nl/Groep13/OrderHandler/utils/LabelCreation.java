@@ -1,8 +1,6 @@
 package nl.Groep13.OrderHandler.utils;
 
 import com.aspose.cells.SaveFormat;
-import com.aspose.pdf.internal.imaging.Image;
-import nl.Groep13.OrderHandler.model.Label;
 import nl.Groep13.OrderHandler.service.V2.LabelDataServiceV2;
 
 import org.apache.commons.io.FileUtils;
@@ -12,13 +10,15 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
-import org.springframework.core.io.ClassPathResource;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.nio.file.Files;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LabelCreation {
     LabelDataServiceV2 labelDataServiceV2;
@@ -94,6 +94,15 @@ public class LabelCreation {
         } catch (InvalidFormatException e) {
             e.printStackTrace();
         }
+    }
+
+    public HashMap<String, String> createPDF() {
+        File file = new File("src/main/resources/" + "path");
+        String encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
+        Map<String, String> jsonMap = new HashMap<>();
+        jsonMap.put("content", encodeImage);
+        jsonMap.put("name", "label.get(klant)");
+        return null;
     }
 
     private void toPdf(String templateName){

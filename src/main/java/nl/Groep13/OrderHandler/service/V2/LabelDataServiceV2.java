@@ -79,6 +79,11 @@ public class LabelDataServiceV2 {
         }
         return null;
     }
+
+    public HashMap<String, String> getPDFData(Long id){
+        HashMap<String, String> pdf = labelCreation.createPDF();
+    }
+
     public Map<String, String> getLabelImage(Long id) throws Exception {
         HashMap<String, String> label = labelCreation.createLabel(id);
 
