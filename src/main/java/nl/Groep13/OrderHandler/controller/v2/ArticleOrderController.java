@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/api/v2/article_order")
 public class ArticleOrderController {
 
@@ -47,5 +48,9 @@ public class ArticleOrderController {
         );
     }
 
-    //TODO UPDATE FUNCTIE NOG SCHRIJVEN
+
+    @RequestMapping(value = "/{id}/update", method = RequestMethod.PUT)
+    public Optional<ArticleOrder> updateArticleOrder(@PathVariable Long id, @RequestBody Optional<ArticleOrder> articleOrder) throws ChangeSetPersister.NotFoundException {
+        return this.articleOrderService.updateWasteOrder(id,  articleOrder);
+    }
 }
