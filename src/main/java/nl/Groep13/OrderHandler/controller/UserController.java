@@ -8,6 +8,7 @@ import nl.Groep13.OrderHandler.record.RegisterRequest;
 import nl.Groep13.OrderHandler.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
@@ -86,5 +87,9 @@ public class UserController {
         Optional<User> user = userService.getUserById(id);
         if (user.isPresent()) return user.get().getName();
         return "";
+    }
+
+    public User getAuthUser(Authentication authentication) {
+        return userService.getAuthUser(authentication.getName());
     }
 }

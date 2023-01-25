@@ -1,12 +1,18 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
+import nl.Groep13.OrderHandler.DAO.v2.ArticleDAOV2;
+import nl.Groep13.OrderHandler.controller.UserController;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
+import nl.Groep13.OrderHandler.model.User;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
+import nl.Groep13.OrderHandler.record.ArticleRec;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import nl.Groep13.OrderHandler.utils.Pager;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,17 +23,21 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/v2/waste")
+@RequestMapping(value = "/api/v2/article")
 public class ArticleControllerV2 {
-    private final WasteDAO wasteDAO;
-//    private final WasteInterface wasteInterface = null;
+    private final ArticleDAOV2 articleDAOV2;
     private final ArticleInterface articleInterface;
+    private final UsageController usageController;
     private final WasteLocationController wasteLocationController;
-
-    public ArticleControllerV2(WasteDAO wasteDAO, ArticleInterface articleInterface, WasteLocationController wasteLocationController) {
-        this.wasteDAO = wasteDAO;
+    private final UserController userController;
+    @Autowired
+    private AuthenticationManager authManager;
+    public ArticleControllerV2(ArticleDAOV2 wasteDAO, ArticleInterface articleInterface, WasteLocationController wasteLocationController, UsageController usageController, UserController userController) {
+        this.articleDAOV2 = wasteDAO;
         this.articleInterface = articleInterface;
         this.wasteLocationController = wasteLocationController;
+        this.usageController = usageController;
+        this.userController = userController;
     }
 
     @GetMapping("/{pageNo}/{pageSize}")
@@ -43,49 +53,36 @@ public class ArticleControllerV2 {
     @GetMapping(value = "/{id}")
     @ResponseBody
     public ResponseEntity<ArticleV2> getWasteById(@PathVariable Long id) {
-        try {
-            ArticleV2 checkedWaste = this.wasteDAO.getWasteById(id);
-            return new ResponseEntity<>(checkedWaste, HttpStatus.FOUND);
-        } catch (ChangeSetPersister.NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+        ArticleV2 checkedWaste = this.articleDAOV2.getWasteById(id).get();
+        return new ResponseEntity<>(checkedWaste, HttpStatus.FOUND);
     }
 
     @PostMapping
-    public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException {
-        wasteLocationController.createLoction(1L, waste);
-        return null;
-//        if (waste == null) {
-//            throw new NullPointerException("Waste is empty");
-//        } else if (waste.getArticle_dataID() == null) {
-//            throw new NullPointerException("WasteData is empty");
-//        } else if (waste.getArticle_descriptionID() == null) {
-//            throw new NullPointerException("WasteDescription is empty");
-//        } else if (waste.getUsageID() == null) {
-//            throw new NullPointerException("Usage is empty");
-//        } else {
-//            wasteDAO.addWaste(waste);
-//            return ResponseEntity.ok(waste);
-//        }
+    public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleRec waste, Authentication authentication) throws ChangeSetPersister.NotFoundException {
+        ArticleV2 articleV2 = new ArticleV2();
+        articleV2.setArticle_dataID(waste._article_dataID());
+        articleV2.setArticle_descriptionID(waste._article_descriptionID());
+        articleV2.setUsageID(usageController.getUsageById(usageController.setUsageType(articleV2.getArticle_dataID())).getBody());
+        ArticleV2 reArticle = articleDAOV2.addArticle(articleV2);
+        User user = userController.getAuthUser(authentication);
+        //TODO vervang user.getId met een customerId.
+        wasteLocationController.createLoction(user.getId(), reArticle);
+        return ResponseEntity.ok(reArticle);
     }
 
     @PutMapping(value = "/{id}")
     @ResponseBody
-    public ResponseEntity<ArticleV2> updateWaste(@PathVariable final Long id, @RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException {
-        try {
-            this.wasteDAO.getWasteById(id);
-        } catch (ChangeSetPersister.NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+    public ResponseEntity<ArticleV2> updateWaste(@PathVariable final Long id, @RequestBody final ArticleV2 waste) throws ChangeSetPersister.NotFoundException, IllegalAccessException {
+        this.articleDAOV2.getWasteById(id);
         return ResponseEntity.ok(
-                wasteDAO.updateWaste(id, waste)
+                articleDAOV2.updateWaste(id, waste)
         );
     }
 
     @GetMapping
     public ResponseEntity<List<ArticleV2>> getWaste(@RequestParam int page) {
 
-        List<ArticleV2> fullList = this.wasteDAO.getWaste();
+        List<ArticleV2> fullList = this.articleDAOV2.getArticle();
         List<ArticleV2> toSend = Pager.getRequestedItems(fullList, page);
 
         return ResponseEntity.ok()

@@ -2,6 +2,7 @@ package nl.Groep13.OrderHandler.DAO.v2;
 
 import nl.Groep13.OrderHandler.model.v2.ArticleDescription;
 import nl.Groep13.OrderHandler.repository.v2.ArticleDescriptionRepository;
+import nl.Groep13.OrderHandler.service.V2.AttrCopy;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
@@ -9,10 +10,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class WasteDescriptionDAO {
+public class ArticleDescriptionDAO {
     private final ArticleDescriptionRepository wasteDescriptionRepository;
 
-    public WasteDescriptionDAO(ArticleDescriptionRepository wasteDescriptionRepository) {
+    public ArticleDescriptionDAO(ArticleDescriptionRepository wasteDescriptionRepository) {
         this.wasteDescriptionRepository = wasteDescriptionRepository;
     }
 
@@ -32,22 +33,13 @@ public class WasteDescriptionDAO {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public ArticleDescription updateWasteDescription(Long id, ArticleDescription newWasteDescription) throws ChangeSetPersister.NotFoundException {
+    public ArticleDescription updateWasteDescription(Long id, ArticleDescription newWasteDescription) throws ChangeSetPersister.NotFoundException, IllegalAccessException {
         Optional<ArticleDescription> oldWasteDescriptionById = wasteDescriptionRepository.findById(id);
         ArticleDescription alteredWasteDescription = newWasteDescription;
         if (oldWasteDescriptionById.isPresent()) {
             ArticleDescription oldWasteDescription = oldWasteDescriptionById.get();
 
-            alteredWasteDescription.setArticlenumber((newWasteDescription.getArticlenumber() == null || newWasteDescription.getArticlenumber().equals("")) ? oldWasteDescription.getArticlenumber() : newWasteDescription.getArticlenumber());
-            alteredWasteDescription.setDescription((newWasteDescription.getDescription() == null || newWasteDescription.getDescription().equals("")) ? oldWasteDescription.getDescription() : newWasteDescription.getDescription());
-            alteredWasteDescription.setClothWidth((newWasteDescription.getClothWidth() == 0) ? oldWasteDescription.getClothWidth() : newWasteDescription.getClothWidth());
-            alteredWasteDescription.setType((newWasteDescription.getType() == null || newWasteDescription.getType().equals("")) ? oldWasteDescription.getType() : newWasteDescription.getType());
-            alteredWasteDescription.setLayout((newWasteDescription.getLayout() == null || newWasteDescription.getLayout().equals("")) ? oldWasteDescription.getLayout() : newWasteDescription.getLayout());
-            alteredWasteDescription.setWashcode((newWasteDescription.getWashcode() == null || newWasteDescription.getWashcode().equals("")) ? oldWasteDescription.getWashcode() : newWasteDescription.getWashcode());
-            alteredWasteDescription.setWeight((newWasteDescription.getWeight() == 0) ? oldWasteDescription.getWeight() : newWasteDescription.getWeight());
-            alteredWasteDescription.setNot_tiltable((newWasteDescription.isNot_tiltable()) != oldWasteDescription.isNot_tiltable() ? newWasteDescription.isNot_tiltable() : oldWasteDescription.isNot_tiltable());
-            alteredWasteDescription.setMinimumStock((newWasteDescription.getMinimumStock() == 0) ? oldWasteDescription.getMinimumStock() : newWasteDescription.getMinimumStock());
-            alteredWasteDescription.setId((newWasteDescription.getId()) == null || newWasteDescription.getId().equals("") ? oldWasteDescription.getId() : newWasteDescription.getId());
+            new AttrCopy().copyAttributes(oldWasteDescription, alteredWasteDescription);
 
             wasteDescriptionRepository.setWasteDescriptionInfoById(
                     alteredWasteDescription.getArticlenumber(),

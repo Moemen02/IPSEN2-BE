@@ -1,20 +1,19 @@
 package nl.Groep13.OrderHandler.DAO.v2;
 
+import nl.Groep13.OrderHandler.service.V2.AttrCopy;
 import nl.Groep13.OrderHandler.model.v2.ArticleData;
 import nl.Groep13.OrderHandler.repository.v2.ArticleDataRepository;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Component
-public class WasteDataDAO {
+public class ArticleDataDAO {
     private final ArticleDataRepository wasteDataRepository;
 
-    public WasteDataDAO(ArticleDataRepository wasteDataRepository) {
+    public ArticleDataDAO(ArticleDataRepository wasteDataRepository) {
         this.wasteDataRepository = wasteDataRepository;
     }
 
@@ -38,22 +37,14 @@ public class WasteDataDAO {
         throw new ChangeSetPersister.NotFoundException();
     }
 
-    public ArticleData updateWasteData(Long id, ArticleData newWasteData) throws ChangeSetPersister.NotFoundException {
+    public ArticleData updateWasteData(Long id, ArticleData newWasteData) throws ChangeSetPersister.NotFoundException, IllegalAccessException {
         Optional<ArticleData> oldWasteDataById = wasteDataRepository.findById(id);
         ArticleData alteredWasteData = newWasteData;
 
         if (oldWasteDataById.isPresent()) {
             ArticleData oldWasteData = oldWasteDataById.get();
 
-            alteredWasteData.setSupplier((newWasteData.getSupplier() == null || newWasteData.getSupplier().equals("")) ? oldWasteData.getSupplier() : newWasteData.getSupplier());
-            alteredWasteData.setEancode((newWasteData.getEancode() == null || newWasteData.getEancode().equals("")) ? oldWasteData.getEancode() : newWasteData.getEancode());
-            alteredWasteData.setColor((newWasteData.getColor() == null || newWasteData.getColor().equals("")) ? oldWasteData.getColor() : newWasteData.getColor());
-            alteredWasteData.setPatternLength((newWasteData.getPatternLength() == 0) ? oldWasteData.getPatternLength() : newWasteData.getPatternLength());
-            alteredWasteData.setPatternWidth((newWasteData.getPatternWidth() == 0) ? oldWasteData.getPatternWidth() : newWasteData.getPatternWidth());
-            alteredWasteData.setComposition((newWasteData.getComposition() == null) ? oldWasteData.getComposition() : newWasteData.getComposition());
-            alteredWasteData.setStockRL((newWasteData.isStockRL() != oldWasteData.isStockRL()) ? newWasteData.isStockRL() : oldWasteData.isStockRL());
-            alteredWasteData.setProductgroup((newWasteData.getProductgroup() == null || newWasteData.getProductgroup().equals("")) ? oldWasteData.getProductgroup() : newWasteData.getProductgroup());
-            alteredWasteData.setId((newWasteData.getId() == null || newWasteData.getId().equals("")) ? oldWasteData.getId() : newWasteData.getId());
+            new AttrCopy().copyAttributes(oldWasteData, alteredWasteData);
 
             wasteDataRepository.setWasteDataInfoById(
                     alteredWasteData.getSupplier(),
