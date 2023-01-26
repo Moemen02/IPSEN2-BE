@@ -1,14 +1,16 @@
 package nl.Groep13.OrderHandler.interfaces;
 
-import nl.Groep13.OrderHandler.model.v2.WasteLocation;
+import nl.Groep13.OrderHandler.model.v2.ArticleLocation;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface WasteLocationInterface {
 
-    List<WasteLocation> getAllWasteLocations();
-    WasteLocation getWasteLocationById(Long id);
-    WasteLocation addWasteLocation(WasteLocation wasteLocation);
-    WasteLocation updateWasteLocation(Long id, WasteLocation wasteLocation);
+    List<ArticleLocation> getAllWasteLocations();
+    Optional<ArticleLocation> getWasteLocationById(Long id);
+    ArticleLocation addWasteLocation(ArticleLocation articleLocation);
+    ArticleLocation updateWasteLocation(Long id, ArticleLocation wasteLocation);
 
+    Optional<ArticleLocation> getArticleLocationByOrderId(long orderId);
 }

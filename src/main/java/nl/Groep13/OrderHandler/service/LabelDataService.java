@@ -3,6 +3,7 @@ package nl.Groep13.OrderHandler.service;
 import nl.Groep13.OrderHandler.controller.*;
 import nl.Groep13.OrderHandler.model.*;
 
+import nl.Groep13.OrderHandler.utils.LabelCreation;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class LabelDataService {
     AdressController adressController;
     ArticleController articleController ;
     ArticleService articleService;
+
 
 
     public LabelDataService(LabelService labelService, OrderController orderController, LocationController locationController, CustomerController customerController, AdressController adressController, ArticleController articleController, ArticleService articleService) {
