@@ -89,8 +89,8 @@ public class LabelDataServiceV2 {
 
         String path;
 
-        if (label.get("retour").equals("true")) path = "images/retourLabel.png";
-        else path = "images/magazijnLabel.png";
+        if (label.get("retour").equals("true")) path = "retourLabel";
+        else path = "magazijnLabel";
 
         File png = new File("src/main/resources/images/" + path + ".png");
         File pdf = new File("src/main/resources/Labels/newLabel/" + path);
