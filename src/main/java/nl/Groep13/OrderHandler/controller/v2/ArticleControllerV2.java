@@ -63,14 +63,12 @@ public class ArticleControllerV2 {
     public CategoryLocation getLocation(@PathVariable Long orderId) throws ChangeSetPersister.NotFoundException {
         ArticleV2 article = this.getSingleArticle(orderId).get();
         ArticleLocation articleLocation = wasteLocationController.getArticleLocationByOrderId(article.getId());
-        if (articleLocation != null){
-            Long yoyo = locationControllerV2.getLocationByArticleLocation(articleLocation.getId()).getCategory_locationID();
-            System.out.println(yoyo);
-        }
-        return null;
 
-//            Long locationV2 = locationControllerV2.getLocationByArticleLocation(articleLocation).getCategory_locationID();
-//            return categoryLocationController.getCategoryLocationByLocation(locationV2);
+        if (articleLocation.getId() != null){
+            Long location = locationControllerV2.getLocationByArticleLocation(articleLocation.getId()).getCategory_locationID();
+            return categoryLocationController.getCategoryLocationByLocation(location);
+        }
+        return new CategoryLocation();
     }
 
     @GetMapping(value = "/{id}")

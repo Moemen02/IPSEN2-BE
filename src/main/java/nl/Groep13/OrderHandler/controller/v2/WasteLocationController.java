@@ -27,10 +27,10 @@ public class WasteLocationController {
 
     public ArticleLocation getArticleLocationByOrderId(Long orderId){
         Optional<ArticleLocation> articleLocation = wasteLocationInterface.getArticleLocationByOrderId(orderId);
-        if (articleLocation.isPresent()){
-            return articleLocation.get();
-        }
-        return null;
+        if (articleLocation.isEmpty()){
+            return new ArticleLocation();
+        };
+        return articleLocation.get();
     }
 
 
