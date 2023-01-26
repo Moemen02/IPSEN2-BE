@@ -1,7 +1,6 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
 import com.google.gson.Gson;
-import nl.Groep13.OrderHandler.DAO.v2.WasteDAO;
 import nl.Groep13.OrderHandler.controller.ArticleController;
 import nl.Groep13.OrderHandler.model.v2.*;
 import nl.Groep13.OrderHandler.service.ArticleService;
@@ -30,7 +29,7 @@ public class ArticleOrderController {
 
     @Autowired
 
-    public ArticleOrderController(ArticleOrderService articleOrderService, ArticleService articleService, WasteDAO wasteDAO, ArticleControllerV2 articleControllerV2, WasteLocationController wasteLocationController, LocationControllerV2 locationControllerV2, CategoryLocationController categoryLocationController, ArticleController articleController, Gson gson) {
+    public ArticleOrderController(ArticleOrderService articleOrderService, ArticleService articleService, ArticleControllerV2 articleControllerV2, WasteLocationController wasteLocationController, LocationControllerV2 locationControllerV2, CategoryLocationController categoryLocationController, ArticleController articleController, Gson gson) {
         this.articleOrderService = articleOrderService;
         this.wasteLocationController = wasteLocationController;
         this.locationControllerV2 = locationControllerV2;
@@ -51,12 +50,15 @@ public class ArticleOrderController {
         }
     }
 
-    @GetMapping("/{orderId}/moemen")
-    public String getLocation(@PathVariable Long orderId) throws ChangeSetPersister.NotFoundException {
-        ArticleV2 article = this.getWasteOrderById(orderId).getBody().get().getArticleID();
-        Long articleLocation = wasteLocationController.getArticleLocationByOrderId(article.getId()).getLocationID();
-        Long locationV2 = locationControllerV2.getLocationByArticleLocation(articleLocation).getCategory_locationID();
-        return categoryLocationController.getCategoryLocationByLocation(locationV2).getLocation_type();
+    @GetMapping("/{orderId}/article/location")
+    public CategoryLocation getLocation(@PathVariable Long orderId) throws ChangeSetPersister.NotFoundException {
+            ArticleV2 article = this.getWasteOrderById(orderId).getBody().get().getArticleID();
+            ArticleLocation articleLocation = wasteLocationController.getArticleLocationByOrderId(article.getId());
+            if (articleLocation.getLocationID() != null){
+                Long locationV2 = locationControllerV2.getLocationByArticleLocation(articleLocation.getLocationID()).getCategory_locationID();
+                return categoryLocationController.getCategoryLocationByLocation(locationV2);
+            }
+            return null;
     }
 
     @GetMapping

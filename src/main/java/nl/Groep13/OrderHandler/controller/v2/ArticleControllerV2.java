@@ -4,7 +4,10 @@ import nl.Groep13.OrderHandler.DAO.v2.ArticleDAOV2;
 import nl.Groep13.OrderHandler.controller.UserController;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.User;
+import nl.Groep13.OrderHandler.model.v2.ArticleLocation;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
+import nl.Groep13.OrderHandler.model.v2.CategoryLocation;
+import nl.Groep13.OrderHandler.model.v2.LocationV2;
 import nl.Groep13.OrderHandler.record.ArticleRec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -26,17 +29,23 @@ import java.util.Optional;
 @RequestMapping(value = "/api/v2/article")
 public class ArticleControllerV2 {
     private final ArticleDAOV2 articleDAOV2;
+
     private final ArticleInterface articleInterface;
     private final UsageController usageController;
+
+    private final LocationControllerV2 locationControllerV2;
     private final WasteLocationController wasteLocationController;
+    private final CategoryLocationController categoryLocationController;
     private final UserController userController;
     @Autowired
     private AuthenticationManager authManager;
-    public ArticleControllerV2(ArticleDAOV2 wasteDAO, ArticleInterface articleInterface, WasteLocationController wasteLocationController, UsageController usageController, UserController userController) {
+    public ArticleControllerV2(ArticleDAOV2 wasteDAO, ArticleInterface articleInterface, LocationControllerV2 locationControllerV2, WasteLocationController wasteLocationController, UsageController usageController, CategoryLocationController categoryLocationController, UserController userController) {
         this.articleDAOV2 = wasteDAO;
         this.articleInterface = articleInterface;
+        this.locationControllerV2 = locationControllerV2;
         this.wasteLocationController = wasteLocationController;
         this.usageController = usageController;
+        this.categoryLocationController = categoryLocationController;
         this.userController = userController;
     }
 
@@ -48,6 +57,20 @@ public class ArticleControllerV2 {
 
     public Optional<ArticleV2> getSingleArticle(Long id){
         return this.articleInterface.getWasteById(id);
+    }
+
+    @GetMapping("/{orderId}/location")
+    public CategoryLocation getLocation(@PathVariable Long orderId) throws ChangeSetPersister.NotFoundException {
+        ArticleV2 article = this.getSingleArticle(orderId).get();
+        ArticleLocation articleLocation = wasteLocationController.getArticleLocationByOrderId(article.getId());
+        if (articleLocation != null){
+            Long yoyo = locationControllerV2.getLocationByArticleLocation(articleLocation.getId()).getCategory_locationID();
+            System.out.println(yoyo);
+        }
+        return null;
+
+//            Long locationV2 = locationControllerV2.getLocationByArticleLocation(articleLocation).getCategory_locationID();
+//            return categoryLocationController.getCategoryLocationByLocation(locationV2);
     }
 
     @GetMapping(value = "/{id}")

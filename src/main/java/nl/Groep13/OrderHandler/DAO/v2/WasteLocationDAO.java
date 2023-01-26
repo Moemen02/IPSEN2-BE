@@ -40,6 +40,6 @@ public class WasteLocationDAO implements WasteLocationInterface {
 
     @Override
     public Optional<ArticleLocation> getArticleLocationByOrderId(long orderId) {
-        return wasteLocationRepository.getArticleLocationByOrderId(orderId);
+        return Optional.ofNullable(wasteLocationRepository.getArticleLocationByOrderId(orderId).orElseGet(null));
     }
 }
