@@ -7,6 +7,7 @@ import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.record.RegisterRequest;
 import nl.Groep13.OrderHandler.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -83,10 +84,12 @@ public class UserController {
      */
     @GetMapping("/user/{id}")
     @ResponseBody
-    public String getUserByID(@PathVariable Long id) {
+    public ResponseEntity<User> getUserByID(@PathVariable Long id) {
         Optional<User> user = userService.getUserById(id);
-        if (user.isPresent()) return user.get().getName();
-        return "";
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        };
+        return null;
     }
 
     public User getAuthUser(Authentication authentication) {
