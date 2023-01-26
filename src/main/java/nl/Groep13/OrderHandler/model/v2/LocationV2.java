@@ -16,7 +16,9 @@ public class LocationV2 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long category_locationID;
+
 
     public LocationV2(Long category_locationID) {
         this.category_locationID = category_locationID;

@@ -29,6 +29,10 @@ public class LocationServiceV2 {
         return this.locationDAOV2.getLocationByCategoryLocationID(id);
     }
 
+    public LocationV2 getLocationByArticleLocation(Long id) throws ChangeSetPersister.NotFoundException {
+        return this.locationDAOV2.getLocationByArticleLocation(id);
+    }
+
     public LocationV2 saveLocation(LocationV2 location){
         return this.locationDAOV2.saveLocation(location);
     }
