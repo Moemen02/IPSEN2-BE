@@ -93,11 +93,13 @@ public class LabelDataServiceV2 {
         if (label.get("retour").equals("true")) path = "images/retourLabel.png";
         else path = "images/magazijnLabel.png";
 
-//        File file = new ClassPathResource(path).getFile();
-        File file = new File("src/main/resources/" + path);
-        String encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
+        File png = new File("src/main/resources/images/" + path + ".png");
+        File pdf = new File("src/main/resources/Labels/newLabel/" + path);
+        String encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(png.toPath()));
+        String encodePdf = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(pdf.toPath()));
         Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("content", encodeImage);
+        jsonMap.put("pdf", encodePdf);
         jsonMap.put("name", label.get("klant"));
 
         return jsonMap;
