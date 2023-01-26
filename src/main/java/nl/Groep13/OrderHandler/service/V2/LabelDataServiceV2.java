@@ -7,7 +7,6 @@ import nl.Groep13.OrderHandler.interfaces.LabelInterface;
 
 import nl.Groep13.OrderHandler.model.v2.*;
 import nl.Groep13.OrderHandler.utils.LabelCreation;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
