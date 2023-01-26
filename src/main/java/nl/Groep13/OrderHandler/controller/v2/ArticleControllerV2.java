@@ -5,6 +5,8 @@ import nl.Groep13.OrderHandler.controller.UserController;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.User;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
+import nl.Groep13.OrderHandler.model.v2.CustomerV2;
+import nl.Groep13.OrderHandler.record.ArticleCustomerRec;
 import nl.Groep13.OrderHandler.record.ArticleRec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -58,15 +60,13 @@ public class ArticleControllerV2 {
     }
 
     @PostMapping
-    public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleRec waste, Authentication authentication) throws ChangeSetPersister.NotFoundException {
+    public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleCustomerRec articleCustomerRec) throws ChangeSetPersister.NotFoundException {
         ArticleV2 articleV2 = new ArticleV2();
-        articleV2.setArticle_dataID(waste._article_dataID());
-        articleV2.setArticle_descriptionID(waste._article_descriptionID());
+        articleV2.setArticle_dataID(articleCustomerRec.article().getArticle_dataID());
+        articleV2.setArticle_descriptionID(articleCustomerRec.article().getArticle_descriptionID());
         articleV2.setUsageID(usageController.getUsageById(usageController.setUsageType(articleV2.getArticle_dataID())).getBody());
         ArticleV2 reArticle = articleDAOV2.addArticle(articleV2);
-        User user = userController.getAuthUser(authentication);
-        //TODO vervang user.getId met een customerId.
-        wasteLocationController.createLoction(user.getId(), reArticle);
+        wasteLocationController.createLoction(articleCustomerRec.customer().getID(), reArticle);
         return ResponseEntity.ok(reArticle);
     }
 

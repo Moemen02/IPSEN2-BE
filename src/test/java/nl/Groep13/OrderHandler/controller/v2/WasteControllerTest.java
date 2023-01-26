@@ -5,11 +5,10 @@ import nl.Groep13.OrderHandler.DAO.v2.*;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
 import nl.Groep13.OrderHandler.model.JWTPayload;
 import nl.Groep13.OrderHandler.model.UserRole;
-import nl.Groep13.OrderHandler.model.v2.Usage;
-import nl.Groep13.OrderHandler.model.v2.ArticleV2;
-import nl.Groep13.OrderHandler.model.v2.ArticleData;
-import nl.Groep13.OrderHandler.model.v2.ArticleDescription;
+import nl.Groep13.OrderHandler.model.v2.*;
+import nl.Groep13.OrderHandler.record.ArticleCustomerRec;
 import nl.Groep13.OrderHandler.record.ArticleRec;
+import nl.Groep13.OrderHandler.record.CustomerRec;
 import nl.Groep13.OrderHandler.record.LoginRequest;
 import nl.Groep13.OrderHandler.repository.v2.UsageRepository;
 import nl.Groep13.OrderHandler.repository.v2.ArticleDataRepository;
@@ -135,13 +134,15 @@ class WasteControllerTest {
         ArticleData fillerData = new ArticleData(null, "Filler", "ADK-1000 Test", "2398", 2.5f, 3f, "100% PL", false, "Holland Haag Test");
         ArticleDescription fillerDescription = new ArticleDescription(null, "ADK-1000 Test", "ForTesting", 50, "Nepstoffen", "Compiled", "wQlsd", 100, false, 0);
         Usage usage = new Usage(null, "AFVAL");
-        ArticleRec testWaste = new ArticleRec(null, fillerData, fillerDescription, usage);
+        ArticleV2 testWaste = new ArticleV2(fillerData, fillerDescription, usage);
+        CustomerV2 Customer = new CustomerV2(2L, "Smith", new Address(2L, "WD92", 23, "Hendricksenlaan"));
+        ArticleCustomerRec ArticleCustomerRec = new ArticleCustomerRec(testWaste, Customer);
 //        testWaste.setArticle_dataID(fillerData);
 //        testWaste.setArticle_descriptionID(fillerDescription);
 //        testWaste.setUsageID(usage);
 
         //Act
-        ArticleV2 waste = wasteController.addWaste(testWaste).getBody();
+        ArticleV2 waste = wasteController.addWaste(ArticleCustomerRec).getBody();
         ArticleData altWasteData = waste.getArticle_dataID();
         altWasteData.setSupplier("Tester");
         waste.setArticle_dataID(altWasteData);
