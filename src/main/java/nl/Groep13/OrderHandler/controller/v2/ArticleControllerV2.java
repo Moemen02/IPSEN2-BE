@@ -3,18 +3,16 @@ package nl.Groep13.OrderHandler.controller.v2;
 import nl.Groep13.OrderHandler.DAO.v2.ArticleDAOV2;
 import nl.Groep13.OrderHandler.controller.UserController;
 import nl.Groep13.OrderHandler.interfaces.ArticleInterface;
-import nl.Groep13.OrderHandler.model.User;
+import nl.Groep13.OrderHandler.model.v2.ArticleOrder;
 import nl.Groep13.OrderHandler.model.v2.ArticleV2;
 import nl.Groep13.OrderHandler.model.v2.CustomerV2;
 import nl.Groep13.OrderHandler.record.ArticleCustomerRec;
-import nl.Groep13.OrderHandler.record.ArticleRec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import nl.Groep13.OrderHandler.utils.Pager;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,14 +29,16 @@ public class ArticleControllerV2 {
     private final ArticleInterface articleInterface;
     private final UsageController usageController;
     private final WasteLocationController wasteLocationController;
+    private final ArticleOrderController articleOrderController;
     private final UserController userController;
     @Autowired
     private AuthenticationManager authManager;
-    public ArticleControllerV2(ArticleDAOV2 wasteDAO, ArticleInterface articleInterface, WasteLocationController wasteLocationController, UsageController usageController, UserController userController) {
+    public ArticleControllerV2(ArticleDAOV2 wasteDAO, ArticleInterface articleInterface, WasteLocationController wasteLocationController, UsageController usageController, ArticleOrderController articleOrderController, UserController userController) {
         this.articleDAOV2 = wasteDAO;
         this.articleInterface = articleInterface;
         this.wasteLocationController = wasteLocationController;
         this.usageController = usageController;
+        this.articleOrderController = articleOrderController;
         this.userController = userController;
     }
 
@@ -62,11 +62,20 @@ public class ArticleControllerV2 {
     @PostMapping
     public ResponseEntity<ArticleV2> addWaste (@RequestBody final ArticleCustomerRec articleCustomerRec) throws ChangeSetPersister.NotFoundException {
         ArticleV2 articleV2 = new ArticleV2();
-        articleV2.setArticle_dataID(articleCustomerRec.article().getArticle_dataID());
-        articleV2.setArticle_descriptionID(articleCustomerRec.article().getArticle_descriptionID());
+        ArticleOrder articleOrder = new ArticleOrder();
+        CustomerV2 customer = new CustomerV2();
+        articleV2.setArticle_dataID(articleCustomerRec._article()._article_dataID());
+        articleV2.setArticle_descriptionID(articleCustomerRec._article()._article_descriptionID());
         articleV2.setUsageID(usageController.getUsageById(usageController.setUsageType(articleV2.getArticle_dataID())).getBody());
         ArticleV2 reArticle = articleDAOV2.addArticle(articleV2);
-        wasteLocationController.createLoction(articleCustomerRec.customer().getID(), reArticle);
+        wasteLocationController.createLoction(articleCustomerRec._customer().id(), reArticle);
+        customer.setID(articleCustomerRec._customer().id());
+        customer.setName(articleCustomerRec._customer().Name());
+        customer.setAddressID(articleCustomerRec._customer().AddressID());
+        articleOrder.setArticleID(reArticle);
+        articleOrder.setCustomerID(customer);
+        articleOrder.setFinished(false);
+        articleOrderController.addArticleOrder(articleOrder);
         return ResponseEntity.ok(reArticle);
     }
 

@@ -53,4 +53,13 @@ public class ArticleOrderController {
     public Optional<ArticleOrder> updateArticleOrder(@PathVariable Long id, @RequestBody Optional<ArticleOrder> articleOrder) throws ChangeSetPersister.NotFoundException {
         return this.articleOrderService.updateWasteOrder(id,  articleOrder);
     }
+
+    @PostMapping
+    public ResponseEntity<ArticleOrder> addArticleOrder(@RequestBody ArticleOrder articleOrder) {
+        if (this.articleOrderService.addArticleOrder(articleOrder) == null) {
+            throw new NullPointerException("ArticleOrder is empty!");
+        } else {
+            return ResponseEntity.ok(articleOrder);
+        }
+    }
 }

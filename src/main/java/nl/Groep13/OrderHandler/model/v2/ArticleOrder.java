@@ -20,11 +20,11 @@ public class ArticleOrder {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "articleID", referencedColumnName = "id")
     private ArticleV2 articleID;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "customerID", referencedColumnName = "id")
     private CustomerV2 customerID;
     private boolean finished;

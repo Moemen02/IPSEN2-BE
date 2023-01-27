@@ -52,4 +52,7 @@ public class ArticleOrderDAO {
         throw new ChangeSetPersister.NotFoundException();
     }
 
+    public ArticleOrder addArticleOrder(ArticleOrder articleOrder) {
+        return articleOrderRepository.save(articleOrder);
+    }
 }
