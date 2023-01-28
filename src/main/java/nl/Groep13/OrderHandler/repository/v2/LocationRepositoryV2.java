@@ -23,4 +23,7 @@ public interface LocationRepositoryV2 extends JpaRepository<LocationV2, Long> {
 
     @Query("select location.id from LocationV2 location where location.category_locationID = ?1")
     LocationV2 getLocationByCategoryLocationID(Long id);
+
+    @Query("SELECT location from LocationV2 location where location.id = ?1")
+    LocationV2 getLocationByArticleLocation(Long id);
 }

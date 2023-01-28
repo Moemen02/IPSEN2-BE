@@ -1,12 +1,12 @@
 package nl.Groep13.OrderHandler.service.V2;
 
 
+
 import nl.Groep13.OrderHandler.controller.v2.*;
 import nl.Groep13.OrderHandler.interfaces.LabelInterface;
 
 import nl.Groep13.OrderHandler.model.v2.*;
 import nl.Groep13.OrderHandler.utils.LabelCreation;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
@@ -45,14 +45,15 @@ public class LabelDataServiceV2 {
 
     public HashMap<String, String> getLabelData(Long id) throws ChangeSetPersister.NotFoundException {
         Optional<LabelV2> label = labelInterface.getLabelById(id);
-        Optional<ArticleOrder> order = articleOrderController.getWasteOrderById(label.get().getId()).getBody();
+        Optional<ArticleOrder> order = articleOrderController.getWasteOrderById(label.get().getArticleOrderId().getId()).getBody();
         Optional<CustomerV2> customer = customerControllerV2.getCustomerById(order.get().getCustomerID().getID());
         Optional<Address> adres = addressController.getAddressById(customer.get().getAddressID().getId()).getBody();
-        Optional<ArticleV2> article = Optional.ofNullable(articleControllerV2.getWasteById(order.get().getId()).getBody());
+        Optional<ArticleV2> article = Optional.ofNullable(articleControllerV2.getWasteById(order.get().getArticleID().getId()).getBody());
 //      Optional<WasteLocation> articleLocation = wasteController.getArticleLocationById(article.get().getArticleLocationID()).getBody();
 
         HashMap<String, String> labelData = new HashMap<>();
 
+        System.out.println(article.get().getUsageID().getId());
         if (article.get().getUsageID().getId() == 1){
             labelData.put("vervoerder", "HollandHaag BV");
             labelData.put("klant", customer.get().getName());
@@ -88,14 +89,16 @@ public class LabelDataServiceV2 {
 
         String path;
 
-        if (label.get("retour").equals("true")) path = "images/retourLabel.png";
-        else path = "images/magazijnLabel.png";
+        if (label.get("retour").equals("true")) path = "retourLabel";
+        else path = "magazijnLabel";
 
-//        File file = new ClassPathResource(path).getFile();
-        File file = new File("src/main/resources/" + path);
-        String encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(file.toPath()));
+        File png = new File("src/main/resources/images/" + path + ".png");
+        File pdf = new File("src/main/resources/Labels/newLabel/" + path);
+        String encodeImage = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(png.toPath()));
+        String encodePdf = Base64.getEncoder().withoutPadding().encodeToString(Files.readAllBytes(pdf.toPath()));
         Map<String, String> jsonMap = new HashMap<>();
         jsonMap.put("content", encodeImage);
+        jsonMap.put("pdf", encodePdf);
         jsonMap.put("name", label.get("klant"));
 
         return jsonMap;

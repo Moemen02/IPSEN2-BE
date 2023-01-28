@@ -18,11 +18,12 @@ public class ArticleLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long locationID;
     private Long articleID;
     private Long usageID;
 
-    public ArticleLocation(Long locationID, Long articleID, Long usageID) {
+    public ArticleLocation( Long locationID, Long articleID, Long usageID) {
         this.locationID = locationID;
         this.articleID = articleID;
         this.usageID = usageID;

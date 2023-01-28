@@ -1,8 +1,9 @@
 package nl.Groep13.OrderHandler.controller.v2;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import nl.Groep13.OrderHandler.model.v2.ArticleOrder;
+import nl.Groep13.OrderHandler.controller.ArticleController;
+import nl.Groep13.OrderHandler.model.v2.*;
+import nl.Groep13.OrderHandler.service.ArticleService;
 import nl.Groep13.OrderHandler.service.V2.ArticleOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister;
@@ -19,14 +20,21 @@ import java.util.Optional;
 public class ArticleOrderController {
 
     private final ArticleOrderService articleOrderService;
-
+    private final WasteLocationController wasteLocationController;
+    private final LocationControllerV2 locationControllerV2;
+    private final CategoryLocationController categoryLocationController;
+    private final ArticleController articleController;
 
     Gson gson = new Gson();
 
     @Autowired
 
-    public ArticleOrderController(ArticleOrderService articleOrderService, Gson gson) {
+    public ArticleOrderController(ArticleOrderService articleOrderService, ArticleService articleService, ArticleControllerV2 articleControllerV2, WasteLocationController wasteLocationController, LocationControllerV2 locationControllerV2, CategoryLocationController categoryLocationController, ArticleController articleController, Gson gson) {
         this.articleOrderService = articleOrderService;
+        this.wasteLocationController = wasteLocationController;
+        this.locationControllerV2 = locationControllerV2;
+        this.categoryLocationController = categoryLocationController;
+        this.articleController = articleController;
         this.gson = gson;
     }
 
@@ -36,9 +44,21 @@ public class ArticleOrderController {
         try{
             Optional<ArticleOrder> articleOrder = this.articleOrderService.getArticleOrderById(ID);
             return new ResponseEntity<>(articleOrder, HttpStatus.OK);
+
         } catch (ChangeSetPersister.NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+    }
+
+    @GetMapping("/{orderId}/article/location")
+    public CategoryLocation getLocation(@PathVariable Long orderId) throws ChangeSetPersister.NotFoundException {
+            ArticleV2 article = this.getWasteOrderById(orderId).getBody().get().getArticleID();
+            ArticleLocation articleLocation = wasteLocationController.getArticleLocationByOrderId(article.getId());
+            if (articleLocation.getLocationID() != null){
+                Long locationV2 = locationControllerV2.getLocationByArticleLocation(articleLocation.getLocationID()).getCategory_locationID();
+                return categoryLocationController.getCategoryLocationByLocation(locationV2);
+            }
+            return null;
     }
 
     @GetMapping

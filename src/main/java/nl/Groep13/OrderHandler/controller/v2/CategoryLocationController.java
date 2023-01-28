@@ -47,6 +47,10 @@ public class CategoryLocationController {
         );
     }
 
+    public CategoryLocation getCategoryLocationByLocation(Long id){
+        return categoryLocationService.getCategoryLocationByLocation(id).get();
+    }
+
     public List<Long> getCatLocIds() throws ChangeSetPersister.NotFoundException {
         List<CategoryLocation> categoryLocations = this.categoryLocationService.getAllCategoryLocations();
         List<Long> idList = new ArrayList<>();
