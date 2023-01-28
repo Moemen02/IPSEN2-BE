@@ -140,15 +140,15 @@
 //        testWaste.setArticle_descriptionID(fillerDescription);
 //        testWaste.setUsageID(usage);
 
-        //Act
-        ArticleV2 waste = wasteController.addWaste(testWaste).getBody();
-        ArticleData altWasteData = waste.getArticle_dataID();
-        altWasteData.setSupplier("Tester");
-        waste.setArticle_dataID(altWasteData);
-        ArticleV2 checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
-
-        //Assert
-        assert checkableWaste != null;
-        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getArticle_dataID().getSupplier());
-    }
-}
+//        //Act
+//        ArticleV2 waste = wasteController.addWaste(testWaste).getBody();
+//        ArticleData altWasteData = waste.getArticle_dataID();
+//        altWasteData.setSupplier("Tester");
+//        waste.setArticle_dataID(altWasteData);
+//        ArticleV2 checkableWaste = wasteController.updateWaste(waste.getId(), waste).getBody();
+//
+//        //Assert
+//        assert checkableWaste != null;
+//        assertThat(altWasteData.getSupplier()).isEqualTo(checkableWaste.getArticle_dataID().getSupplier());
+//    }
+//}

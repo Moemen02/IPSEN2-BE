@@ -23,18 +23,16 @@ public class ArticleOrderController {
     private final WasteLocationController wasteLocationController;
     private final LocationControllerV2 locationControllerV2;
     private final CategoryLocationController categoryLocationController;
-    private final ArticleController articleController;
 
     Gson gson = new Gson();
 
     @Autowired
 
-    public ArticleOrderController(ArticleOrderService articleOrderService, ArticleService articleService, ArticleControllerV2 articleControllerV2, WasteLocationController wasteLocationController, LocationControllerV2 locationControllerV2, CategoryLocationController categoryLocationController, ArticleController articleController, Gson gson) {
+    public ArticleOrderController(ArticleOrderService articleOrderService, WasteLocationController wasteLocationController, LocationControllerV2 locationControllerV2, CategoryLocationController categoryLocationController, Gson gson) {
         this.articleOrderService = articleOrderService;
         this.wasteLocationController = wasteLocationController;
         this.locationControllerV2 = locationControllerV2;
         this.categoryLocationController = categoryLocationController;
-        this.articleController = articleController;
         this.gson = gson;
     }
 
