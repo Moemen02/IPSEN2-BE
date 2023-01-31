@@ -27,7 +27,7 @@
             <li><a href="#environment">Environment</a></li>
         </ul>
         <ul>
-            <li><a href="#npm-install">Environment</a></li>
+            <li><a href="#npm-install">npm install</a></li>
         </ul>
     </li>
   </ol>
